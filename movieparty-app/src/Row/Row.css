@@ -1,0 +1,38 @@
+.row {
+  color: white;
+  margin-left: 20px;
+}
+
+.row__posters {
+  display: flex;
+  overflow-y: hidden; /*hide scroll on y axis*/
+  overflow-x: scroll; /*scroll bar*/
+  padding: 20px;
+}
+
+.row__poster {
+  object-fit: contain; /*keep aspect ratio*/
+  width: 100%;
+  max-height: 100px;
+  margin-right: 10px;
+  transition: transform 400ms; /*transition on transform with delayed effect*/
+}
+
+.row__poster:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.row__posters::-webkit-scrollbar {
+  display: none; /*used to hide the scroll bar x (the slider)*/
+}
+
+.row__posterTrending {
+  /*different style for trending movies*/
+  max-height: 250px;
+}
+
+.row__posterTrending:hover {
+  /*different style for trending movies*/
+  transform: scale(1.11);
+}
