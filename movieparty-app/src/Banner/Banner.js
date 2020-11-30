@@ -44,7 +44,7 @@ function Banner() {
 
                 {/*div > 2 buttons*/}
                 <div className="banner__buttons">
-                    <button className="banner__button">Play</button>
+                    <button className="banner__button">Play1</button>
                     <button className="banner__button">Play party</button>
                 </div>
 
