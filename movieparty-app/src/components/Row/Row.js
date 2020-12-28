@@ -5,7 +5,7 @@ import YouTube from "react-youtube";
 import requestsTmdbMovieTrailer from "../Requests/requestsTmdb";
 //Banner component
 import Banner from "../Banner/Banner";
-import MovieParty from "../components/MovieParty/MovieParty";
+import MovieParty from "../MovieParty/MovieParty";
 
 function Row({ title, fetchTitles, trending}) {
   const IMG_API = "https://image.tmdb.org/t/p/original/";
@@ -14,10 +14,10 @@ function Row({ title, fetchTitles, trending}) {
   const [movies, setMovies] = useState([]); //react setter variable, init to empty list
 
   //trailer id
-  const [trailerId, setTrailerId] = useState("");
+  const [bannerId, setBannerId] = useState("");
 
   //Youtube trailer Url
-  const [trailerUrl, setTrailerUrl] = useState("");
+  const [moviePartyUrlSolo, setMoviePartyUrlSolo] = useState("");
 
   //MovieParty
   const [moviePartyUrl, setMoviePartyUrl] = useState("");
@@ -44,22 +44,28 @@ function Row({ title, fetchTitles, trending}) {
   }
 
   const handleClick = (e) => {
-    if(trailerId){
-      setTrailerId(""); /*if trailer was playing stop */
+    if(bannerId){
+      setBannerId(""); /*if trailer was playing stop */
+      setMoviePartyUrlSolo("");
+      setMoviePartyUrl("");
     } else {              
-      setTrailerId(e.id);
+      setBannerId(e.id);
+      setMoviePartyUrlSolo("");
+      setMoviePartyUrl("");
     }
     console.log("prova2")
   }
 
   function startMovieParty(movieId){
     console.log("prova")
-    setTrailerId("");
+    setBannerId("");
+    setMoviePartyUrlSolo("");
     start_MoviePartyTrailer(movieId);
   }
 
   function startMoviePartySolo(movieId){
-    setTrailerId("");
+    setBannerId("");
+    setMoviePartyUrl("");
     start_trailer(movieId);
   }
 
@@ -72,7 +78,7 @@ function Row({ title, fetchTitles, trending}) {
       return ytUrl;
     }
     //set movie trailers
-    if(moviePartyUrl){
+    if(moviePartyUrl !== ""){
       setMoviePartyUrl(""); /*if trailer was playing stop */
     } else {              
       /*set trailer to yt trailer */
@@ -85,12 +91,12 @@ function Row({ title, fetchTitles, trending}) {
     async function fetchMovieTrailer(){
       /**function from movie-trailer api, search url from movie id */
       const ytUrl = await axios.get( axios.defaults.baseURL + "/movie/" + movieId + requestsTmdbMovieTrailer.trailerVideoKey)
-      setTrailerUrl(String(ytUrl.data.results[0].key)); //add undefined key conrtrol
+      setMoviePartyUrlSolo(String(ytUrl.data.results[0].key)); //add undefined key conrtrol
       return ytUrl;
     }
     //set movie trailers
-    if(trailerUrl){
-      setTrailerUrl(""); /*if trailer was playing stop */
+    if(moviePartyUrlSolo !== ""){
+      setMoviePartyUrlSolo(""); /*if trailer was playing stop */
     } else {              
       /*set trailer to yt trailer */
       fetchMovieTrailer();        
@@ -112,9 +118,9 @@ function Row({ title, fetchTitles, trending}) {
           </img>
         ))}
       </div>
-      {trailerId && <Banner movieId={trailerId} startMoviePartySolo = {startMoviePartySolo} startMovieParty = {startMovieParty}/> /**if it as the trailer add yt component */}
-      {trailerUrl && <YouTube videoId={trailerUrl} opts={opts}/> /**if it as the trailer add yt component */}
-      {moviePartyUrl && <MovieParty trailerUrl={moviePartyUrl} opts={opts}/> /**if it as the trailer add yt component */}
+      {bannerId !== "" && <Banner movieId={bannerId} startMoviePartySolo = {startMoviePartySolo} startMovieParty = {startMovieParty}/> /**if it as the trailer add yt component */}
+      {moviePartyUrlSolo !== "" && <YouTube videoId={moviePartyUrlSolo} opts={opts}/> /**if it as the trailer add yt component */}
+      {moviePartyUrl !== "" && <MovieParty trailerUrl={moviePartyUrl} opts={opts}/> /**if it as the trailer add yt component */}
     </div>
   );
 }

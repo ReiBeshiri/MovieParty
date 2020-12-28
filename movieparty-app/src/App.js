@@ -2,13 +2,13 @@ import "./App.css";
 import React from "react";
 //Apply Component Pattern
 //Row component
-import Row from "./Row/Row";
+import Row from "./components/Row/Row";
 //Banner component
-import Banner from "./Banner/Banner";
+import Banner from "./components/Banner/Banner";
 //Navbar component
-import Nav from "./Nav/Nav"
+import Nav from "./components/Nav/Nav"
 //url to fetch the movies info from tmdb
-import request from "./Requests/requestsTmdb";
+import request from "./components/Requests/requestsTmdb";
 
 function App() {
   return (
