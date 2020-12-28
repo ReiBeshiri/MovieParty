@@ -51,9 +51,9 @@ function Banner(props) {
 
                 {/*div > 2 buttons*/}
                 <div className="banner__buttons">
-                    {/*onClick = {props.hideBanner}*/}
-                    <button className="banner__button" onClick = {()=>props.hideBanner(props.movieId)}>Play1</button>
-                    <button className="banner__button">Play party</button>
+                    {/*onClick = {props.startYoutubePlayer}*/}
+                    <button className="banner__button" onClick = {()=>props.startMoviePartySolo(props.movieId)}>Play1</button>
+                    <button className="banner__button"  onClick = {()=>props.startMovieParty(props.movieId)}>Play party</button>
                 </div>
 
                 {/*description*/}

@@ -5,6 +5,7 @@ import YouTube from "react-youtube";
 import requestsTmdbMovieTrailer from "../Requests/requestsTmdb";
 //Banner component
 import Banner from "../Banner/Banner";
+import MovieParty from "../components/MovieParty/MovieParty";
 
 function Row({ title, fetchTitles, trending}) {
   const IMG_API = "https://image.tmdb.org/t/p/original/";
@@ -17,6 +18,9 @@ function Row({ title, fetchTitles, trending}) {
 
   //Youtube trailer Url
   const [trailerUrl, setTrailerUrl] = useState("");
+
+  //MovieParty
+  const [moviePartyUrl, setMoviePartyUrl] = useState("");
 
   //lambda function to add listener every time Row func is called using useEffect react function
   useEffect(() => {
@@ -32,8 +36,8 @@ function Row({ title, fetchTitles, trending}) {
 
   //yt player options
   const opts = {
-    height: "400",
-    width: "100%",
+    height: "400",//400
+    width: "80%",
     playerVars: {
       autoplay: 1,
     },
@@ -48,16 +52,32 @@ function Row({ title, fetchTitles, trending}) {
     console.log("prova2")
   }
 
-  /*const hide_banner = (movieId) => {
+  function startMovieParty(movieId){
     console.log("prova")
     setTrailerId("");
-    start_trailer(movieId);
-  }*/
+    start_MoviePartyTrailer(movieId);
+  }
 
-  function hide_banner(movieId){
-    console.log("prova")
+  function startMoviePartySolo(movieId){
     setTrailerId("");
     start_trailer(movieId);
+  }
+
+  function start_MoviePartyTrailer(movieId){
+    //define async function to get movie trailers
+    async function fetchMovieTrailer(){
+      /**function from movie-trailer api, search url from movie id */
+      const ytUrl = await axios.get( axios.defaults.baseURL + "/movie/" + movieId + requestsTmdbMovieTrailer.trailerVideoKey)
+      setMoviePartyUrl(String(ytUrl.data.results[0].key)); //add undefined key conrtrol
+      return ytUrl;
+    }
+    //set movie trailers
+    if(moviePartyUrl){
+      setMoviePartyUrl(""); /*if trailer was playing stop */
+    } else {              
+      /*set trailer to yt trailer */
+      fetchMovieTrailer();        
+    }
   }
 
   function start_trailer(movieId){
@@ -92,8 +112,9 @@ function Row({ title, fetchTitles, trending}) {
           </img>
         ))}
       </div>
-      {trailerId && <Banner movieId={trailerId} hideBanner = {hide_banner}/> /**if it as the trailer add yt component */}
+      {trailerId && <Banner movieId={trailerId} startMoviePartySolo = {startMoviePartySolo} startMovieParty = {startMovieParty}/> /**if it as the trailer add yt component */}
       {trailerUrl && <YouTube videoId={trailerUrl} opts={opts}/> /**if it as the trailer add yt component */}
+      {moviePartyUrl && <MovieParty trailerUrl={moviePartyUrl} opts={opts}/> /**if it as the trailer add yt component */}
     </div>
   );
 }
