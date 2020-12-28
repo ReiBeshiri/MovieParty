@@ -16,10 +16,10 @@ function App() {
       <Nav/>
       <Banner/>
       <Row title="Trending Now" fetchTitles={request.fetchTrending} trending /*trending={true}*//> 
-      <Row title="Top Rated" fetchTitles={request.fetchTopRated} />
-      <Row title="Action Movies" fetchTitles={request.fetchActionMovies} />
-      <Row title="Comdey Movies" fetchTitles={request.fetchComedyMovies} />
-      <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} />
+      <Row title="Top Rated" fetchTitles={request.fetchTopRated} trending/>
+      <Row title="Action Movies" fetchTitles={request.fetchActionMovies} trending/>
+      <Row title="Comdey Movies" fetchTitles={request.fetchComedyMovies} trending/>
+      <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} trending/>
       <Row
         title="Animation Movies"
         fetchTitles={request.fetchAnimationMovies}

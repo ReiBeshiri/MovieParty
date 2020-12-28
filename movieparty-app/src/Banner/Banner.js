@@ -3,22 +3,29 @@ import axios from "../Requests/axiosReq"
 import req from "../Requests/requestsTmdb"
 import "./Banner.css"
 
-function Banner() {
+function Banner(props) {
+    //baseurl/movie/464052?api_key=38edf32690a1d179a3c3b3120f3041ee&lenguage=en-US
     const IMG_API = "https://image.tmdb.org/t/p/original/";
     const [movieBanner, setMovieBanner] = useState([]);
 
     useEffect(() => {
        async function fetchDataBanner(){
-        const request = await axios.get(axios.defaults.baseURL + req.fetchTrending)
-        setMovieBanner(
-            request.data.results[
-                Math.floor(Math.random() * request.data.results.length)
+        var request
+        if(props.movieId !== undefined) {
+            console.log(props.movieId)
+            request = (await axios.get(axios.defaults.baseURL + `/movie/${props.movieId}` + req.apikey)).data
+        } else {
+            var trendingMovies = await axios.get(axios.defaults.baseURL + req.fetchTrending)
+            request = trendingMovies.data.results[
+                Math.floor(Math.random() * trendingMovies.data.results.length)
             ]
-        );
+            console.log(request)
+        }
+        setMovieBanner(request);
         return request;
        }
        fetchDataBanner();
-    }, [])
+    }, [props])
 
     function suspensionDots(str, n){
         return str?.length > n ? str.substr(0, n-1) + "..." : str;
@@ -44,7 +51,8 @@ function Banner() {
 
                 {/*div > 2 buttons*/}
                 <div className="banner__buttons">
-                    <button className="banner__button">Play1</button>
+                    {/*onClick = {props.hideBanner}*/}
+                    <button className="banner__button" onClick = {()=>props.hideBanner(props.movieId)}>Play1</button>
                     <button className="banner__button">Play party</button>
                 </div>
 
