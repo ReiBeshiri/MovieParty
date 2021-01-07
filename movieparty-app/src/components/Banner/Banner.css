@@ -7,7 +7,7 @@
 .banner__contents {
   margin-left: 30px;
   padding-top: 140px;
-  height: 190px;
+  height: 350px;
 }
 
 .banner__title {
@@ -17,12 +17,12 @@
 }
 
 .banner__description {
-  width: 50rem;
-  max-width: 360px;
+  width: 55rem;
+  max-width: 400px;
   height: 80px;
   line-height: 1.4;
   padding-top: 1rem;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
 }
 
 .banner__button {
@@ -47,7 +47,7 @@
 }
 
 .banner__fadeBottom {
-  height: 7.5rem;
+  height: 8rem;
   background-image: linear-gradient(
     180deg,
     transparent,

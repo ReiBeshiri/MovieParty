@@ -105,7 +105,7 @@ function Row({ title, fetchTitles, trending}) {
 
   return (
     <div className="row">
-      <h2>{title /*gets the title from App.js Row title="name"*/}</h2>
+      <h4>{title /*gets the title from App.js Row title="name"*/}</h4>
 
       <div className="row__posters">
         {movies.map(e => (

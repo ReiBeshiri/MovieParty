@@ -28,7 +28,6 @@ function Nav() {
                 /*src="https://img-assets.drafthouse.com/images/collections/movie-parties/MovieParty_TC.jpg?auto=compress&crop=focalpoint&fit=crop&fp-x=0.5&fp-y=0.5&h=1080&q=80&w=1920"*/
                 alt="Moive Party"
             />
-
             <img 
                 className="nav__avatar"
                 src="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-25-512.png"

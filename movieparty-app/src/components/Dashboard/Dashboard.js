@@ -20,10 +20,7 @@ function Dashboard() {
       <Row title="Action Movies" fetchTitles={request.fetchActionMovies} trending/>
       <Row title="Comdey Movies" fetchTitles={request.fetchComedyMovies} trending/>
       <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} trending/>
-      <Row
-        title="Animation Movies"
-        fetchTitles={request.fetchAnimationMovies}
-      />
+      <Row title="Animation Movies" fetchTitles={request.fetchAnimationMovies} trending />
     </div>
   );
 }
