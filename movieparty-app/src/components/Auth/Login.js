@@ -21,6 +21,7 @@ function Login(props) {
 
   useEffect(() => {
     if (props.auth.isAuthenticated) {
+      console.log("entra in dashboard")
       props.history.push("/dashboard");
     }
 
