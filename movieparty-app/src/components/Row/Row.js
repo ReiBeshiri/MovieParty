@@ -39,7 +39,7 @@ function Row({ title, fetchTitles, trending}) {
     height: "400",//400
     width: "80%",
     playerVars: {
-      autoplay: 1,
+      autoplay: 0,
     },
   }
 

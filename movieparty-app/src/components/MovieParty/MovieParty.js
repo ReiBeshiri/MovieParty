@@ -13,9 +13,18 @@ function MovieParty(props) {
         },
     }*/
 
+    function _onStateChange(ev){
+        console.log(ev.target);
+    }
+
+    function _onPlay(ev){
+        console.log(ev.target);
+    }
+
+
     return(
         <div className = "movieparty">
-            <YouTube className = "movieparty__youtube" videoId={props.trailerUrl} opts={props.opts}/>
+            <YouTube className = "movieparty__youtube" videoId={props.trailerUrl} opts={props.opts} onStateChange={_onStateChange} onPlay={_onPlay}/>
             <Chat className = "movieparty__chat"/>
         </div>
     );
