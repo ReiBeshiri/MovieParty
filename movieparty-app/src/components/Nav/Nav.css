@@ -30,3 +30,9 @@
   width: 50px;
   object-fit: contain; /*save aspect ratio to container*/
 }
+
+.friendUsername {
+  position: fixed;
+  width: 25%;
+  left: 25%;
+}

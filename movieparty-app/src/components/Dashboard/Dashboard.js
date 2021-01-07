@@ -1,5 +1,7 @@
 import "./Dashboard.css";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 //Apply Component Pattern
 //Row component
 import Row from "../Row/Row";
@@ -9,8 +11,31 @@ import Banner from "../Banner/Banner";
 import Nav from "../Nav/Nav"
 //url to fetch the movies info from tmdb
 import request from "../Requests/requestsTmdb";
+import {useNotification} from "../Notification/NotificationProvider";
 
-function Dashboard() {
+function Dashboard(props) {
+  const { user } = props.auth;
+  const myusername = user.name.split(" ")[0];
+
+  const dispatch = useNotification();
+  const handleNewNotification = (msg, usr, friendusr) => {
+      dispatch({
+      type: "SUCCESS",
+      message: msg,
+      title: "Successful Request",
+      usr:usr,
+      friendusr:friendusr
+      })
+  }
+
+  useEffect(() => {
+    if(props.friend.friend_username.length > 2){      
+      handleNewNotification("richiesta da ", myusername, props.friend.friend_username);
+      props.friend.friend_username="";//reset props
+      console.log("props resettata " + props.friend.friend_username);
+    }      
+  }, [props.friend])
+
   return (
     <div className="app">
       <Nav/>
@@ -25,4 +50,18 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  friend: state.friend
+});
+
+export default connect(
+  mapStateToProps, 
+  {}
+)(Dashboard);
+
+//export default Dashboard;

@@ -1,8 +1,15 @@
 import React, {useState, useEffect} from 'react'
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+import { friendRequest, friendList } from "../../actions/friendsActions";
 import "./Nav.css"
 
-function Nav() {
+function Nav(props) {
+    const { user } = props.auth;
+    const [friendUsername, setfriendUsername] = useState("");
     const [show, showNav] = useState(false);
+    const myusername = user.name.split(" ")[0];
     
     /** listener to the scroll y event, when reaches 100px activate show func*/
     useEffect(() => {
@@ -19,6 +26,14 @@ function Nav() {
         }; callback  error*/ 
     }, []);
 
+    const onChange = e => {
+        setfriendUsername(e.target.value );
+    };
+
+    const onLogoutClick = (myUsername) => {
+        props.logoutUser(myUsername);
+    };
+
     return (
         <div className={`nav ${show/**if show true add nav__blackscroll*/ && "nav__blackscroll"}`}>
             <img
@@ -28,6 +43,15 @@ function Nav() {
                 /*src="https://img-assets.drafthouse.com/images/collections/movie-parties/MovieParty_TC.jpg?auto=compress&crop=focalpoint&fit=crop&fp-x=0.5&fp-y=0.5&h=1080&q=80&w=1920"*/
                 alt="Moive Party"
             />
+            <input
+                onChange={onChange}
+                value={friendUsername}
+                className="friendUsername"
+                type="text"
+            />
+            <button onClick={()=> {friendRequest(myusername, friendUsername)}}>Aggiungi Amico</button>
+            <button onClick={()=> {friendList(myusername)}}>Lista Amici</button>
+            <button onClick={() => onLogoutClick(myusername)}>Logout</button>
             <img 
                 className="nav__avatar"
                 src="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-25-512.png"
@@ -37,4 +61,19 @@ function Nav() {
     )
 }
 
-export default Nav;
+Nav.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    friend: state.friend
+});
+
+export default connect(
+    mapStateToProps,
+    { logoutUser }
+)(Nav);
+
+//export default Nav;
