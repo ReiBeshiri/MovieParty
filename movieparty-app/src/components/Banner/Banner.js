@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import axios from "../Requests/axiosReq"
-import req from "../Requests/requestsTmdb"
+import { Link } from "react-router-dom";
+import axios from "../../utils/Requests/axiosReq"
+import req from "../../utils/Requests/requestsTmdb"
 import { connect } from "react-redux";
 import { friendList } from "../../actions/friendsActions";
 import "./Banner.css"
 
 function Banner(props) {
-    //baseurl/movie/464052?api_key=38edf32690a1d179a3c3b3120f3041ee&lenguage=en-US
     const IMG_API = "https://image.tmdb.org/t/p/original/";
     const [movieBanner, setMovieBanner] = useState([]);
     const [myfriend, setMyfriends] = useState([]);
@@ -14,36 +14,29 @@ function Banner(props) {
     const myusername = user.name.split(" ")[0];
 
     useEffect(() => {
-       async function fetchDataBanner(){
-        var request
-        if(props.movieId !== undefined) {
-            console.log(props.movieId)
-            request = (await axios.get(axios.defaults.baseURL + `/movie/${props.movieId}` + req.apikey)).data
-        } else {
-            var trendingMovies = await axios.get(axios.defaults.baseURL + req.fetchTrending)
-            request = trendingMovies.data.results[
-                Math.floor(Math.random() * trendingMovies.data.results.length)
-            ]
-            console.log(request)
+        async function fetchDataBanner(){
+            var request
+            if(props.movieId !== undefined) {
+                request = (await axios.get(axios.defaults.baseURL + `/movie/${props.movieId}` + req.apikey)).data
+            } else {
+                var trendingMovies = await axios.get(axios.defaults.baseURL + req.fetchTrending)
+                request = trendingMovies.data.results[
+                    Math.floor(Math.random() * trendingMovies.data.results.length)
+                ]
+            }
+            setMovieBanner(request);
+            return request;
         }
-        setMovieBanner(request);
-        return request;
-       }
        fetchDataBanner();
     }, [props])
 
     useEffect(() => {
         fetchFriendList();
-      }, []); // <-- empty array means 'run once'
-    
-    useEffect(() => {
-        console.log(myfriend.length)
-        //myfriend.forEach(e => console.log(e))
-      }, [myfriend])
+    }, []); // <-- empty array means 'run once'
 
     const fetchFriendList = () => {
         friendList(myusername).then(data => { data.friends.forEach(element => {
-            setMyfriends(prevArray => [...prevArray, element.username])
+            setMyfriends(prevArray => [...prevArray, element])
         })})
     };
 
@@ -53,12 +46,9 @@ function Banner(props) {
 
     const parseFriend = (myfriend) =>{
         myfriend.forEach(e => {
-            console.log(e)
-            var str1 = '<li onclick="console.log('
-            var str2_4 = e
-            var str3 = ');">'
-            var str5 = '</li>'
-            document.getElementById('friend__list').innerHTML +=  str1 + `'`+str2_4+`'` + str3 + str2_4 + str5;            
+            console.log(e.username)
+            console.log(e.online)
+            document.getElementById('friend__list').innerHTML +=  '<li onclick="console.log(' + `'`+e.username+`'` + ');">' + e.username + ' (' + e.online + ')' + '</li>';            
         })        
     }
 
@@ -84,10 +74,19 @@ function Banner(props) {
                 <div className="banner__buttons">
                     {/*onClick = {props.startYoutubePlayer}*/}
                     <button className="banner__button" onClick = {()=>props.startMoviePartySolo(props.movieId)}>Play1</button>
+                    <Link to={
+                            {
+                                pathname:"/movieparty",
+                                friendlist: myfriend,             
+                                movieId: movieBanner.id
+                            }
+                        }
+                         className="btn-flat waves-effect">
+                        <button className="banner__button">Play party</button>
+                    </Link>
                     <button className="banner__button"  onClick = {()=>parseFriend(myfriend)}>Play party</button>
                     <ul id = "friend__list"> </ul>
                 </div>
-                {/*description                                                                                {()=&gtconsole.log(`hello`)}      '<div onclick="alert(2);test(123);">Text</div>';*/}
                 <h2 className="banner__description"> {suspensionDots(movieBanner?.overview, 150)} </h2>
             </div>
 

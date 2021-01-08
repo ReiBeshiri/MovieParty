@@ -10,7 +10,7 @@ import Banner from "../Banner/Banner";
 //Navbar component
 import Nav from "../Nav/Nav"
 //url to fetch the movies info from tmdb
-import request from "../Requests/requestsTmdb";
+import request from "../../utils/Requests/requestsTmdb";
 import {useNotification} from "../Notification/NotificationProvider";
 
 function Dashboard(props) {

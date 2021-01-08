@@ -14,6 +14,7 @@ import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
+import MovieParty from "./components/MovieParty/MovieParty";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/movieparty" component={MovieParty}/>
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>

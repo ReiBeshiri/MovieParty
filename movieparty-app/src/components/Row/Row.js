@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "../Requests/axiosReq";
+import axios from "../../utils/Requests/axiosReq";
 import "./Row.css" //import css in this component
 import YouTube from "react-youtube";
-import requestsTmdbMovieTrailer from "../Requests/requestsTmdb";
+import requestsTmdbMovieTrailer from "../../utils/Requests/requestsTmdb";
 //Banner component
 import Banner from "../Banner/Banner";
 import MovieParty from "../MovieParty/MovieParty";
@@ -53,11 +53,9 @@ function Row({ title, fetchTitles, trending}) {
       setMoviePartyUrlSolo("");
       setMoviePartyUrl("");
     }
-    console.log("prova2")
   }
 
   function startMovieParty(movieId){
-    console.log("prova")
     setBannerId("");
     setMoviePartyUrlSolo("");
     start_MoviePartyTrailer(movieId);

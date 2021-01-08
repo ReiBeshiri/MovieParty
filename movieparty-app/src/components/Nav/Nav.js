@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { friendRequest, friendList } from "../../actions/friendsActions";
-import axios from "../Requests/axiosReq";
-import requestsTmdb from "../Requests/requestsTmdb";
+import axios from "../../utils/Requests/axiosReq";
+import requestsTmdb from "../../utils/Requests/requestsTmdb";
 import "./Nav.css"
 
 function Nav(props) {
