@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { friendRequest, friendList } from "../../actions/friendsActions";
+import axios from "../Requests/axiosReq";
+import requestsTmdb from "../Requests/requestsTmdb";
 import "./Nav.css"
 
 function Nav(props) {
@@ -34,6 +36,18 @@ function Nav(props) {
         props.logoutUser(myUsername);
     };
 
+    const searchMovie = (movie) => {
+        //https://api.themoviedb.org/3/search/movie?api_key=###&query=batman
+                                //https://api.themoviedb.org/3                  //?api_key=###
+        async function fetchMovie(m){
+            let querymovie = m.replace(/ /g, '-');
+            const res = await axios.get( axios.defaults.baseURL + "/search/movie" + requestsTmdb.apikey + "&query=" + querymovie);
+            console.log(axios.defaults.baseURL + "/search/movie" + requestsTmdb.apikey + "&query=" + querymovie)
+            console.log(res)
+        }
+        fetchMovie(movie);
+    };
+
     return (
         <div className={`nav ${show/**if show true add nav__blackscroll*/ && "nav__blackscroll"}`}>
             <img
@@ -52,6 +66,7 @@ function Nav(props) {
             <button onClick={()=> {friendRequest(myusername, friendUsername)}}>Aggiungi Amico</button>
             <button onClick={()=> {friendList(myusername)}}>Lista Amici</button>
             <button onClick={() => onLogoutClick(myusername)}>Logout</button>
+            <button onClick={() => searchMovie(friendUsername)}>Search Movie</button>
             <img 
                 className="nav__avatar"
                 src="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-25-512.png"
