@@ -1,23 +1,37 @@
+import React, {useState} from 'react'
+import { sendMoviePartyInvite, sendStartParty } from "../../socket/socket";
+import MoviePartyPlay from "../MoviePartyPlay/MoviePartyPlay";
 
 function InviteFriendsMovieParty(props) {
-    console.log(props)
 
-    function prova(){
-        console.log("asfa")
-    }
+    const [start, setStart] = useState(false);
 
     function viewFriends(friendsList){
+        console.log("prova")
         return friendsList.map(function(friend){
             return  <div className="friend" key={friend.username}>
                         <label>{friend.username} ({friend.online?"online":"offline"})</label>
-                        <button onClick={prova}>Invita</button> 
+                        <button id={"btn" + friend.username} onClick={(e) => sendInvite(e.target, friend.username)}>Invita</button> 
                     </div>
         }); 
     }
 
+    function sendInvite(btn, friendUsername){
+        btn.innerHTML= "In attesa..."
+        btn.disabled = "True"
+        sendMoviePartyInvite(props.myusername, friendUsername, props.movieURL)
+    }
+
+    function startParty(){
+        setStart(true)
+        sendStartParty(props.myusername)
+    }
+
     return(
         <div id="invitefriends" className = "invitefriends">
-            {viewFriends(props.friends)}
+            {!start && viewFriends(props.friends)}
+            {!start && <button onClick={() => startParty()}>Avvia il party</button>}
+            {start && <MoviePartyPlay movieURL = {props.movieURL}/>}
         </div>
     );
 }

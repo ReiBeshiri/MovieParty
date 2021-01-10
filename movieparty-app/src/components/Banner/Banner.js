@@ -77,6 +77,7 @@ function Banner(props) {
                     <Link to={
                             {
                                 pathname:"/movieparty",
+                                myUsername: myusername,
                                 friendlist: myfriend,             
                                 movieId: movieBanner.id
                             }

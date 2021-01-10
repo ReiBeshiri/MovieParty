@@ -15,6 +15,8 @@ import Login from "./components/Auth/Login";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
 import MovieParty from "./components/MovieParty/MovieParty";
+import MoviePartyPlay from "./components/MoviePartyPlay/MoviePartyPlay";
+import InvitedByFriendMovieParty from "./components/InvitedByFriendMovieParty/InvitedByFriendMovieParty";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -25,8 +27,6 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(token);
   // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
-  /*store.dispatch(logoutUser()); //DA TOGLIEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-  console.log("è rimasto autenticato")  */
   // Check for expired token
   const currentTime = Date.now() / 1000; // to get in milliseconds
   if (decoded.exp < currentTime) {
@@ -47,6 +47,7 @@ function App() {
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/movieparty" component={MovieParty}/>
+          <Route exact path="/invited" component={InvitedByFriendMovieParty}/>
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>

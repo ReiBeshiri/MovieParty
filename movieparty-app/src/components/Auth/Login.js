@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
+import { initSocket } from "../../socket/socket";
 
 function Login(props) {
 
@@ -21,7 +22,9 @@ function Login(props) {
 
   useEffect(() => {
     if (props.auth.isAuthenticated) {
-      console.log("entra in dashboard")
+      //init socket connection
+      console.log(props)
+      initSocket(props.auth.user.name); //è una prova
       props.history.push("/dashboard");
     }
 

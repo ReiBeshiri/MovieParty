@@ -2,8 +2,6 @@ import {
     SET_FRIEND_USERNAME
 } from "../actions/types";
 
-//const isEmpty = require("is-empty");
-
 const initialState = {
     friend_username: ""
 };

@@ -1,9 +1,8 @@
-import YouTube from "react-youtube";
-import Chat from '../Chat/Chat';
 import axios from "../../utils/Requests/axiosReq"
 import React, {useState, useEffect} from 'react'
 import requestsTmdbMovieTrailer from "../../utils/Requests/requestsTmdb";
 import InviteFriendsMovieParty from '../InviteFriendsMovieParty/InviteFriendsMovieParty';
+import { joinRoom } from '../../socket/socket';
 
 
 function MovieParty(props) {
@@ -23,6 +22,7 @@ function MovieParty(props) {
         async function fetchMovieTrailer(movieId){
             const ytUrl = await axios.get(axios.defaults.baseURL + "/movie/" + movieId + requestsTmdbMovieTrailer.trailerVideoKey)
             setMovieURL(String(ytUrl.data.results[0].key))
+            console.log(String(ytUrl.data.results[0].key))
             return ytUrl
         }
         fetchMovieTrailer(movieid)
@@ -30,15 +30,12 @@ function MovieParty(props) {
 
     useEffect(() => {
         fetchmovie(props.location.movieId);
+        joinRoom(props.location.myUsername);
     }, []); // <-- empty array means 'run once'
 
     return(
         <div className = "movieparty">
-            <InviteFriendsMovieParty className = "invitefriends" friends={props.location.friendlist}/>
-            {/*FRIEND REQUEST
-            {movieURL !== "" && <YouTube className = "movieparty__youtube" videoId={movieURL} opts={opts}/>}
-            <Chat className = "movieparty__chat"/>*/ }
-            
+            {movieURL && <InviteFriendsMovieParty className = "invitefriends" friends={props.location.friendlist} myusername={props.location.myUsername} movieURL={movieURL}/>}            
         </div>
     );
 
