@@ -56,7 +56,7 @@ function sendPrivateMessage(receiverUser, eventName, data) {
     if(usernameSocketId.has(receiverUser)){ //send the real-time request if the receiver is online.
         let usr = usernameSocketId.get(receiverUser)
         io.to(usr).emit(eventName, data);
-        console.log("fatto")
+        console.log("Private message "+ eventName +" sent to " + data + " from "+ receiverUser)
     }
 
 }

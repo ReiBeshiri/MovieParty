@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import {SET_MAIN_BANNER_MOVIE} from "../../actions/types";
+import store from "../../store";
 import { logoutUser } from "../../actions/authActions";
-import { friendRequest, friendList } from "../../actions/friendsActions";
+import { friendRequest, genericmsg } from "../../actions/friendsActions";
 import axios from "../../utils/Requests/axiosReq";
 import requestsTmdb from "../../utils/Requests/requestsTmdb";
 import "./Nav.css"
 
 function Nav(props) {
     const { user } = props.auth;
-    const [friendUsername, setfriendUsername] = useState("");
+    const [searchbarText, setSearchbarText] = useState("");
     const [show, showNav] = useState(false);
     const myusername = user.name.split(" ")[0];
     
@@ -29,7 +31,7 @@ function Nav(props) {
     }, []);
 
     const onChange = e => {
-        setfriendUsername(e.target.value );
+        setSearchbarText(e.target.value);
     };
 
     const onLogoutClick = (myUsername) => {
@@ -37,41 +39,41 @@ function Nav(props) {
     };
 
     const searchMovie = (movie) => {
-        //https://api.themoviedb.org/3/search/movie?api_key=###&query=batman
-                                //https://api.themoviedb.org/3                  //?api_key=###
         async function fetchMovie(m){
-            let querymovie = m.replace(/ /g, '-');
+            let querymovie = m.replace(/ /g, '+');//-
             const res = await axios.get( axios.defaults.baseURL + "/search/movie" + requestsTmdb.apikey + "&query=" + querymovie);
-            console.log(axios.defaults.baseURL + "/search/movie" + requestsTmdb.apikey + "&query=" + querymovie)
-            console.log(res)
+            store.dispatch({
+                type: SET_MAIN_BANNER_MOVIE,
+                payload: res.data.results[0].id
+            })
         }
-        fetchMovie(movie);
+        if(movie.length>0){fetchMovie(movie);} //if movie length > 0 search, dont otherwise        
     };
 
     return (
         <div className={`nav ${show/**if show true add nav__blackscroll*/ && "nav__blackscroll"}`}>
             <img
                 className="nav__logo"
-                /*src="https://media.istockphoto.com/vectors/movie-party-emblem-modern-cinema-sign-vector-illustration-vector-id1038664972?k=6&m=1038664972&s=170667a&w=0&h=xSXJ16gTLSnir9Ix6pwjKjCFLZ0nIvglGRK-mqi5T9M="*/                
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSboEyDF2dtHbPm5v_kWaOnc610LI4PrszUJg&usqp=CAU"
-                /*src="https://img-assets.drafthouse.com/images/collections/movie-parties/MovieParty_TC.jpg?auto=compress&crop=focalpoint&fit=crop&fp-x=0.5&fp-y=0.5&h=1080&q=80&w=1920"*/
                 alt="Moive Party"
-            />
-            <input
-                onChange={onChange}
-                value={friendUsername}
-                className="friendUsername"
-                type="text"
-            />
-            <button onClick={()=> {friendRequest(myusername, friendUsername)}}>Aggiungi Amico</button>
-            <button onClick={()=> {friendList(myusername)}}>Lista Amici</button>
-            <button onClick={() => onLogoutClick(myusername)}>Logout</button>
-            <button onClick={() => searchMovie(friendUsername)}>Search Movie</button>
-            <img 
-                className="nav__avatar"
-                src="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-25-512.png"
-                alt="Your Avatar"
-            />
+            />            
+            <div className="nav__elements">
+                <input
+                    onChange={onChange}
+                    value={searchbarText}
+                    className="nav__elements__searchbar"
+                    type="text"
+                />
+                <button className="nav__elements__button" onClick={() => searchMovie(searchbarText)}>Search Movie</button>
+                <button className="nav__elements__button" onClick={()=> {genericmsg(myusername, searchbarText)}}>genericmsg</button>
+                <button className="nav__elements__button" onClick={()=> {friendRequest(myusername, searchbarText)}}>Add Friend</button>
+                <button className="nav__elements__button" id="nav__elements__button__logout" onClick={() => onLogoutClick(myusername)}>Logout</button>
+                <img 
+                    className="nav__avatar"
+                    src="https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-25-512.png"
+                    alt="Your Avatar"
+                />
+            </div>
         </div>
     )
 }
@@ -83,7 +85,7 @@ Nav.propTypes = {
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    friend: state.friend
+    friend: state.friend,
 });
 
 export default connect(

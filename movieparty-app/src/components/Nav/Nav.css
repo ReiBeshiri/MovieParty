@@ -5,7 +5,7 @@
   padding: 20px;
   height: 80px;
   z-index: 1;
-
+  background-color: rgb(17, 17, 17, 0.8);
   /*display: flex;
   justify-content: space-between; /*space between logo & avatar*/
   /*animation transition*/
@@ -31,8 +31,38 @@
   object-fit: contain; /*save aspect ratio to container*/
 }
 
-.friendUsername {
-  position: fixed;
-  width: 25%;
-  left: 25%;
+.nav__elements__button {
+  object-fit: contain;
+  cursor: pointer;
+  color: rgb(243, 231, 231);
+  outline: none;
+  border: none;
+  font-weight: 600;
+  border-radius: 0.2vw;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+  padding-top: 0.5rem;
+  background-color: rgba(51, 51, 51, 0.6);
+  padding-bottom: 0.5rem;
+}
+
+.nav__elements__button:hover {
+  color: rgb(19, 1, 1);
+  background-color: rgba(199, 184, 184, 0.87);
+  transition: all 0.2s;
+}
+
+.nav__elements__searchbar {
+  /*background-color: rgb(245, 241, 241);*/
+  color: white;
+  font-weight: 600;
+  object-fit: contain;
+}
+
+.nav__elements {
+  display: flex;
+  width: 80%;
+  padding-left: 5%;
 }

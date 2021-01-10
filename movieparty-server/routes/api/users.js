@@ -107,6 +107,14 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.post("/genericmsg", (req, res) => {
+    myUsername = req.body.requester
+    friendUsername = req.body.receiver
+    console.log("sending private msg from " + myUsername + " to " + friendUsername)
+    socketio.sendPrivateMessage(friendUsername, "genericmsg", myUsername)
+    return res.status(200).json();
+});
+
 router.post("/addfriend", (req, res) => {
 
     myUsername = req.body.requester
@@ -118,11 +126,10 @@ router.post("/addfriend", (req, res) => {
     User.findOne({ name: myUsername }).then(myself => {
 
         if(myself.friends.includes(friendUsername)){
-            console.log("gia presente")
+            console.log("User already in friends list")
             return res.status(200).json({ info: "User already in friends list"});
         } 
 
-        console.log("non presente")
         User.findOne({ name: friendUsername }).then(user => {
 
             //If user does not exist, return 404 not found
@@ -137,7 +144,7 @@ router.post("/addfriend", (req, res) => {
                 result: 0
             });
             newFriendRequest.save()
-
+            console.log("sending private msg from " + myUsername + " to " + friendUsername)
             socketio.sendPrivateMessage(friendUsername, "friendRequest", myUsername)
 
             return res.status(200).json();
@@ -160,11 +167,15 @@ router.put("/friendresponse", (req, res) => {
         User.findOne({ name: myUsername }).then(user => {
             user.friends.addToSet(friendUsername)
             user.save()
+            socketio.sendPrivateMessage(myUsername, "friendRequestAccepted", friendUsername)
+            console.log("1 aggiunto amico a " + friendUsername)
         });
 
         User.findOne({ name: friendUsername }).then(user => {
             user.friends.addToSet(myUsername)
             user.save()
+            //socketio.sendPrivateMessage(friendUsername, "friendRequestAccepted", myUsername)
+            //console.log("2 aggiunto amico a " + myUsername)
         });
         //Bisogna fare una socket al client che ha creato la richiesta dicendogli il risultato
         return res.status(200).json();
