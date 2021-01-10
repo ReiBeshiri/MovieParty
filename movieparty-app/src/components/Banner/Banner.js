@@ -13,33 +13,49 @@ function Banner(props) {
     const { user } = props.auth;
     const myusername = user.name.split(" ")[0];
 
-    useEffect(() => {
-        async function fetchDataBanner(){
-            var request
-            if(props.movieId !== undefined) {
-                request = (await axios.get(axios.defaults.baseURL + `/movie/${props.movieId}` + req.apikey)).data
-            } else {
-                var trendingMovies = await axios.get(axios.defaults.baseURL + req.fetchTrending)
-                request = trendingMovies.data.results[
-                    Math.floor(Math.random() * trendingMovies.data.results.length)
-                ]
-            }
-            setMovieBanner(request);
-            return request;
+    //changeMainMovieBanner
+    async function changeMainMovieBanner(movieId){
+        var request = (await axios.get(axios.defaults.baseURL + `/movie/${movieId}` + req.apikey)).data
+        setMovieBanner(request);
+        return request;
+    }
+    //fetchDataBanner at load or row banner
+    async function fetchDataBanner(){
+        var request
+        if(props.movieId !== undefined) {//row banner
+            request = (await axios.get(axios.defaults.baseURL + `/movie/${props.movieId}` + req.apikey)).data
+        } else {//main banner
+            var trendingMovies = await axios.get(axios.defaults.baseURL + req.fetchTrending)
+            request = trendingMovies.data.results[
+                Math.floor(Math.random() * trendingMovies.data.results.length)
+            ]
         }
-       fetchDataBanner();
+        setMovieBanner(request);
+        return request;
+    }
+
+    //First load main banner or row banner loads
+    useEffect(() => {
+        if(props.searchedMovie.mainBannerMovieId == ""){
+            fetchDataBanner();
+        }
+        else if(props.mainBanner && props.searchedMovie.mainBannerMovieId != ""){
+            changeMainMovieBanner(props.searchedMovie.mainBannerMovieId);
+            props.searchedMovie.mainBannerMovieId = ""//reset props
+        }
     }, [props])
 
+    //fetch friend list once at page load
     useEffect(() => {
         fetchFriendList();
     }, []); // <-- empty array means 'run once'
-
     const fetchFriendList = () => {
         friendList(myusername).then(data => { data.friends.forEach(element => {
             setMyfriends(prevArray => [...prevArray, element])
         })})
     };
 
+    //In banner description
     function suspensionDots(str, n){
         return str?.length > n ? str.substr(0, n-1) + "..." : str;
     }
@@ -51,6 +67,19 @@ function Banner(props) {
             document.getElementById('friend__list').innerHTML +=  '<li onclick="console.log(' + `'`+e.username+`'` + ');">' + e.username + ' (' + e.online + ')' + '</li>';            
         })        
     }
+
+    /*useEffect(() => {
+        async function changeMainMovieBanner(movieId){
+            var request = (await axios.get(axios.defaults.baseURL + `/movie/${movieId}` + req.apikey)).data
+            console.log(request)
+            setMovieBanner(request);
+            return request;
+        }
+        if(props.mainBanner && props.searchedMovie.mainBannerMovieId != ""){            
+            changeMainMovieBanner(props.searchedMovie.mainBannerMovieId);
+            props.searchedMovie.mainBannerMovieId = ""//reset props
+        }
+    }, [props.searchedMovie]);*/
 
     return (
         <header className="banner"
@@ -98,7 +127,8 @@ function Banner(props) {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth,
+    auth: state.auth,    
+    searchedMovie: state.mainBannerMovieId
 });
 
 export default connect(

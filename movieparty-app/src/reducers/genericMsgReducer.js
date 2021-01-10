@@ -1,24 +1,18 @@
 import {
-    SET_FRIEND_USERNAME,
-    SET_ACCEPTED_FRIENDSHIP
+    GENERICMSG
 } from "../actions/types";
 
 const initialState = {
-    friend_username: "",
-    friend_accepted: ""
+    message: ""
 };
 
 //se state non esiste allora viene inizializzato con "initialState"
 export default function(state = initialState, action) {
     switch (action.type) {
-        case SET_FRIEND_USERNAME:
+        case GENERICMSG:
             return {
                 //...state,
-                friend_username: action.payload
-            };
-        case SET_ACCEPTED_FRIENDSHIP:
-            return{
-                friend_accepted: action.payload
+                message: action.payload
             };
         default:
             return state;

@@ -1,5 +1,25 @@
 import axios from "axios";
 
+export const genericmsg = (myUsername, friendUsername) => {
+
+    const newFriendRequest = {
+        requester: myUsername,
+        receiver: friendUsername
+    };
+
+    axios
+    .post("/api/users/genericmsg", newFriendRequest)
+    .then(res => {
+        console.log("richiesta inviata al server") 
+    })
+    .catch(err => {
+        //TODO --> guardare come si restituisce lo status e le info
+        console.log(err)
+        console.log(err.statusCode)
+    });
+}
+
+
 export const friendRequest = (myUsername, friendUsername) => {
 
     const newFriendRequest = {

@@ -75,6 +75,7 @@ function sendPrivateMessage(receiverUser, eventName, data) {
         console.log("spedisco")
         let usr = usernameSocketId.get(receiverUser)
         io.to(usr).emit(eventName, data);
+        console.log("Private message "+ eventName +" sent to " + data + " from "+ receiverUser)
     }
 }
 
