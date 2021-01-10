@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"; 
 import {friendResponse } from "../../actions/friendsActions";
 import { notification_titles } from "./NotificationTitle";
+import {sendMoviePartyResponse} from "../../socket/socket";
 
 const Notification = props => {
   const [exit, setExit] = useState(false);
@@ -68,6 +69,17 @@ const Notification = props => {
     )
   }
 
+  function partyReqNotification(){
+    return (
+      <div className="notification__result">
+        <p>{props.message.text}</p>
+        <button onClick={()=>{setWidth(100);sendMoviePartyResponse(props.message.info.leader, props.message.info.room, true)}} >accetta</button>
+        <button onClick={()=>{setWidth(100);sendMoviePartyResponse(props.message.info.leader, props.message.info.room, false)}} >rifiuta</button>
+        <div className={"bar"} style={{ width: `${width}%` }} />
+      </div>
+    )
+  }
+
   return (
     <div
       onMouseEnter={handlePauseTimer}
@@ -79,6 +91,7 @@ const Notification = props => {
       {props.title === notification_titles.friend_req && friendReq()}
       {props.title === notification_titles.friend_req_accepted && genericNotification()}
       {props.title === notification_titles.genericmsg && genericNotification()}
+      {props.title === notification_titles.party_req && partyReqNotification()}
     </div>
   );
 };

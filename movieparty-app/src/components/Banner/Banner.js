@@ -112,9 +112,8 @@ function Banner(props) {
                             }
                         }
                          className="btn-flat waves-effect">
-                        <button className="banner__button">Play party</button>
+                        <button className="banner__button" >Play party</button>
                     </Link>
-                    <button className="banner__button"  onClick = {()=>parseFriend(myfriend)}>Play party</button>
                     <ul id = "friend__list"> </ul>
                 </div>
                 <h2 className="banner__description"> {suspensionDots(movieBanner?.overview, 150)} </h2>
@@ -128,7 +127,8 @@ function Banner(props) {
 
 const mapStateToProps = state => ({
     auth: state.auth,    
-    searchedMovie: state.mainBannerMovieId
+    searchedMovie: state.mainBannerMovieId,
+    partystatus: state.partystatus
 });
 
 export default connect(

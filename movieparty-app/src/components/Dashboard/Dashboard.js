@@ -9,6 +9,8 @@ import Row from "../Row/Row";
 import Banner from "../Banner/Banner";
 //Navbar component
 import Nav from "../Nav/Nav"
+//InviteFriendsMovieParty component
+import InviteFriendsMovieParty from "../InviteFriendsMovieParty/InviteFriendsMovieParty"
 //url to fetch the movies info from tmdb
 import request from "../../utils/Requests/requestsTmdb";
 //notification imports
@@ -18,6 +20,7 @@ import {notification_titles} from "../Notification/NotificationTitle";
 function Dashboard(props) {
   const { user } = props.auth;
   const myusername = user.name.split(" ")[0];
+  const [inLobby, setInLobby] = useState(false);
 
   const dispatch = useNotification();
   const handleNewNotification = (title, type, msg, usr) => {
@@ -69,16 +72,36 @@ function Dashboard(props) {
     }
   }, [props.genericmsg])
 
+  useEffect(() => {
+    console.log(props)
+    if(!props.partystatus.inLobby){
+      setInLobby(false)
+      if(props.partystatus.leader.length>2){
+        handleNewNotification(
+          notification_titles.party_req,
+          "SUCCESS",
+          {text: props.partystatus.leader+" invited you to a party", info: props.partystatus},
+          myusername
+          );
+      }
+        //reset props
+    }
+    if(props.partystatus.inLobby){
+      setInLobby(true)
+    }
+  }, [props.partystatus])
+
   return (
     <div className="app">
-      <Nav/>
-      <Banner mainBanner/>
-      <Row title="Trending Now" fetchTitles={request.fetchTrending} trending /*trending={true}*//> 
-      <Row title="Top Rated" fetchTitles={request.fetchTopRated} trending/>
-      <Row title="Action Movies" fetchTitles={request.fetchActionMovies} trending/>
-      <Row title="Comdey Movies" fetchTitles={request.fetchComedyMovies} trending/>
-      <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} trending/>
-      <Row title="Animation Movies" fetchTitles={request.fetchAnimationMovies} trending />
+      {!inLobby && <Nav/>}
+      {!inLobby && <Banner mainBanner/>}
+      {!inLobby && <Row title="Trending Now" fetchTitles={request.fetchTrending} trending /*trending={true}*//> }
+      {!inLobby && <Row title="Top Rated" fetchTitles={request.fetchTopRated} trending/>}
+      {!inLobby && <Row title="Action Movies" fetchTitles={request.fetchActionMovies} trending/>}
+      {!inLobby && <Row title="Comdey Movies" fetchTitles={request.fetchComedyMovies} trending/>}
+      {!inLobby && <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} trending/>}
+      {!inLobby && <Row title="Animation Movies" fetchTitles={request.fetchAnimationMovies} trending />}
+      {inLobby && <InviteFriendsMovieParty/>}
     </div>
   );
 }
@@ -90,7 +113,8 @@ Dashboard.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth,
   friend: state.friend,
-  genericmsg: state.genericmsg
+  genericmsg: state.genericmsg,
+  partystatus: state.partystatus
 });
 
 export default connect(

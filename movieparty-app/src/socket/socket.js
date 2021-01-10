@@ -4,6 +4,8 @@ import {
     MOVIEPARTY_IS_STARTED,
     SET_ACCEPTED_FRIENDSHIP,
     GENERICMSG,
+    PARTY_INVITATION,
+    IN_LOBBY
 } from "../actions/types";
 import store from "../store";
 
@@ -28,8 +30,12 @@ export const initSocket = (username) => {
         console.log("richiesta movieparty da: " + data.sender)
         console.log("room: " + data.room)
         console.log("movieURL: " + data.movieURL)
-        acceptMoviePartyInvite(data.sender, data.room)
-        window.history.pushState({sender: data.sender, room: data.room, movieURL: data.movieURL }, "titolo", "/invited")
+        store.dispatch({
+            type: PARTY_INVITATION,
+            payload: data
+        })
+        //acceptMoviePartyInvite(data.sender, data.room)
+        //window.history.pushState({sender: data.sender, room: data.room, movieURL: data.movieURL }, "titolo", "/invited")
     })
 
     socket.on("moviePartyInviteResponse", (data) => {
@@ -76,12 +82,19 @@ export const initSocket = (username) => {
 
 };
 
-const acceptMoviePartyInvite = (sender, room) => {
+/*const acceptMoviePartyInvite = (sender, room) => {
     joinRoom(room)
     sendMoviePartyResponse(sender, true)
-}
+}*/
 
-const sendMoviePartyResponse = (sender, response) => {
+export const sendMoviePartyResponse = (sender, room, response) => {
+    if(response){
+        joinRoom(room)
+        store.dispatch({
+            type: IN_LOBBY,
+            payload: true
+        })
+    }
     socket.emit("moviePartyInviteResponse", {requestSender: sender, requestReceiver: myusername, response: response})
 }
 
