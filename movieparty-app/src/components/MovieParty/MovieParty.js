@@ -1,7 +1,7 @@
 import "./Lobby.css"
 import React, {useState, useEffect} from 'react'
 import { sendMoviePartyInvite, sendStartParty } from "../../socket/socket";
-import MoviePartyPlay from "../MoviePartyPlay/MoviePartyPlay";
+import MoviePartyPlay from "./MoviePartyPlay/MoviePartyPlay";
 import { connect } from "react-redux";
 import axios from "../../utils/Requests/axiosReq";
 import { joinRoom } from '../../socket/socket';

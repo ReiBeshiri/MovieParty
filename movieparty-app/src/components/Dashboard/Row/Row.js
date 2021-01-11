@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../utils/Requests/axiosReq";
+import axios from "../../../utils/Requests/axiosReq";
 import "./Row.css" //import css in this component
 import YouTube from "react-youtube";
-import requestsTmdbMovieTrailer from "../../utils/Requests/requestsTmdb";
+import requestsTmdbMovieTrailer from "../../../utils/Requests/requestsTmdb";
 //Banner component
 import Banner from "../Banner/Banner";
-import MovieParty from "../MovieParty/MovieParty";
+import MovieParty from "../../MovieParty/MovieParty";
 
 function Row({ title, fetchTitles, trending}) {
   const IMG_API = "https://image.tmdb.org/t/p/original/";

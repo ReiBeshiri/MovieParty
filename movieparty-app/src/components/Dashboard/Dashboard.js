@@ -1,18 +1,11 @@
 import "./Dashboard.css";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-//Apply Component Pattern
-//Row component
-import Row from "../Row/Row";
-//Banner component
-import Banner from "../Banner/Banner";
-//Navbar component
-import Nav from "../Nav/Nav"
-//url to fetch the movies info from tmdb
-import request from "../../utils/Requests/requestsTmdb";
-//notification imports
+import Row from "./Row/Row";
+import Banner from "./Banner/Banner";
+import Nav from "./Nav/Nav"
+import request from "../../utils/Requests/requestsTmdb"; //url to fetch the movies info from tmdb
 import {useNotification} from "../Notification/NotificationProvider";
 import {notification_titles} from "../Notification/NotificationTitle";
 

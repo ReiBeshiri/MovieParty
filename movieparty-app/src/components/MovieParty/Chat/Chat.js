@@ -1,10 +1,10 @@
 import './Chat.css';
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import InfoBar from '../InfoBar/InfoBar';
-import Input from '../Input/Input';
-import Messages from '../Messages/Messages';
-import { sendChatMessage } from "../../socket/socket";
+import InfoBar from './InfoBar/InfoBar';
+import Input from './Input/Input';
+import Messages from './Messages/Messages';
+import { sendChatMessage } from "../../../socket/socket";
 
 const Chat = (props) => {
 

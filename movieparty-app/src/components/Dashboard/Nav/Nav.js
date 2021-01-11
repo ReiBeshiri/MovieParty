@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {SET_MAIN_BANNER_MOVIE} from "../../actions/types";
-import store from "../../store";
-import { logoutUser } from "../../actions/authActions";
-import { friendRequest, genericmsg } from "../../actions/friendsActions";
-import axios from "../../utils/Requests/axiosReq";
-import requestsTmdb from "../../utils/Requests/requestsTmdb";
+import {SET_MAIN_BANNER_MOVIE} from "../../../actions/types";
+import store from "../../../store";
+import { logoutUser } from "../../../actions/authActions";
+import { friendRequest, genericmsg } from "../../../actions/friendsActions";
+import axios from "../../../utils/Requests/axiosReq";
+import requestsTmdb from "../../../utils/Requests/requestsTmdb";
 import "./Nav.css"
 
 function Nav(props) {

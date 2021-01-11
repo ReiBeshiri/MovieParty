@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from "react-router-dom";
-import axios from "../../utils/Requests/axiosReq"
-import req from "../../utils/Requests/requestsTmdb"
+import axios from "../../../utils/Requests/axiosReq"
+import req from "../../../utils/Requests/requestsTmdb"
 import { connect } from "react-redux";
-import { friendList } from "../../actions/friendsActions";
+import { friendList } from "../../../actions/friendsActions";
 import "./Banner.css"
 
 function Banner(props) {
