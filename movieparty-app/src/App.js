@@ -8,15 +8,12 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
-import Navbar from "./components/Layout/Navbar";
 import Landing from "./components/Layout/Landing";
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
 import MovieParty from "./components/MovieParty/MovieParty";
-import MoviePartyPlay from "./components/MoviePartyPlay/MoviePartyPlay";
-import InvitedByFriendMovieParty from "./components/InvitedByFriendMovieParty/InvitedByFriendMovieParty";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -42,12 +39,10 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App">
-          {/*<Navbar />*/}
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/movieparty" component={MovieParty}/>
-          <Route exact path="/invited" component={InvitedByFriendMovieParty}/>
           <Switch>
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>

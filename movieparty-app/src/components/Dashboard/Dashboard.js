@@ -1,5 +1,6 @@
 import "./Dashboard.css";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 //Apply Component Pattern
@@ -9,8 +10,6 @@ import Row from "../Row/Row";
 import Banner from "../Banner/Banner";
 //Navbar component
 import Nav from "../Nav/Nav"
-//InviteFriendsMovieParty component
-import InviteFriendsMovieParty from "../InviteFriendsMovieParty/InviteFriendsMovieParty"
 //url to fetch the movies info from tmdb
 import request from "../../utils/Requests/requestsTmdb";
 //notification imports
@@ -93,15 +92,15 @@ function Dashboard(props) {
 
   return (
     <div className="app">
-      {!inLobby && <Nav/>}
-      {!inLobby && <Banner mainBanner/>}
-      {!inLobby && <Row title="Trending Now" fetchTitles={request.fetchTrending} trending /*trending={true}*//> }
-      {!inLobby && <Row title="Top Rated" fetchTitles={request.fetchTopRated} trending/>}
-      {!inLobby && <Row title="Action Movies" fetchTitles={request.fetchActionMovies} trending/>}
-      {!inLobby && <Row title="Comdey Movies" fetchTitles={request.fetchComedyMovies} trending/>}
-      {!inLobby && <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} trending/>}
-      {!inLobby && <Row title="Animation Movies" fetchTitles={request.fetchAnimationMovies} trending />}
-      {inLobby && <InviteFriendsMovieParty/>}
+      <Nav/>
+      <Banner mainBanner/>
+      <Row title="Trending Now" fetchTitles={request.fetchTrending} trending /*trending={true}*//>
+      <Row title="Top Rated" fetchTitles={request.fetchTopRated} trending/>
+      <Row title="Action Movies" fetchTitles={request.fetchActionMovies} trending/>
+      <Row title="Comdey Movies" fetchTitles={request.fetchComedyMovies} trending/>
+      <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} trending/>
+      <Row title="Animation Movies" fetchTitles={request.fetchAnimationMovies} trending />
+      {inLobby && props.history.push("/movieparty")}
     </div>
   );
 }

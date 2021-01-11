@@ -5,7 +5,8 @@ import {
     SET_ACCEPTED_FRIENDSHIP,
     GENERICMSG,
     PARTY_INVITATION,
-    IN_LOBBY
+    IN_LOBBY,
+    NEW_CHAT_MESSAGE
 } from "../actions/types";
 import store from "../store";
 
@@ -34,8 +35,6 @@ export const initSocket = (username) => {
             type: PARTY_INVITATION,
             payload: data
         })
-        //acceptMoviePartyInvite(data.sender, data.room)
-        //window.history.pushState({sender: data.sender, room: data.room, movieURL: data.movieURL }, "titolo", "/invited")
     })
 
     socket.on("moviePartyInviteResponse", (data) => {
@@ -80,6 +79,14 @@ export const initSocket = (username) => {
         })
     })
 
+    socket.on("receiveChatMessage", (data) => {
+        console.log("new message from |" + data.username + "| --> " + data.text)
+        store.dispatch({
+            type: NEW_CHAT_MESSAGE,
+            payload: data
+        })
+    })
+
 };
 
 /*const acceptMoviePartyInvite = (sender, room) => {
@@ -99,6 +106,9 @@ export const sendMoviePartyResponse = (sender, room, response) => {
 }
 
 export const sendMoviePartyInvite = (myUsername, friendUsername, movieURL) => {
+    console.log("sender:" + myUsername)
+    console.log("receiver:" + friendUsername)
+    console.log("movieURL:" + movieURL)
     socket.emit("moviePartyInviteSender", {sender: myUsername, receiver: friendUsername, room: myUsername, movieURL: movieURL})
 }
 
@@ -108,6 +118,10 @@ export const joinRoom = (roomName) => {
 
 export const sendStartParty = (roomName) => {
     socket.emit("startparty", {roomName})
+}
+
+export const sendChatMessage = (myUsername, roomName, message) => {
+    socket.emit("chatMessage", {username: myUsername, roomName: roomName, message: message})
 }
 
 export const disconnectSocket = () => {

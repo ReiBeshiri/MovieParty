@@ -12,8 +12,6 @@ function serverSocket(server){
 
     io.on('connection', (socket) => {
         
-
-        //map.add(newUser)
         if(!(socket.handshake.query.name === undefined))
             usernameSocketId.set(socket.handshake.query.name, socket.id);
 
@@ -33,7 +31,7 @@ function serverSocket(server){
         });
 
         socket.on('moviePartyInviteSender', (data)=>{
-            console.log("movieparty invito: " + data.sender + " " + data.receiver)
+            console.log("movieparty invito: " + data.sender + " " + data.receiver + ", movieURL:" + data.movieURL)
             sendPrivateMessage(data.receiver, "moviePartyInviteReceiver", {sender: data.sender, room: data.room, movieURL: data.movieURL})
         })
 
@@ -45,6 +43,11 @@ function serverSocket(server){
         socket.on("startparty", ({roomName})=> {
             console.log(roomName + " incomincia il party")
             socket.broadcast.to(roomName).emit("partystarted", {})
+        })
+
+        socket.on("chatMessage", (data) => {
+            console.log("from: " + data.username + " to: " + data.roomName + " --> " + data.message)
+            socket.broadcast.to(data.roomName).emit("receiveChatMessage", {username: data.username, text: data.message})
         })
 
         socket.on('remove', username => {

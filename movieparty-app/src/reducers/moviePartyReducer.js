@@ -1,7 +1,8 @@
 import {
     MOVIEPARTY_IS_STARTED,
     PARTY_INVITATION,
-    IN_LOBBY
+    IN_LOBBY,
+    NEW_CHAT_MESSAGE
 } from "../actions/types";
 
 const initialState = {
@@ -9,7 +10,8 @@ const initialState = {
     leader: "",
     room: "",
     movieURL:"",
-    inLobby: false
+    inLobby: false,
+    lastMessage: undefined
 };
 
 //se state non esiste allora viene inizializzato con "initialState"
@@ -32,6 +34,11 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 inLobby: action.payload
+            }
+        case NEW_CHAT_MESSAGE:
+            return{
+                ...state,
+                lastMessage: action.payload
             }
         default:
             return state;
