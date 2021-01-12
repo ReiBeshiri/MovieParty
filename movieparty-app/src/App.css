@@ -6,7 +6,7 @@
 }
 
 .notification__item {
-  background-color: rgba(179, 241, 221, 0.7);
+  background-color: rgba(223, 223, 223, 0.7);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   overflow: hidden;
