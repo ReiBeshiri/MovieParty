@@ -17,7 +17,7 @@ function MoviePartyPlay(props) {
   const [url, setUrl] = useState(null);
   const [pip, setPip] = useState(false);
   const [playing, setPlaying] = useState(true);
-  const [controls, setControls] = useState(false);
+  const [controls, setControls] = useState(true);
   const [light, setLight] = useState(false);
   const [volume, setVolume] = useState(0.8);
   const [muted, setMuted] = useState(false);
