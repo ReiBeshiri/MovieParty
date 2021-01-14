@@ -15,6 +15,10 @@
     margin-left: 0%;
 }
 
+.logo {
+    max-width: 5% !important;
+}
+
 .registerButton {
     width: 140px;
     border-radius: 3px;
@@ -22,8 +26,14 @@
     margin-right: 2%;
 }
 
+.mediumSize {
+    max-width: 50% !important; 
+}
+
 .moviepartyTitle {
-    color: white;
+    color: #F45F5F;
+    font-family: 'Kaushan Script', cursive;
+    font-size: 4vw;
 }
 
 .loginButton {
@@ -39,4 +49,8 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.prova {
+    padding-top: 5%;
 }

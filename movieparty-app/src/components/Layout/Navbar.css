@@ -1,0 +1,11 @@
+.transparent {
+    background-color: transparent !important;
+}
+
+.redborder {
+    border: 2px solid #F45F5F !important;
+} 
+
+.whiteborder {
+    border: 2px solid white !important;
+} 
