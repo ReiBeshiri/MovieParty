@@ -8,7 +8,7 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
-import Landing from "./components/Layout/Landing";
+import Homepage from "./components/Layout/Homepage";
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
@@ -39,7 +39,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App">
-          <Route exact path="/" component={Landing} />
+          <Route exact path="/" component={Homepage} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/movieparty" component={MovieParty}/>
