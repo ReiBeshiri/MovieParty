@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
+import "./Auth.css";
 
 function Register(props) {
 
@@ -56,19 +57,19 @@ function Register(props) {
     });*/
 
     return (
-      <div className="container">
-        <div className="row">
+      <div className="container grey">
+        <div className="row margin-top-register">
           <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect">
+            <Link to="/" className="btn-flat waves-effect white-text">
               <i className="material-icons left">keyboard_backspace</i> Back to
               home
             </Link>
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+            <div className="col s12">
               <h4>
                 <b>Register</b> below
               </h4>
               <p className="grey-text text-darken-1">
-                Already have an account? <Link to="/login">Log in</Link>
+                Already have an account? <Link to="/login" className="red-text">Log in</Link>
               </p>
             </div>
             <form noValidate onSubmit={onSubmit}>
@@ -126,16 +127,10 @@ function Register(props) {
                 <label htmlFor="password2">Confirm Password</label>
                 <span className="red-text">{errors.password2}</span>
               </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+              <div className="col s12">
                 <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
                   type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  className="btn auth-button transparent redborder waves-effect waves-light hoverable "
                 >
                   Sign up
                 </button>

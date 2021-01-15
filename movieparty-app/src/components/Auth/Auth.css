@@ -1,0 +1,29 @@
+.grey {
+    background: #111 !important;
+}
+
+.white-text{
+    color: white;
+}
+
+.red-text {
+    color: #F45F5F;
+}
+
+.margin-top-login {
+    margin-top: 4rem;
+}
+
+.margin-top-register {
+    margin-top: 3rem;
+}
+
+/*.padding-left-auth {
+    padding-left: 11.250px;
+}*/
+
+.auth-button {
+    width: 100%;
+    border-radius: 3px;
+    margin-top: 1rem;
+}

@@ -4,6 +4,7 @@
 
 .App {
     height: 100%;
+    background: #111111 !important;
 }
 
 .fullscreen {
@@ -51,6 +52,6 @@
   background-size: cover;
 }
 
-.prova {
+.paddingTop {
     padding-top: 5%;
 }

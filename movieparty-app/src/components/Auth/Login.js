@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 import { initSocket } from "../../socket/socket";
+import "./Auth.css";
 
 function Login(props) {
 
@@ -12,19 +13,10 @@ function Login(props) {
   const [password,setPassword] = useState("");
   const [errors,setError] = useState({});
 
-
-  /*componentDidMount() {
-    // If logged in and user navigates to Login page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
-  }*/
-
   useEffect(() => {
     if (props.auth.isAuthenticated) {
       //init socket connection
-      console.log(props)
-      initSocket(props.auth.user.name); //è una prova
+      initSocket(props.auth.user.name);
       props.history.push("/dashboard");
     }
 
@@ -55,19 +47,19 @@ function Login(props) {
     //const { errors } = state;
 
     return (
-      <div className="container">
-        <div style={{ marginTop: "4rem" }} className="row">
+      <div className="container grey">
+        <div className="row margin-top-login">
           <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect">
+            <Link to="/" className="btn-flat waves-effect white-text">
               <i className="material-icons left">keyboard_backspace</i> Back to
               home
             </Link>
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+            <div className="col s12">
               <h4>
                 <b>Login</b> below
               </h4>
               <p className="grey-text text-darken-1">
-                Don't have an account? <Link to="/register">Register</Link>
+                Don't have an account? <Link to="/register" className = "red-text">Register</Link>
               </p>
             </div>
             <form noValidate onSubmit={onSubmit}>
@@ -105,16 +97,10 @@ function Login(props) {
                   {errors.passwordincorrect}
                 </span>
               </div>
-              <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+              <div className="col s12">
                 <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
                   type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  className="btn auth-button transparent redborder waves-effect waves-light hoverable"
                 >
                   Login
                 </button>
