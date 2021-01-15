@@ -6,7 +6,8 @@ import {
     GENERICMSG,
     PARTY_INVITATION,
     IN_LOBBY,
-    NEW_CHAT_MESSAGE
+    NEW_CHAT_MESSAGE,
+    SYNCHRONIZE_VIDEO
 } from "../actions/types";
 import store from "../store";
 
@@ -87,6 +88,13 @@ export const initSocket = (username) => {
         })
     })
 
+    socket.on("synchronizeParty", data => {
+        store.dispatch({
+            type: SYNCHRONIZE_VIDEO,
+            payload: data
+        })
+    })
+
 };
 
 /*const acceptMoviePartyInvite = (sender, room) => {
@@ -122,6 +130,10 @@ export const sendStartParty = (roomName) => {
 
 export const sendChatMessage = (myUsername, roomName, message) => {
     socket.emit("chatMessage", {username: myUsername, roomName: roomName, message: message})
+}
+
+export const synchronizeVideo = (roomName, timestamp, playing) => {
+    socket.emit("synchronizeVideo", {roomName: roomName, timestamp: timestamp, playing: playing})
 }
 
 export const disconnectSocket = () => {

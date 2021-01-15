@@ -2,7 +2,8 @@ import {
     MOVIEPARTY_IS_STARTED,
     PARTY_INVITATION,
     IN_LOBBY,
-    NEW_CHAT_MESSAGE
+    NEW_CHAT_MESSAGE,
+    SYNCHRONIZE_VIDEO
 } from "../actions/types";
 
 const initialState = {
@@ -11,7 +12,9 @@ const initialState = {
     room: "",
     movieURL:"",
     inLobby: false,
-    lastMessage: undefined
+    lastMessage: undefined,
+    timestamp: undefined,
+    playing: true
 };
 
 //se state non esiste allora viene inizializzato con "initialState"
@@ -39,6 +42,12 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 lastMessage: action.payload
+            }
+        case SYNCHRONIZE_VIDEO:
+            return{
+                ...state,
+                timestamp: action.payload.timestamp,
+                playing: action.payload.playing
             }
         default:
             return state;

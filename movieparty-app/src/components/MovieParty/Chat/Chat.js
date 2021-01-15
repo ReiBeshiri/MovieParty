@@ -16,6 +16,7 @@ const Chat = (props) => {
   useEffect(() => {
     if(props.partystatus.lastMessage !== undefined){
       setMessages(messages => [ ...messages, props.partystatus.lastMessage]);
+      props.partystatus.lastMessage = undefined
     }
   }, [props.partystatus.lastMessage]);
 

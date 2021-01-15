@@ -50,16 +50,12 @@ function serverSocket(server){
             socket.broadcast.to(data.roomName).emit("receiveChatMessage", {username: data.username, text: data.message})
         })
 
+        socket.on("synchronizeVideo", (data) => {
+            console.log("synchronizing party to timestamp: " + data.timestamp, " playing: "+data.playing)
+            socket.broadcast.to(data.roomName).emit("synchronizeParty", data)
+        })
+
         socket.on('remove', username => {
-
-            //disconnec from room
-            /*const user = removeUser(socket.id);
-            if(user) {
-                io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
-                io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
-            }*/
-
-            //map.remove(user) 
             console.log("user disconnected " + username + socket.id)
             usernameSocketId.delete(username)
             usernameSocketId.forEach((v,k) => {
