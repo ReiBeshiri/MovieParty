@@ -80,7 +80,7 @@ function Register(props) {
                   error={errors.name}
                   id="name"
                   type="text"
-                  className={classnames("", {invalid: errors.name})}
+                  className={classnames("white-text", {invalid: errors.name})}
                 />
                 <label htmlFor="name">Name</label>
                 <span className="red-text">{errors.name}</span>
@@ -92,7 +92,7 @@ function Register(props) {
                   error={errors.email}
                   id="email"
                   type="email"
-                  className={classnames("", {
+                  className={classnames("white-text", {
                     invalid: errors.email
                   })}
                 />
@@ -106,7 +106,7 @@ function Register(props) {
                   error={errors.password}
                   id="password"
                   type="password"
-                  className={classnames("", {
+                  className={classnames("white-text", {
                     invalid: errors.password
                   })}
                 />
@@ -120,7 +120,7 @@ function Register(props) {
                   error={errors.password2}
                   id="password2"
                   type="password"
-                  className={classnames("", {
+                  className={classnames("white-text", {
                     invalid: errors.password2
                   })}
                 />

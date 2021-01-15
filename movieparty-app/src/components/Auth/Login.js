@@ -63,14 +63,14 @@ function Login(props) {
               </p>
             </div>
             <form noValidate onSubmit={onSubmit}>
-              <div className="input-field col s12">
+              <div className="input-field col s12 transparent">
                 <input
                   onChange={onChangeEmail}
                   value={email}
                   error={errors.email}
                   id="email"
                   type="email"
-                  className={classnames("", {
+                  className={classnames("white-text", {
                     invalid: errors.email || errors.emailnotfound
                   })}
                 />
@@ -87,7 +87,7 @@ function Login(props) {
                   error={errors.password}
                   id="password"
                   type="password"
-                  className={classnames("", {
+                  className={classnames("white-text", {
                     invalid: errors.password || errors.passwordincorrect
                   })}
                 />
