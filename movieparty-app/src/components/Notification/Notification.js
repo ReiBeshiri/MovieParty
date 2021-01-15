@@ -53,8 +53,8 @@ const Notification = props => {
         return (
           <div className="notification__result">
             <p>{props.message.text} {props.message.info} </p>
-            <button onClick={()=>{setWidth(100);friendResponse(props.myusr, props.message.info, 1)}} >accetta</button>
-            <button onClick={()=>{setWidth(100);friendResponse(props.myusr, props.message.info, 2)}} >rifiuta</button>
+            <button className="notification__button" onClick={()=>{setWidth(100);friendResponse(props.myusr, props.message.info, 1)}} >accetta</button>
+            <button className="notification__button" onClick={()=>{setWidth(100);friendResponse(props.myusr, props.message.info, 2)}} >rifiuta</button>
             <div className={"bar"} style={{ width: `${width}%` }} />
           </div>
         )
@@ -73,8 +73,8 @@ const Notification = props => {
     return (
       <div className="notification__result">
         <p>{props.message.text}</p>
-        <button onClick={()=>{setWidth(100);sendMoviePartyResponse(props.message.info.leader, props.message.info.room, true)}} >accetta</button>
-        <button onClick={()=>{setWidth(100);sendMoviePartyResponse(props.message.info.leader, props.message.info.room, false)}} >rifiuta</button>
+        <button className="notification__button" onClick={()=>{setWidth(100);sendMoviePartyResponse(props.message.info.leader, props.message.info.room, true)}} >accetta</button>
+        <button className="notification__button" onClick={()=>{setWidth(100);sendMoviePartyResponse(props.message.info.leader, props.message.info.room, false)}} >rifiuta</button>
         <div className={"bar"} style={{ width: `${width}%` }} />
       </div>
     )

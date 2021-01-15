@@ -1,3 +1,4 @@
+import './MoviePartyPlay.css';
 import { connect } from "react-redux";
 import React, { useState, useEffect, useRef  } from "react";
 import ReactPlayer from 'react-player'
@@ -160,10 +161,13 @@ function MoviePartyPlay(props) {
   }
 
   return(
-    <div className = "moviepartyplay">
-    {<ReactPlayer
+    <div className = "movieparty">
+      <div className="movieparty__player__container">
+        {<ReactPlayer
           ref={ref}
-          className='react-player1'
+          className='movieparty__player'
+          width={"100%"}
+          height={"100%"}
           url={'https://www.youtube.com/watch?v='+props.movieURL}
           pip={pip}
           playing={playing}
@@ -186,7 +190,10 @@ function MoviePartyPlay(props) {
           onProgress={(handleProgress)}
           onDuration={handleDuration}
         />}
-        <Chat className = "movieparty__chat"/>
+      </div>
+      <div className = "movieparty__chat__container">
+          <Chat className = "movieparty__chat"/>
+      </div>
     </div>
   );
 

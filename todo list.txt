@@ -1,0 +1,15 @@
+1) grafica:
+	- grafica homepage + login/register
+ 	- dashboard -> navbar + notifiche(fatto)
+	- movie party play(fatto)
+2) bugfix:
+	- token error
+	- errore password sicura
+	- torna a dashboard da movie party
+	- ...
+3) riduzione debito tecnico
+4) gamification
+	- punti
+	- acheivments
+5) icona notifiche
+6) schermata invita amici

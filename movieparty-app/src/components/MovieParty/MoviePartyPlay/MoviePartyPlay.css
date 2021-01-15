@@ -1,0 +1,41 @@
+.movieparty {
+  height: 100%;
+  display: flex;
+  background-color: #111;
+}
+
+.movieparty__player__container {
+  object-fit: contain; /*keep aspect ratio*/
+  height: 100%;
+  flex: 0.75;
+}
+
+.movieparty__chat__container {
+  object-fit: contain; /*keep aspect ratio*/
+  height: 100%;
+  flex: 0.25;
+}
+
+/*@media (min-width: 480px) and (max-width: 1200px) {
+  .container {
+    width: 60%;
+  }
+}*/
+
+@media /*only screen and*/ (max-width: 1200px) {
+  /* For mobile phones: */
+  .movieparty {
+    display: block;
+    height: 97%;
+  }
+  .movieparty__chat__container {
+    object-fit: contain; /*keep aspect ratio*/
+    height: 50%;
+    width: 100%;
+  }
+  .movieparty__player__container {
+    object-fit: contain; /*keep aspect ratio*/
+    height: 50%;
+    width: 100%;
+  }
+}

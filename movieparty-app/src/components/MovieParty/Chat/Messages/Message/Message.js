@@ -19,7 +19,7 @@ const Message = ({ message: { text, username }, name }) => {
             //Nel caso in cui il messaggio sia stato spedito da se stessi
             <div className="messageContainer justifyEnd">
                 <p className="sentText pr-10">{trimmedName}</p>
-                <div className="messageBox backgroundBlue">
+                <div className="messageBox backgroundPurple">
                     <p className="messageText colorWhite">{ReactEmoji.emojify(text)}</p>
                 </div>
             </div>
