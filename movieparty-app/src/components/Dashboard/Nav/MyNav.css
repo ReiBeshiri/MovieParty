@@ -1,0 +1,29 @@
+.navDashboard {
+    z-index: 1;
+    background-color: rgb(17, 17, 17, 0.8);
+    transition-timing-function: ease-in;
+    transition: all 0.5s;
+}
+
+.prova {
+    height: 2rem !important;
+    border: 2px solid red !important;
+}
+
+.border-red {
+    border-radius: 5px;
+    border: 1px solid #F45F5F;
+    border-radius: 24px;
+}
+
+.input-field input[type=search] {
+    display: initial !important;
+    color: white;
+    /*border-radius: 24px;
+    border: 1px solid #F45F5F !important;*/
+}
+
+.input-field input[type=search]:focus:not(.browser-default) {
+    background-color: transparent !important;
+    color: white;
+}

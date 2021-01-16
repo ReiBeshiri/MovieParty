@@ -7,7 +7,7 @@ import { logoutUser } from "../../../actions/authActions";
 import { friendRequest, genericmsg } from "../../../actions/friendsActions";
 import axios from "../../../utils/Requests/axiosReq";
 import requestsTmdb from "../../../utils/Requests/requestsTmdb";
-import "./Nav.css"
+import "./MyNav.css"
 
 function Nav(props) {
     const { user } = props.auth;
@@ -51,11 +51,11 @@ function Nav(props) {
     };
 
     return (
-        <div className={`nav ${show/**if show true add nav__blackscroll*/ && "nav__blackscroll"}`}>
+        /*<div className={`nav ${show && "nav__blackscroll"}`}>
             <img
-                className="nav__logo"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSboEyDF2dtHbPm5v_kWaOnc610LI4PrszUJg&usqp=CAU"
-                alt="Moive Party"
+                className="logoSize responsive-img"
+                src="img/logo.svg"
+                alt="MoiveParty logo"
             />            
             <div className="nav__elements">
                 <input
@@ -74,7 +74,39 @@ function Nav(props) {
                     alt="Your Avatar"
                 />
             </div>
+        </div>*/
+
+        <div class="navbar-fixed">
+            <nav className = "navDashboard">
+                <div class="nav-wrapper">
+                     <div className = "row">
+                        <div className ="col s1">
+                            <img
+                                className="responsive-img"
+                                src="img/logo.svg"
+                                alt="MoiveParty logo"
+                            />
+                            {/* <p className = "white-text">LOGO</p> */}
+                        </div>
+                        <div className ="col s4 offset-s1">
+                            <form>
+                                <div class="input-field">
+                                    <input id="search" type="search" onChange={onChange} value={searchbarText} required/>
+                                    <label class="label-icon" for="search" onClick={console.log("ciao")}><i class="material-icons white-text">search</i></label>
+                                    <i class="material-icons white-text">close</i>
+                                </div>
+                            </form>
+                        </div>
+                        <ul id="nav-mobile" class="right hide-on-med-and-down">
+                            <li><a class="waves-effect waves-teal btn-flat white-text" onClick={()=> genericmsg(myusername, searchbarText)}>genericmsg</a></li>
+                            <li><a class="waves-effect waves-teal btn-flat white-text" onClick={()=> friendRequest(myusername, searchbarText)}>Friend</a></li>
+                            <li><a class="waves-effect waves-teal btn-flat white-text" onClick={() => onLogoutClick(myusername)}>Logout</a></li>
+                        </ul>
+                    </div> 
+                </div>
+            </nav>
         </div>
+
     )
 }
 

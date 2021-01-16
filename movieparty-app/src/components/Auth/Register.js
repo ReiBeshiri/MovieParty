@@ -49,93 +49,93 @@ function Register(props) {
     props.registerUser(newUser, props.history);
   };
 
-    /*setErrors({
-      name: name,
-      email: email,
-      password: password,
-      password2: password2
-    });*/
+  /*setErrors({
+    name: name,
+    email: email,
+    password: password,
+    password2: password2
+  });*/
 
-    return (
-      <div className="center grey padding-top-register">
-        <Link to="/" className="btn-flat waves-effect white-text">
-          <i className="material-icons left">keyboard_backspace</i> Back to
-          home
-        </Link>
-        <div className="col s12">
-          <h4>
-            <b className = "white-text">Register</b>
-          </h4>
-          <p className="grey-text text-darken-1">
-            Already have an account? <Link to="/login" className="red-text">Log in</Link>
-          </p>
-        </div>
-        <form noValidate onSubmit={onSubmit} className = "row">
-          <div className="input-field col s4 offset-s4">
-            <input
-              onChange={onChangeName}
-              value={name}
-              error={errors.name}
-              id="name"
-              type="text"
-              className={classnames("white-text", {invalid: errors.name})}
-            />
-            <label htmlFor="name">Name</label>
-            <span className="red-text">{errors.name}</span>
-          </div>
-          <div className="input-field col s4 offset-s4">
-            <input
-              onChange={onChangeEmail}
-              value={email}
-              error={errors.email}
-              id="email"
-              type="email"
-              className={classnames("white-text", {
-                invalid: errors.email
-              })}
-            />
-            <label htmlFor="email">Email</label>
-            <span className="red-text">{errors.email}</span>
-          </div>
-          <div className="input-field col s4 offset-s4">
-            <input
-              onChange={onChangePassword}
-              value={password}
-              error={errors.password}
-              id="password"
-              type="password"
-              className={classnames("white-text", {
-                invalid: errors.password
-              })}
-            />
-            <label htmlFor="password">Password</label>
-            <span className="red-text">{errors.password}</span>
-          </div>
-          <div className="input-field col s4 offset-s4">
-            <input
-              onChange={onChangePassword2}
-              value={password2}
-              error={errors.password2}
-              id="password2"
-              type="password"
-              className={classnames("white-text", {
-                invalid: errors.password2
-              })}
-            />
-            <label htmlFor="password2">Confirm Password</label>
-            <span className="red-text">{errors.password2}</span>
-          </div>
-          <div className="col s4 offset-s4">
-            <button
-              type="submit"
-              className="btn auth-button transparent redborder waves-effect waves-light hoverable "
-            >
-              Sign up
-            </button>
-          </div>
-        </form>
+  return (
+    <div className="center grey padding-top-register">
+      <Link to="/" className="btn-flat waves-effect white-text">
+        <i className="material-icons left">keyboard_backspace</i> Back to
+        home
+      </Link>
+      <div className="col s12">
+        <h4>
+          <b className = "white-text">Register</b>
+        </h4>
+        <p className="grey-text text-darken-1">
+          Already have an account? <Link to="/login" className="red-text">Log in</Link>
+        </p>
       </div>
-    );
+      <form noValidate onSubmit={onSubmit} className = "row">
+        <div className="input-field col s4 offset-s4">
+          <input
+            onChange={onChangeName}
+            value={name}
+            error={errors.name}
+            id="name"
+            type="text"
+            className={classnames("white-text", {invalid: errors.name})}
+          />
+          <label htmlFor="name">Name</label>
+          <span className="red-text">{errors.name}</span>
+        </div>
+        <div className="input-field col s4 offset-s4">
+          <input
+            onChange={onChangeEmail}
+            value={email}
+            error={errors.email}
+            id="email"
+            type="email"
+            className={classnames("white-text", {
+              invalid: errors.email
+            })}
+          />
+          <label htmlFor="email">Email</label>
+          <span className="red-text">{errors.email}</span>
+        </div>
+        <div className="input-field col s4 offset-s4">
+          <input
+            onChange={onChangePassword}
+            value={password}
+            error={errors.password}
+            id="password"
+            type="password"
+            className={classnames("white-text", {
+              invalid: errors.password
+            })}
+          />
+          <label htmlFor="password">Password</label>
+          <span className="red-text">{errors.password}</span>
+        </div>
+        <div className="input-field col s4 offset-s4">
+          <input
+            onChange={onChangePassword2}
+            value={password2}
+            error={errors.password2}
+            id="password2"
+            type="password"
+            className={classnames("white-text", {
+              invalid: errors.password2
+            })}
+          />
+          <label htmlFor="password2">Confirm Password</label>
+          <span className="red-text">{errors.password2}</span>
+        </div>
+        <div className="col s4 offset-s4">
+          <button
+            type="submit"
+            className="btn auth-button transparent redborder waves-effect waves-light hoverable "
+          >
+            Sign up
+          </button>
+        </div>
+      </form>
+    </div>
+  );
     
 }
 
