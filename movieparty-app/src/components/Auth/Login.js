@@ -47,67 +47,63 @@ function Login(props) {
     //const { errors } = state;
 
     return (
-      <div className="container grey">
-        <div className="row margin-top-login">
-          <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect white-text">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
-            </Link>
-            <div className="col s12">
-              <h4>
-                <b>Login</b> below
-              </h4>
-              <p className="grey-text text-darken-1">
-                Don't have an account? <Link to="/register" className = "red-text">Register</Link>
-              </p>
-            </div>
-            <form noValidate onSubmit={onSubmit}>
-              <div className="input-field col s12 transparent">
-                <input
-                  onChange={onChangeEmail}
-                  value={email}
-                  error={errors.email}
-                  id="email"
-                  type="email"
-                  className={classnames("white-text", {
-                    invalid: errors.email || errors.emailnotfound
-                  })}
-                />
-                <label htmlFor="email">Email</label>
-                <span className="red-text">
-                  {errors.email}
-                  {errors.emailnotfound}
-                </span>
-              </div>
-              <div className="input-field col s12">
-                <input
-                  onChange={onChangePassword}
-                  value={password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames("white-text", {
-                    invalid: errors.password || errors.passwordincorrect
-                  })}
-                />
-                <label htmlFor="password">Password</label>
-                <span className="red-text">
-                  {errors.password}
-                  {errors.passwordincorrect}
-                </span>
-              </div>
-              <div className="col s12">
-                <button
-                  type="submit"
-                  className="btn auth-button transparent redborder waves-effect waves-light hoverable"
-                >
-                  Login
-                </button>
-              </div>
-            </form>
-          </div>
+      <div className="center grey padding-top-login">
+        <Link to="/" className="btn-flat waves-effect white-text">
+          <i className="material-icons left">keyboard_backspace</i> Back to
+          home
+        </Link>
+        <div className="col s12">
+          <h4>
+            <b className = "white-text">Login</b>
+          </h4>
+          <p className="grey-text text-darken-1">
+            Don't have an account? <Link to="/register" className = "red-text">Register</Link>
+          </p>
         </div>
+        <form noValidate onSubmit={onSubmit} className = "row">
+          <div className="input-field col s4 offset-s4">
+            <input
+              onChange={onChangeEmail}
+              value={email}
+              error={errors.email}
+              id="email"
+              type="email"
+              className={classnames("white-text", {
+                invalid: errors.email || errors.emailnotfound
+              })}
+            />
+            <label htmlFor="email">Email</label>
+            <span className="red-text">
+              {errors.email}
+              {errors.emailnotfound}
+            </span>
+          </div>
+          <div className="input-field col s4 offset-s4">
+            <input
+              onChange={onChangePassword}
+              value={password}
+              error={errors.password}
+              id="password"
+              type="password"
+              className={classnames("white-text", {
+                invalid: errors.password || errors.passwordincorrect
+              })}
+            />
+            <label htmlFor="password">Password</label>
+            <span className="red-text">
+              {errors.password}
+              {errors.passwordincorrect}
+            </span>
+          </div>
+          <div className="col s4 offset-s4">
+            <button
+              type="submit"
+              className="btn auth-button transparent redborder waves-effect waves-light hoverable"
+            >
+              Login
+            </button>
+          </div>
+        </form>
       </div>
     );
 }
