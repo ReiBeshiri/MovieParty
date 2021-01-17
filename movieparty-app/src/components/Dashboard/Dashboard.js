@@ -61,9 +61,19 @@ function Dashboard(props) {
     }
   }, [props.genericmsg])
 
+  
+  useEffect(()=>{
+    setInParty(props.partystatus.inLobby)
+    if(!props.partystatus.inLobby){
+      props.partystatus.movieparty_isStarted = false
+      props.partystatus.room=undefined
+      props.partystatus.leader=myusername
+    }
+    console.log("psuh movie party " + (inParty && !props.partystatus.movieparty_isStarted))
+  },[props.partystatus.inLobby])
+
   useEffect(() => {
-    if(!props.partystatus.inLobby && props.partystatus.leader!==myusername){
-      setInParty(false)
+    if(!inParty && props.partystatus.leader!==myusername && props.partystatus.room!==undefined){
       if(props.partystatus.leader.length>2){
         handleNewNotification(
           notification_titles.party_req,
@@ -74,10 +84,7 @@ function Dashboard(props) {
       }
         //reset props
     }
-    if(props.partystatus.inLobby){
-      setInParty(true)
-    }
-  }, [props.partystatus.inLobby])
+  }, [props.partystatus.room])
 
   return (
     <div className="app">
@@ -89,7 +96,7 @@ function Dashboard(props) {
       <Row title="Comdey Movies" fetchTitles={request.fetchComedyMovies} trending/>
       <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} trending/>
       <Row title="Animation Movies" fetchTitles={request.fetchAnimationMovies} trending />
-      {inParty && props.history.push("/movieparty")}
+      {inParty && !props.partystatus.movieparty_isStarted && props.history.push("/movieparty")}
     </div>
   );
 }

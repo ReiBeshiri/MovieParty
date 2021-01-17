@@ -55,14 +55,17 @@ function MovieParty(props) {
             })
         }
         console.log(props)
-
+        //reset props
+        props.partystatus.inLobby=false
     }, []);
 
     useEffect(() => {
         if(props.partystatus.movieparty_isStarted){
             console.log(props)
-            setStart(true)
-            setMovieURL(props.partystatus.movieURL)
+            setStart(props.partystatus.movieparty_isStarted)
+            setMovieURL(props.partystatus.movieURL)            
+            //exit lobby
+            props.partystatus.inLobby=false
         }
     }, [props.partystatus.movieparty_isStarted])
 
@@ -86,12 +89,14 @@ function MovieParty(props) {
     function startParty(){
         setStart(true)
         sendStartParty(myusername)
+        //exit lobby
+        props.partystatus.inLobby=false
     }
 
     return(
         <div className = "lobby__elements">
             {!start && <div className="lobby__pre__party">
-                {!start && <p className="lobby__pre__party__title"><h4>lobby pre party di {myusername}!</h4></p>}
+                {!start && <p className="lobby__pre__party__title"><h4>lobby pre party di {props.partystatus.leader}!</h4></p>}
                 {!start && props.partystatus.leader === myusername && viewFriends(props.location.friendlist)}
                 {!start && props.partystatus.leader === myusername && <button className="lobby__pre__party__start__party" onClick={() => startParty()}>Avvia il party</button>}
                 {!start && props.partystatus.leader !== myusername && <p>aspetto che il leader starta il party, sono {myusername}</p>}                
