@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import {SET_MAIN_BANNER_MOVIE} from "../../../actions/types";
 import store from "../../../store";
 import { logoutUser } from "../../../actions/authActions";
-import { friendRequest, genericmsg } from "../../../actions/friendsActions";
+import { friendRequest, genericmsg, friendList } from "../../../actions/friendsActions";
 import axios from "../../../utils/Requests/axiosReq";
 import requestsTmdb from "../../../utils/Requests/requestsTmdb";
+import M from "materialize-css";
 import "./MyNav.css"
 
 function Nav(props) {
@@ -14,6 +15,8 @@ function Nav(props) {
     const [searchbarText, setSearchbarText] = useState("");
     const [show, showNav] = useState(false);
     const myusername = user.name.split(" ")[0];
+    const [friendsDropdown, setfriendsDropdown] = useState("");
+    var elem;
     
     /** listener to the scroll y event, when reaches 100px activate show func*/
     useEffect(() => {
@@ -28,6 +31,13 @@ function Nav(props) {
         /*return () => {
             window.removeEventListener("scroll");
         }; callback  error*/ 
+
+        elem = (document.querySelectorAll('.dropdown-trigger'))
+        M.Dropdown.init(elem, {onOpenStart: updateFriends});
+
+        setfriendsDropdown(elem)
+        console.log(elem)
+        console.log(friendsDropdown)
     }, []);
 
     const onChange = e => {
@@ -49,6 +59,19 @@ function Nav(props) {
         }
         if(movie.length>0){fetchMovie(movie);} //if movie length > 0 search, dont otherwise        
     };
+
+    const updateFriends = () => {
+        console.log("prova")
+        const ulFriends = document.getElementById("friends")
+        console.log(ulFriends.innerHTML)
+        friendList(myusername).then(data => { data.friends.forEach(element => {
+            console.log(element)
+            ulFriends.innerHTML = ulFriends.innerHTML +  `<li>${element.username}</li>`         
+        })})
+        console.log(ulFriends.innerHTML)
+    }
+
+    
 
     return (
         /*<div className={`nav ${show && "nav__blackscroll"}`}>
@@ -81,25 +104,27 @@ function Nav(props) {
                 <div class="nav-wrapper">
                      <div className = "row">
                         <div className ="col s1">
-                            <img
-                                className="responsive-img"
-                                src="img/logo.svg"
-                                alt="MoiveParty logo"
-                            />
-                            {/* <p className = "white-text">LOGO</p> */}
+                            <p className = "movieparty-logo">MovieParty</p>
                         </div>
                         <div className ="col s4 offset-s1">
                             <form>
                                 <div class="input-field">
                                     <input id="search" type="search" onChange={onChange} value={searchbarText} required/>
-                                    <label class="label-icon" for="search" onClick={console.log("ciao")}><i class="material-icons white-text">search</i></label>
+                                    <label class="label-icon" for="search"><i class="material-icons white-text">search</i></label>
                                     <i class="material-icons white-text">close</i>
                                 </div>
                             </form>
                         </div>
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
                             <li><a class="waves-effect waves-teal btn-flat white-text" onClick={()=> genericmsg(myusername, searchbarText)}>genericmsg</a></li>
-                            <li><a class="waves-effect waves-teal btn-flat white-text" onClick={()=> friendRequest(myusername, searchbarText)}>Friend</a></li>
+                            {/* <li><a class="waves-effect waves-teal btn-flat white-text" onClick={()=> friendRequest(myusername, searchbarText)}>Friend</a></li> */}
+                            <li><a class="dropdown-trigger friends-list" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <ul id="friends" class="dropdown-content">
+                                <li><a>I tuoi amici</a></li>
+                                {/*<li><a>two</a></li>
+                                <li class="divider"></li>
+                                <li><a>three</a></li> */}
+                            </ul>
                             <li><a class="waves-effect waves-teal btn-flat white-text" onClick={() => onLogoutClick(myusername)}>Logout</a></li>
                         </ul>
                     </div> 

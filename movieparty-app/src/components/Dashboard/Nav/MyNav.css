@@ -27,3 +27,13 @@
     background-color: transparent !important;
     color: white;
 }
+
+.movieparty-logo {
+    color: #F45F5F;
+    font-family: 'Kaushan Script', cursive;
+    font-size: 2vw;
+}
+
+.friends-list {
+    width: 150px;
+}
