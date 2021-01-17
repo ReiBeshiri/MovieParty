@@ -78,10 +78,7 @@ export const friendList = (myUsername) => {
         console.log(err.statusCode)
     });*/
     const promise = axios.get("/api/users/friendlist", { params: { name: myUsername }})
-
     const dataPromise = promise.then((response) => response.data)
-    console.log("mi è arrivata la lista degli amici") 
-    //console.log(dataPromise)
     
     return dataPromise
 }
