@@ -5,11 +5,12 @@
 2) bugfix:
 	- token error
 	- errore password sicura
-	- torna a dashboard da movie party
+	- torna a dashboard da movie party(fatto)
+	- key of undefined quando avviavi un party(fatto, era problema di tmdb che non ha alcuni trailer)
 	- ...
-3) riduzione debito tecnico
-4) gamification
+3) icona notifiche
+4) schermata invita amici (fatta, mettere chat e togliere movie party play?)
+5) gamification
 	- punti
 	- acheivments
-5) icona notifiche
-6) schermata invita amici
+6) riduzione debito tecnico

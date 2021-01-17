@@ -110,34 +110,48 @@ export const sendMoviePartyResponse = (sender, room, response) => {
             payload: true
         })
     }
-    socket.emit("moviePartyInviteResponse", {requestSender: sender, requestReceiver: myusername, response: response})
+    if(socket !== undefined){
+        socket.emit("moviePartyInviteResponse", {requestSender: sender, requestReceiver: myusername, response: response})
+    }
 }
 
 export const sendMoviePartyInvite = (myUsername, friendUsername, movieURL) => {
-    console.log("sender:" + myUsername)
-    console.log("receiver:" + friendUsername)
-    console.log("movieURL:" + movieURL)
-    socket.emit("moviePartyInviteSender", {sender: myUsername, receiver: friendUsername, room: myUsername, movieURL: movieURL})
+    if(socket !== undefined){
+        console.log("sender:" + myUsername)
+        console.log("receiver:" + friendUsername)
+        console.log("movieURL:" + movieURL)
+        socket.emit("moviePartyInviteSender", {sender: myUsername, receiver: friendUsername, room: myUsername, movieURL: movieURL})        
+    }
 }
 
 export const joinRoom = (roomName) => {
-    socket.emit("join", {myusername: myusername, room: roomName})
+    if(socket !== undefined){
+        socket.emit("join", {myusername: myusername, room: roomName})
+    }
 }
 
 export const sendStartParty = (roomName) => {
-    socket.emit("startparty", {roomName})
+    if(socket !== undefined){
+        socket.emit("startparty", {roomName})
+    }
 }
 
 export const sendChatMessage = (myUsername, roomName, message) => {
-    socket.emit("chatMessage", {username: myUsername, roomName: roomName, message: message})
+    if(socket !== undefined){
+        socket.emit("chatMessage", {username: myUsername, roomName: roomName, message: message})
+    }
 }
 
 export const synchronizeVideo = (roomName, timestamp, playing) => {
-    socket.emit("synchronizeVideo", {roomName: roomName, timestamp: timestamp, playing: playing})
+    if(socket !== undefined){
+        socket.emit("synchronizeVideo", {roomName: roomName, timestamp: timestamp, playing: playing})
+    }
 }
 
 export const disconnectSocket = () => {
-    socket.emit("remove", myusername)
-    socket.disconnect()
-    socket.off();
+    if(socket !== undefined){
+        socket.emit("remove", myusername)
+        socket.disconnect()
+        socket.off();
+    }
 }

@@ -2,3 +2,93 @@
   background-color: white;
   height: 100%;
 }
+
+.lobby__pre__party {
+  display: inline-block;
+  margin-left: 1%;
+}
+
+.friend {
+  height: 40px;
+}
+
+.lobby__pre__party__invite__friend__disabled {
+  cursor: pointer;
+  color: rgba(98, 92, 93);
+  outline: none;
+  border: none;
+  font-weight: 700;
+  border-radius: 0.2vw;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-right: 1rem;
+  padding-top: 0.5rem;
+  background-color: rgba(98, 92, 93, 0.8);
+  padding-bottom: 0.5rem;
+  float: right;
+}
+
+.lobby__pre__party__invite__friend {
+  cursor: pointer;
+  color: white;
+  outline: none;
+  border: none;
+  font-weight: 700;
+  border-radius: 0.2vw;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-right: 1rem;
+  padding-top: 0.5rem;
+  background-color: rgb(161, 36, 47, 0.8);
+  padding-bottom: 0.5rem;
+  float: right;
+}
+
+.lobby__pre__party__invite__friend:hover {
+  color: black;
+  background-color: rgb(161, 36, 47);
+  transition: all 0.2s;
+}
+
+.lobby__pre__party__start__party {
+  cursor: pointer;
+  color: white;
+  outline: none;
+  border: none;
+  font-weight: 700;
+  border-radius: 0.2vw;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-right: 1rem;
+  padding-top: 0.5rem;
+  background-color: rgb(161, 36, 47, 0.8);
+  padding-bottom: 0.5rem;
+  float: right;
+}
+
+.lobby__pre__party__start__party:hover {
+  background-color: rgb(129, 33, 41);
+  transition: all 0.2s;
+}
+
+.friend__online {
+  color: rgb(34, 112, 27);
+  font-size: large;
+  font-weight: 700;
+}
+
+.friend__offline {
+  font-size: large;
+}
+
+.friend__list {
+  color: black;
+  font-size: large;
+}
+
+.lobby__pre__party__chat__container {
+  object-fit: contain; /*keep aspect ratio*/
+  height: 100%;
+  width: 25%;
+  float: right;
+}

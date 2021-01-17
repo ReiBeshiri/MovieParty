@@ -8,7 +8,6 @@ import {synchronizeVideo} from "../../../socket/socket";
 function MoviePartyPlay(props) {
 
   var player1 = useRef(null);
-  const myusername = props.auth.user.name.split(" ")[0];
   const [url, setUrl] = useState(null);
   const [pip, setPip] = useState(false);
   const [playing, setPlaying] = useState(true);
@@ -192,7 +191,7 @@ function MoviePartyPlay(props) {
         />}
       </div>
       <div className = "movieparty__chat__container">
-          <Chat className = "movieparty__chat"/>
+          {<Chat className = "movieparty__chat"/>}
       </div>
     </div>
   );
@@ -200,7 +199,6 @@ function MoviePartyPlay(props) {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth,
   partystatus: state.partystatus
 });
 

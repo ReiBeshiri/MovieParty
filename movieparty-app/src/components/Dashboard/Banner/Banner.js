@@ -80,7 +80,7 @@ function Banner(props) {
             props.searchedMovie.mainBannerMovieId = ""//reset props
         }
     }, [props.searchedMovie]);*/
-
+    
     return (
         <header className="banner"
         /*bg image*/

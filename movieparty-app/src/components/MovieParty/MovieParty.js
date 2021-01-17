@@ -7,6 +7,8 @@ import axios from "../../utils/Requests/axiosReq";
 import { joinRoom } from '../../socket/socket';
 import store from "../../store";
 import requestsTmdbMovieTrailer from "../../utils/Requests/requestsTmdb";
+import Chat from './Chat/Chat';
+
 import {
     PARTY_INVITATION
 } from "../../actions/types";
@@ -31,17 +33,21 @@ function MovieParty(props) {
 
     const fetchmovie = (movieid) => {
         async function fetchMovieTrailer(movieId){
-            const ytUrl = await axios.get(axios.defaults.baseURL + "/movie/" + movieId + requestsTmdbMovieTrailer.trailerVideoKey)
-            setMovieURL(String(ytUrl.data.results[0].key))
-            console.log(String(ytUrl.data.results[0].key))
-            return ytUrl
+            if(movieId!==undefined){
+                const ytUrl = await axios.get(axios.defaults.baseURL + "/movie/" + movieId + requestsTmdbMovieTrailer.trailerVideoKey)
+                if(ytUrl.data.results[0] !== undefined){
+                    setMovieURL(String(ytUrl.data.results[0].key))
+                    console.log(String(ytUrl.data.results[0].key))
+                }                                
+                return ytUrl
+            }            
         }
         fetchMovieTrailer(movieid)
     }
 
     useEffect(() => {
         joinRoom(myusername);
-        if(props.partystatus.leader === ""){
+        if(props.partystatus.leader === "" || props.partystatus.leader === myusername){
             fetchmovie(props.location.movieId);
             store.dispatch({
                 type: PARTY_INVITATION,
@@ -63,8 +69,8 @@ function MovieParty(props) {
     function viewFriends(friendsList){
         return friendsList.map(function(friend){
             return  <div className="friend" key={friend.username}>
-                        <label>{friend.username} ({friend.online?"online":"offline"})</label>
-                        <button id={"btn" + friend.username} onClick={(e) => sendInvite(e.target, friend.username)}>Invita</button> 
+                        <label className="friend__list">{friend.username} <label className={friend.online?"friend__online":"friend__offline"}>{(friend.online?"online":"offline")}</label></label>
+                        <button id={"btn" + friend.username} className={friend.online?"lobby__pre__party__invite__friend":"lobby__pre__party__invite__friend__disabled"} onClick={(e) => sendInvite(e.target, friend.username)} disabled={!friend.online}>Invita</button> 
                     </div>
         }); 
     }
@@ -84,9 +90,13 @@ function MovieParty(props) {
 
     return(
         <div className = "lobby__elements">
-            {!start && props.partystatus.leader === myusername && viewFriends(props.location.friendlist)}
-            {!start && props.partystatus.leader === myusername && <button onClick={() => startParty()}>Avvia il party</button>}
-            {!start && props.partystatus.leader !== myusername && <p>aspetto che il leader starta il party, sono {myusername}</p>}
+            {!start && <div className="lobby__pre__party">
+                {!start && <p className="lobby__pre__party__title"><h4>lobby pre party di {myusername}!</h4></p>}
+                {!start && props.partystatus.leader === myusername && viewFriends(props.location.friendlist)}
+                {!start && props.partystatus.leader === myusername && <button className="lobby__pre__party__start__party" onClick={() => startParty()}>Avvia il party</button>}
+                {!start && props.partystatus.leader !== myusername && <p>aspetto che il leader starta il party, sono {myusername}</p>}                
+            </div>}
+            {!start && <div className = "lobby__pre__party__chat__container"><Chat className = "lobby__pre__party__chat"/></div>}
             {start && <MoviePartyPlay movieURL = {movieURL}/>}
         </div>
     );

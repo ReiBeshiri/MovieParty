@@ -2,14 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #652ab3; /*#2979ff;*/
+  background: #a1242f; /*##652ab3;*/
   border-radius: 4px 4px 0 0;
   height: 5%;
   width: 100%;
 }
 
 .leftInnerContainer {
-  flex: 1;
+  flex: 0.9;
   display: flex;
   align-items: center;
   margin-left: 5%;
@@ -18,7 +18,7 @@
 
 .rightInnerContainer {
   display: flex;
-  flex: 0;
+  flex: 0.1;
   justify-content: flex-end;
   margin-right: 5%;
 }
@@ -28,11 +28,12 @@
   width: 25px;
 }
 
+.back__to__dashboard {
+  width: 30px;
+}
+
 @media (max-width: 1200px) {
   .infoBar {
-    height: 0px;
-  }
-  .onlineIcon {
-    display: none;
+    height: 35px;
   }
 }

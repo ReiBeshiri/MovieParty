@@ -12,7 +12,7 @@ import {notification_titles} from "../Notification/NotificationTitle";
 function Dashboard(props) {
   const { user } = props.auth;
   const myusername = user.name.split(" ")[0];
-  const [inLobby, setInLobby] = useState(false);
+  const [inParty, setInParty] = useState(false);
 
   const dispatch = useNotification();
   const handleNewNotification = (title, type, msg, usr) => {
@@ -24,50 +24,46 @@ function Dashboard(props) {
       })
   }
 
+  console.log(props)
+
   useEffect(() => {
     if(props.friend.friend_username !== undefined && props.friend.friend_username.length > 2){
-      console.log("nuova notifica per "+myusername)
       handleNewNotification(
         notification_titles.friend_req,
         "SUCCESS", //success or error or ecc..
         {text: "richiesta da ", info: props.friend.friend_username},
         myusername);
-      props.friend.friend_username="";//reset props
-      console.log("props resettata " + props.friend.friend_username);
+      props.friend.friend_username=undefined;//reset props
     }      
   }, [props.friend.friend_username])
 
   useEffect(() => {
     if(props.friend.friend_accepted !== undefined && props.friend.friend_accepted.length > 2){
-      console.log("nuova notifica per "+myusername)
       handleNewNotification(
         notification_titles.friend_req_accepted,
         "SUCCESS",
         {text:"ora sei amico con ", info: props.friend.friend_accepted},
         myusername
         );
-      props.friend.friend_accepted="";//reset props
-      console.log("props resettata " + props.friend.friend_accepted);
+      props.friend.friend_accepted=undefined;//reset props
     }
   }, [props.friend.friend_accepted])
 
   useEffect(() => {
     if(props.genericmsg.message !== undefined && props.genericmsg.message.length > 2){
-      console.log("nuova notifica per "+myusername)
       handleNewNotification(
         notification_titles.genericmsg,
         "SUCCESS",
         {text: props.genericmsg.message, info: ""},
         myusername
         );
-        props.genericmsg.message="";//reset props
+        props.genericmsg.message=undefined;//reset props
     }
   }, [props.genericmsg])
 
   useEffect(() => {
-    console.log(props)
-    if(!props.partystatus.inLobby){
-      setInLobby(false)
+    if(!props.partystatus.inLobby && props.partystatus.leader!==myusername){
+      setInParty(false)
       if(props.partystatus.leader.length>2){
         handleNewNotification(
           notification_titles.party_req,
@@ -79,9 +75,9 @@ function Dashboard(props) {
         //reset props
     }
     if(props.partystatus.inLobby){
-      setInLobby(true)
+      setInParty(true)
     }
-  }, [props.partystatus])
+  }, [props.partystatus.inLobby])
 
   return (
     <div className="app">
@@ -93,7 +89,7 @@ function Dashboard(props) {
       <Row title="Comdey Movies" fetchTitles={request.fetchComedyMovies} trending/>
       <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} trending/>
       <Row title="Animation Movies" fetchTitles={request.fetchAnimationMovies} trending />
-      {inLobby && props.history.push("/movieparty")}
+      {inParty && props.history.push("/movieparty")}
     </div>
   );
 }
