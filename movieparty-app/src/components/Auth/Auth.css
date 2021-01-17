@@ -10,17 +10,13 @@
     color: #F45F5F;
 }
 
-.margin-top-login {
-    margin-top: 4rem;
+.padding-top-login {
+    padding-top: 4rem;
 }
 
-.margin-top-register {
-    margin-top: 3rem;
+.padding-top-register {
+    padding-top: 3rem;
 }
-
-/*.padding-left-auth {
-    padding-left: 11.250px;
-}*/
 
 .auth-button {
     width: 100%;
