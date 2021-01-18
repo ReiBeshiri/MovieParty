@@ -15,29 +15,17 @@ function Nav(props) {
     const [searchbarText, setSearchbarText] = useState("");
     const [show, showNav] = useState(false);
     const myusername = user.name.split(" ")[0];
-    const [friendsDropdown, setfriendsDropdown] = useState("");
-    var elem;
     
-    /** listener to the scroll y event, when reaches 100px activate show func*/
-    useEffect(() => {
-        window.addEventListener("scroll", () => {
-            if(window.scrollY > 100){
-                showNav(true);
-            } else {
-                showNav(false);
-            }            
+    useEffect(() => { 
+
+        const elem = (document.querySelectorAll('.dropdown-trigger'))
+        M.Dropdown.init(elem, {
+            onOpenStart: updateFriends, 
+            inDuration: 500,
+            outDuration: 225,
+            coverTrigger: false
         });
-        /**remove listener so it dows not stack, optimizing the fact that we don't need 100 listeners, but just 1*/
-        /*return () => {
-            window.removeEventListener("scroll");
-        }; callback  error*/ 
 
-        elem = (document.querySelectorAll('.dropdown-trigger'))
-        M.Dropdown.init(elem, {onOpenStart: updateFriends});
-
-        setfriendsDropdown(elem)
-        console.log(elem)
-        console.log(friendsDropdown)
     }, []);
 
     const onChange = e => {
@@ -61,17 +49,21 @@ function Nav(props) {
     };
 
     const updateFriends = () => {
-        console.log("prova")
         const ulFriends = document.getElementById("friends")
-        console.log(ulFriends.innerHTML)
-        friendList(myusername).then(data => { data.friends.forEach(element => {
-            console.log(element)
-            ulFriends.innerHTML = ulFriends.innerHTML +  `<li>${element.username}</li>`         
-        })})
-        console.log(ulFriends.innerHTML)
-    }
 
-    
+        var elements = document.getElementsByClassName("friend");
+        while(elements.length > 0){
+            elements[0].parentNode.removeChild(elements[0]);
+        }
+        
+        friendList(myusername).then(data => { data.friends.forEach(element => {
+            ulFriends.innerHTML = ulFriends.innerHTML +     
+            `<li class = "friend white-text">
+                ${element.username}
+                ${element.online? "<p class = 'right online-friend'> Online</p>": "<p class = 'right center offline-friend'> Offline</p>"}
+            </li>`         
+        })})
+    }   
 
     return (
         /*<div className={`nav ${show && "nav__blackscroll"}`}>
@@ -106,24 +98,22 @@ function Nav(props) {
                         <div className ="col s1">
                             <p className = "movieparty-logo">MovieParty</p>
                         </div>
-                        <div className ="col s4 offset-s1">
+                        <div className ="col s1 offset-s1 prova">
+                            <button className = "search-icons transparent" onClick={() => searchMovie(searchbarText)}><i class="material-icons white-text">search</i></button>
+                        </div>
+                        <div className ="col s3">
                             <form>
                                 <div class="input-field">
                                     <input id="search" type="search" onChange={onChange} value={searchbarText} required/>
-                                    <label class="label-icon" for="search"><i class="material-icons white-text">search</i></label>
-                                    <i class="material-icons white-text">close</i>
+                                    {/* <i class="material-icons white-text">close</i> */}
                                 </div>
                             </form>
                         </div>
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
-                            <li><a class="waves-effect waves-teal btn-flat white-text" onClick={()=> genericmsg(myusername, searchbarText)}>genericmsg</a></li>
-                            {/* <li><a class="waves-effect waves-teal btn-flat white-text" onClick={()=> friendRequest(myusername, searchbarText)}>Friend</a></li> */}
-                            <li><a class="dropdown-trigger friends-list" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
-                            <ul id="friends" class="dropdown-content">
-                                <li><a>I tuoi amici</a></li>
-                                {/*<li><a>two</a></li>
-                                <li class="divider"></li>
-                                <li><a>three</a></li> */}
+                            {/* <li><a class="waves-effect waves-teal btn-flat white-text" onClick={()=> genericmsg(myusername, searchbarText)}>genericmsg</a></li> */}
+                            <li><a class="dropdown-trigger" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <ul id="friends" class="dropdown-content friends-list-dropdown">
+                                <li><a className = "red-text">I tuoi amici</a></li>
                             </ul>
                             <li><a class="waves-effect waves-teal btn-flat white-text" onClick={() => onLogoutClick(myusername)}>Logout</a></li>
                         </ul>
