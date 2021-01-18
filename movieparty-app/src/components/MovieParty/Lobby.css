@@ -11,6 +11,7 @@
 .lobby__pre__party {
   display: inline-block;
   margin-left: 1%;
+  width: 30%;
 }
 
 .friend {
@@ -102,6 +103,12 @@
   color: white;
 }
 
+@media /*only screen and*/ (max-width: 1200px) {
+  .lobby__pre__party {
+    width: 50%;
+  }
+}
+
 @media /*only screen and*/ (max-width: 900px) {
   /* For mobile phones: */
   .lobby__pre__party__chat__container {
@@ -113,5 +120,11 @@
     /* And if you want the div to be full-width: */
     left: 0;
     right: 0;
+  }
+}
+
+@media /*only screen and*/ (max-width: 700px) {
+  .lobby__pre__party {
+    width: 95%;
   }
 }
