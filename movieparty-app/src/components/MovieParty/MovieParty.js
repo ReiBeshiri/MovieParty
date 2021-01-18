@@ -94,7 +94,7 @@ function MovieParty(props) {
     }
 
     return(
-        <div className = "lobby__elements">
+        <div className = {!start?"lobby__elements":"lobby__elements_"}>
             {!start && <div className="lobby__pre__party">
                 {!start && <p className="lobby__pre__party__title"><h4>lobby pre party di {props.partystatus.leader}!</h4></p>}
                 {!start && props.partystatus.leader === myusername && viewFriends(props.location.friendlist)}

@@ -1,5 +1,10 @@
 .lobby__elements {
-  background-color: white;
+  background-color: #111; /*white*/
+  height: 100%;
+}
+
+.lobby__elements_ {
+  background-color: white; /*white*/
   height: 100%;
 }
 
@@ -82,13 +87,31 @@
 }
 
 .friend__list {
-  color: black;
+  color: white; /*black*/
   font-size: large;
 }
 
 .lobby__pre__party__chat__container {
   object-fit: contain; /*keep aspect ratio*/
   height: 100%;
-  width: 25%;
+  width: 30%;
   float: right;
+}
+
+.lobby__pre__party__title {
+  color: white;
+}
+
+@media /*only screen and*/ (max-width: 900px) {
+  /* For mobile phones: */
+  .lobby__pre__party__chat__container {
+    object-fit: contain; /*keep aspect ratio*/
+    height: 50%;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    /* And if you want the div to be full-width: */
+    left: 0;
+    right: 0;
+  }
 }

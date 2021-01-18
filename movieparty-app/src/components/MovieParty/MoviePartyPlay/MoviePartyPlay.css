@@ -26,7 +26,7 @@
   /* For mobile phones: */
   .movieparty {
     display: block;
-    height: 97%;
+    height: 98%;
   }
   .movieparty__chat__container {
     object-fit: contain; /*keep aspect ratio*/
