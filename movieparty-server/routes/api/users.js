@@ -10,6 +10,7 @@ const validateLoginInput = require("../../validation/login");
 
 // Load User model
 const User = require("../../models/User");
+const UserBadge = require("../../models/UserBadge");
 const FriendRequest = require("../../models/FriendRequest");
 
 //Load socket 
@@ -38,6 +39,12 @@ router.post("/register", (req, res) => {
                 password: req.body.password
             });
 
+            const newUserBadge = new UserBadge({
+                name: req.body.name,
+                badge1: {source: "badge1", description: "unlock badge 1", owned: false},
+                badge2: {source: "badge2", description: "unlock badge 2", owned: false}
+            });
+
             //Hash password before saving in database
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -47,8 +54,14 @@ router.post("/register", (req, res) => {
                     .save()
                     .then(user => res.json(user))
                     .catch(err => console.log(err));
+                
                 });
             });
+            //after saving the user insert the badgeCollection 
+            newUserBadge
+                    .save()
+                    .then(user => res.json(user))
+                    .catch(err => console.log(err));
         }
     });
 });
@@ -206,6 +219,54 @@ router.get("/friendlist", (req, res) => {
         
         return res.status(200).json({friends: friendsJSON});
     });
+});
+
+router.get("/badgelist", (req, res) => {
+
+    myUsername = req.query.username
+
+    console.log(myUsername)
+    console.log("SERVER - richiesta lista badge")
+
+    UserBadge.findOne({ username: myUsername }).then(userbadgelist => {
+        // Check if user exists
+        if (!userbadgelist) {
+            return res.status(404).json({ badgenotfound: "Badge not found" });
+        }
+        
+        return res.status(200).json(userbadgelist);
+    });
+});
+
+router.put("/addbadge", (req, res) => {
+    var bl = req.body.params.badgelist
+    var type = req.body.params.badgetype
+
+    var myquery = {username: bl.username};
+    var newvalues;
+    //badge2: { source: String, description: String, owned: Boolean }
+    switch (type) {
+        case "badge1":
+            //badge 1 set up values
+            newvalues = {$set: { "badge1": {
+                source: bl.badge1.source,
+                description: bl.badge1.description,
+                owned: true
+            } }}
+          break;
+        case "badge2":
+            //badge 2 set up values
+            newvalues = {$set: { "badge2": {
+                source: bl.badge2.source,
+                description: bl.badge2.description,
+                owned: true
+            } }}
+          break;
+      }
+
+    UserBadge.updateOne(myquery, newvalues).then(()=> console.log("update badge completed"))
+        
+    return res.status(200).json();
 });
 
 router.put("/logout", (req, res) => {

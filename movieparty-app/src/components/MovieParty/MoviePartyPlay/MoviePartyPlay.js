@@ -4,6 +4,9 @@ import React, { useState, useEffect, useRef  } from "react";
 import ReactPlayer from 'react-player'
 import Chat from '../Chat/Chat';
 import {synchronizeVideo} from "../../../socket/socket";
+import {updateBadgeList} from "../../../actions/friendsActions";
+import {useNotification} from "../../Notification/NotificationProvider";
+import {notification_titles} from "../../Notification/NotificationTitle";
 
 function MoviePartyPlay(props) {
 
@@ -20,9 +23,10 @@ function MoviePartyPlay(props) {
   const [duration, setDuration] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [loop, setLoop] = useState(false);
-  const [seeking, setSeeking] = useState(0)
+  const [seeking, setSeeking] = useState(0);
   const [prevTimestamp, setPrevTimestamp] = useState(Number.MAX_SAFE_INTEGER);
-  const epsilon = 1.5
+  const epsilon = 1.5;
+  const dispatch = useNotification();
 
   useEffect(() => {
     if(props.partystatus.timestamp !== undefined){
@@ -35,6 +39,27 @@ function MoviePartyPlay(props) {
     props.partystatus.timestamp = undefined
     props.partystatus.playing = undefined
   }, [props.partystatus]);
+
+
+  useEffect(()=>{
+    gamify()
+  },[])
+
+  const gamify = () => {
+    //badge2 chat
+    if(!props.badges.badge2.owned){
+      updateBadgeList(props.badges, "badge2")
+      props.badges.badge2.owned=true
+      //NOTIFY
+      dispatch({
+        title: notification_titles.genericmsg,
+        type: "BADGE",
+        message: {text: "badge 2 unlocked!!!", info: ""},
+        myusr: ""
+      })
+    }
+    //END BADGE    
+  }
   
   const load = url => {
     setUrl(url)
@@ -199,7 +224,8 @@ function MoviePartyPlay(props) {
 }
 
 const mapStateToProps = state => ({
-  partystatus: state.partystatus
+  partystatus: state.partystatus,
+  badges: state.badges
 });
 
 export default connect(

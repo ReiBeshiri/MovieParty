@@ -62,23 +62,20 @@ export const friendResponse = (myUsername, friendUsername, response) => {
 }
 
 export const friendList = (myUsername) => {
-
-    /*axios
-    .get("/api/users/friendlist", { params: {
-        name: myUsername
-    }})
-    .then(res => {
-        console.log("mi è arrivata la lista degli amici") 
-        console.log(res.data)
-        return res;
-    })
-    .catch(err => {
-        //TODO --> guardare come si restituisce lo status e le info
-        console.log(err)
-        console.log(err.statusCode)
-    });*/
     const promise = axios.get("/api/users/friendlist", { params: { name: myUsername }})
     const dataPromise = promise.then((response) => response.data)
     
     return dataPromise
+}
+
+export const userBadgeList = (myUsername) => {
+    const promise = axios.get("/api/users/badgelist", { params: { username: myUsername }})
+    const dataPromise = promise.then((response) => response.data)
+    
+    return dataPromise
+}
+
+export const updateBadgeList = (badgelist, badgetype) => {
+    const promise = axios.put("/api/users/addbadge", { params: { badgelist: badgelist, badgetype: badgetype}})
+    return promise
 }

@@ -85,7 +85,7 @@ const Notification = props => {
       onMouseEnter={handlePauseTimer}
       onMouseLeave={handleStartTimer}
       className={`notification__item ${
-        props.type === "SUCCESS" ? "success" : "error"
+        props.type === "SUCCESS" ? "success" : "badge"
       } ${exit ? "exit" : ""}`}
     >
       {props.title === notification_titles.friend_req && friendReq()}

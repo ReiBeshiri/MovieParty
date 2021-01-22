@@ -1,5 +1,5 @@
 1) grafica:
-	- grafica homepage + login/register
+	- grafica homepage + login/register (fatto)
  	- dashboard -> navbar + notifiche(fatto)
 	- movie party play(fatto)
 2) bugfix:
@@ -10,7 +10,7 @@
 	- quando uno crea un party e torna indietro resetta le variabili (fatto, risolti anche minor bug correlati)
 	- ...
 3) icona notifiche
-4) schermata invita amici (fatta, con chat) -> cambiare layout colori
+4) schermata invita amici (fatta, con chat) -> cambiare layout colori(fatto)
 5) gamification
 	- punti
 	- acheivments

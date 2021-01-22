@@ -26,6 +26,12 @@ function Dashboard(props) {
 
   console.log(props)
 
+  useEffect(()=>{
+    //if(!props.badges.badge1.owned)
+    //updateBadgeList(props.badges, "badge1")
+    //props.badges.badge1.owned=true /*local update*/
+  },[])
+
   useEffect(() => {
     if(props.friend.friend_username !== undefined && props.friend.friend_username.length > 2){
       handleNewNotification(
@@ -109,7 +115,8 @@ const mapStateToProps = state => ({
   auth: state.auth,
   friend: state.friend,
   genericmsg: state.genericmsg,
-  partystatus: state.partystatus
+  partystatus: state.partystatus,
+  badges: state.badges
 });
 
 export default connect(

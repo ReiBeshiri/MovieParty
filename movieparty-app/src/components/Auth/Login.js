@@ -6,15 +6,27 @@ import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 import { initSocket } from "../../socket/socket";
 import "./Auth.css";
+import {userBadgeList} from "../../actions/friendsActions"
+import store from "../../store";
+import { GET_BADGES } from "../../actions/types";
 
 function Login(props) {
 
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [errors,setError] = useState({});
+  var badgelist;
 
   useEffect(() => {
     if (props.auth.isAuthenticated) {
+      //gamification init
+      userBadgeList(props.auth.user.name)
+        .then(data => { badgelist = data})
+        .then(()=>console.log(badgelist))//.then(()=> updateBadgeList(badgelist, "badge1"))
+        .then(()=>store.dispatch({
+          type: GET_BADGES,
+          payload: badgelist
+        }))
       //init socket connection
       initSocket(props.auth.user.name);
       props.history.push("/dashboard");

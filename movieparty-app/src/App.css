@@ -51,11 +51,11 @@
 }
 
 .notification__item.success .bar {
-  background-color: #65d266;
+  background-color: #1d6e1ebb;
 }
 
-.notification__item.error .bar {
-  background-color: red;
+.notification__item.badge .bar {
+  background-color: rgba(194, 133, 21, 0.904);
 }
 
 .notification__button {
