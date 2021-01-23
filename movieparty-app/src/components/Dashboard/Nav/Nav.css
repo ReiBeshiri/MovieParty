@@ -1,15 +1,3 @@
-/*.nav {
-  position: fixed; 
-  top: 0;
-  width: 100%;
-  padding: 20px;
-  height: 80px;
-  z-index: 1;
-  background-color: rgb(17, 17, 17, 0.8);
-  transition-timing-function: ease-in;
-  transition: all 0.5s;
-}*/
-
 .navDashboard {
   z-index: 1;
   background-color: rgb(17, 17, 17, 0.8);

@@ -15,7 +15,7 @@ function Navbar(){
             <nav class = "transparent z-depth-0">
                 <div class="nav-wrapper">
                     {/* <img class="logo responsive-img" src="img/logo.svg"/> */}
-                    <a href="/" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul class="right hide-on-med-and-down">
                         <li>
                             <Link

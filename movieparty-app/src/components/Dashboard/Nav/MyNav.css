@@ -1,8 +1,5 @@
 .navDashboard {
-    z-index: 1;
     background-color: rgb(17, 17, 17, 0.8);
-    transition-timing-function: ease-in;
-    transition: all 0.5s;
 }
 
 .border-red {
@@ -41,6 +38,16 @@
     transition: all 0.5s;
 }
 
+.mobile-friends-list-dropdown {
+    height: auto !important;
+    width: 100% !important;
+    min-width: 50% !important;
+    z-index: 1;
+    background-color: rgb(17, 17, 17, 0.8);
+    transition-timing-function: ease-in;
+    transition: all 0.5s;
+}
+
 .online-friend {
     padding-right: 2% !important;
     padding-left: 2% !important;
@@ -62,9 +69,23 @@
     padding-left: 5% !important;
 }
 
+.add-friend {
+    width: 100% !important;
+}
+
 .search-icons {
     border: hidden !important;
 }
+
+.modal {
+    background-color:  rgb(17, 17, 17);
+    top: 30% !important;
+}
+
+.modal-footer {
+    background-color: rgb(17, 17, 17, 0.8) !important;
+}
+
 
 .prova {
     width: auto !important;
