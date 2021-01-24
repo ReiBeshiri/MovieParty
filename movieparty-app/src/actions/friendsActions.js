@@ -20,7 +20,7 @@ export const genericmsg = (myUsername, friendUsername) => {
 }
 
 
-export const friendRequest = (myUsername, friendUsername) => {
+export const sendFriendRequest = (myUsername, friendUsername) => {
 
     const newFriendRequest = {
         requester: myUsername,
@@ -37,6 +37,12 @@ export const friendRequest = (myUsername, friendUsername) => {
         console.log(err)
         console.log(err.statusCode)
     });
+}
+
+export const friendRequest = (myUsername) => {
+    const dataPromise = axios.get("/api/users/friendrequest",  { params: { name: myUsername }})
+                            .then((response) => response.data)
+    return dataPromise;
 }
 
 export const friendResponse = (myUsername, friendUsername, response) => {

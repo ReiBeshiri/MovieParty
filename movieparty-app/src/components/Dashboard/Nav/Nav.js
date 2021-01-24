@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {SET_MAIN_BANNER_MOVIE} from "../../../actions/types";
 import store from "../../../store";
 import { logoutUser } from "../../../actions/authActions";
-import { friendRequest, genericmsg, friendList } from "../../../actions/friendsActions";
+import { sendFriendRequest, friendRequest, friendList } from "../../../actions/friendsActions";
 import axios from "../../../utils/Requests/axiosReq";
 import requestsTmdb from "../../../utils/Requests/requestsTmdb";
 import M from "materialize-css";
@@ -28,6 +28,10 @@ function Nav(props) {
 
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
         M.Modal.init(document.querySelectorAll('.modal'), {});
+        console.log("PRVVVVA")
+        friendRequest(myusername).then(data => { data.requests.forEach(request => {
+            console.log("amico che mi ha inviato una richiesta: " + request.friendUsername)
+        })});
 
     }, []);
 
@@ -102,6 +106,10 @@ function Nav(props) {
                             </form>
                         </div>
                         <ul id="nav-mobile" class="right hide-on-med-and-down border-red">
+                            <li><a class="dropdown-trigger" data-target="notification">NOTIFICATION<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <ul id="notification" class="dropdown-content friends-list-dropdown">
+                                <li><a>New notification</a></li>
+                            </ul>
                             <li><a class="dropdown-trigger" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
                             <ul id="friends" class="dropdown-content friends-list-dropdown">
                                 <li><button data-target="modal1" class="btn modal-trigger red white-text add-friend">Add friend</button></li>
@@ -136,7 +144,7 @@ function Nav(props) {
                 </div>
                 <div class="modal-footer">
                     <a class="modal-close waves-effect waves-green btn-flat white-text" onClick = {() => setFriendName("")}>Discard</a>
-                    <a class="modal-close waves-effect waves-green btn-flat white-text" onClick={() => friendRequest(myusername, friendName)}>Send request</a>
+                    <a class="modal-close waves-effect waves-green btn-flat white-text" onClick={() => sendFriendRequest(myusername, friendName)}>Send request</a>
                 </div>
             </div>
         </div>
