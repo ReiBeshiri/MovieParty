@@ -165,6 +165,26 @@ router.post("/addfriend", (req, res) => {
     });
 });
 
+router.get("/friendrequest", (req, res) => {
+
+    console.log("arrivata richiesta di aggiornamento")
+
+    username = req.query.name
+    console.log("aggiornamento: " + username)
+
+    FriendRequest.find({receiver: username}).then(requests => {
+
+        requestJSON = []
+        requests.forEach(request => {
+            item = {}
+            item["friendUsername"] = request.requester
+            requestJSON.push(item)
+        })
+        return res.status(200).json({requests: requestJSON});
+    })
+
+});
+
 router.put("/friendresponse", (req, res) => {
 
     myUsername = req.body.requester
