@@ -82,7 +82,7 @@ function Banner(props) {
                 {/*div > 2 buttons*/}
                 <div className="banner__buttons">
                     {/*onClick = {props.startYoutubePlayer}*/}
-                    <button className="banner__button" onClick = {()=>props.startMoviePartySolo(props.movieId)}>Play1</button>
+                    {!props.mainBanner && <button className="banner__button" onClick = {()=>props.startMoviePartySolo(props.movieId)}>Play trailer</button>}
                     <Link to={
                             {
                                 pathname:"/movieparty",
@@ -91,7 +91,7 @@ function Banner(props) {
                             }
                         }
                          className="btn-flat waves-effect">
-                        <button className="banner__button" >Play party</button>
+                        <button className="banner__button" >Play in Party</button>
                     </Link>
                     <ul id = "friend__list"> </ul>
                 </div>
