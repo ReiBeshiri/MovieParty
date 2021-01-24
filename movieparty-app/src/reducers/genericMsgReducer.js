@@ -7,7 +7,7 @@ const initialState = {
 };
 
 //se state non esiste allora viene inizializzato con "initialState"
-export default function(state = initialState, action) {
+export default function genmsg(state = initialState, action) {
     switch (action.type) {
         case GENERICMSG:
             return {

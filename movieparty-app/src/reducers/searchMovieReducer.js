@@ -6,7 +6,7 @@ const initialState = {
     mainBannerMovieId: "",
 };
 
-export default function(state = initialState, action) {
+export default function searchmovie(state = initialState, action) {
     switch (action.type) {
         case SET_MAIN_BANNER_MOVIE:
             return {

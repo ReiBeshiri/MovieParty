@@ -30,7 +30,7 @@ export const sendFriendRequest = (myUsername, friendUsername) => {
     axios
     .post("/api/users/addfriend", newFriendRequest)
     .then(res => {
-        console.log("richiesta inviata al server") 
+        console.log("richiesta inviata al server")
     })
     .catch(err => {
         //TODO --> guardare come si restituisce lo status e le info

@@ -23,7 +23,7 @@ const Chat = (props) => {
       setMessages(messages => [ ...messages, props.partystatus.lastMessage]);
       props.partystatus.lastMessage = undefined
     }
-  }, [props.partystatus.lastMessage]);
+  }, [props.partystatus.lastMessage,props.partystatus]);
 
   const sendMessage = (event) => {
     gamify()
@@ -43,7 +43,7 @@ const Chat = (props) => {
         myusr: myusername
       })
     }
-  },[notifyBadge])
+  },[notifyBadge, dispatch, myusername])
 
   const gamify = () => {
     //badge1 chat

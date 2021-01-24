@@ -47,7 +47,7 @@
 }
 
 .notification__item .bar {
-  height: 10px;
+  height: 5px;
 }
 
 .notification__item.success .bar {
