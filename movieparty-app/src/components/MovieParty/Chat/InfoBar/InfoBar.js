@@ -12,7 +12,7 @@ const InfoBar = ({ room }) => (
   <div className="infoBar">
     <div className="leftInnerContainer">
       <img className="onlineIcon" src="https://i.pinimg.com/originals/cb/f9/b1/cbf9b13467d15911a17db8c00dc3382e.jpg" alt="chat"/>
-      <h6>welcome to {room} room</h6>
+      <h6>{room} room</h6>
     </div>
     {<div className="rightInnerContainer">
         <Link to="/dashboard">
