@@ -18,7 +18,7 @@ const initialState = {
 };
 
 //se state non esiste allora viene inizializzato con "initialState"
-export default function(state = initialState, action) {
+export default function movieparty(state = initialState, action) {
     switch (action.type) {
         case MOVIEPARTY_IS_STARTED:
             return {

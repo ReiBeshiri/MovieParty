@@ -40,10 +40,11 @@ router.post("/register", (req, res) => {
             });
 
             const newUserBadge = new UserBadge({
-                name: req.body.name,
+                username: req.body.name,
                 badge1: {source: "badge1", description: "unlock badge 1", owned: false},
                 badge2: {source: "badge2", description: "unlock badge 2", owned: false}
             });
+            newUserBadge.save()
 
             //Hash password before saving in database
             bcrypt.genSalt(10, (err, salt) => {
@@ -57,11 +58,6 @@ router.post("/register", (req, res) => {
                 
                 });
             });
-            //after saving the user insert the badgeCollection 
-            newUserBadge
-                    .save()
-                    .then(user => res.json(user))
-                    .catch(err => console.log(err));
         }
     });
 });
@@ -148,6 +144,7 @@ router.post("/addfriend", (req, res) => {
             //If user does not exist, return 404 not found
             if (!user) {
                 console.log("nessun utente con questo username")
+                socketio.sendPrivateMessage(myUsername, "genericmsg", "user not found")
                 return res.status(404).json({ info: "User not found" });
             }
 

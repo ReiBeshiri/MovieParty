@@ -15,11 +15,11 @@ function Login(props) {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [errors,setError] = useState({});
-  var badgelist;
 
   useEffect(() => {
     if (props.auth.isAuthenticated) {
       //gamification init
+      var badgelist;
       userBadgeList(props.auth.user.name)
         .then(data => { badgelist = data})
         .then(()=>console.log(badgelist))//.then(()=> updateBadgeList(badgelist, "badge1"))
@@ -35,7 +35,7 @@ function Login(props) {
     if (props.errors) {
       setError(props.errors);
     }
-  }, [props.auth])
+  }, [props.auth,props.errors, props.history])
 
   const onChangeEmail = e => {
     setEmail(e.target.value);

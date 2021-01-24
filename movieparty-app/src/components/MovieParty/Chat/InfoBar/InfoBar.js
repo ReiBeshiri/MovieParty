@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import onlineIcon from './icons/onlineIcon.png';
+//import onlineIcon from './icons/onlineIcon.png';
 import closeIcon from './icons/go_back_to_dashboard.png';
 
 import './InfoBar.css';
