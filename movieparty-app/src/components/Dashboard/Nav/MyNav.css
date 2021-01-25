@@ -3,7 +3,6 @@
 }
 
 .border-red {
-    border-radius: 5px;
     border: 1px solid #F45F5F;
     border-radius: 24px;
 }
@@ -12,9 +11,7 @@
     display: initial !important;
     color: white;
     margin-left: 0px !important;
-    padding-left: 0px !important;
-    /*border-radius: 24px;
-    border: 1px solid #F45F5F !important;*/
+    padding-left: 2% !important;
 }
 
 .input-field input[type=search]:focus:not(.browser-default) {
@@ -28,11 +25,31 @@
     font-size: 2vw;
 }
 
-.friends-list-dropdown {
+ul.friends-list-dropdown {
     height: auto !important;
     width: auto !important;
-    min-width: 20% !important;
+    min-width: 20%;
     z-index: 1;
+    background-color: rgb(17, 17, 17, 0.8);
+    transition-timing-function: ease-in;
+    transition: all 0.5s;
+}
+
+.notification-list-dropdown {
+    height: auto !important;
+    width: auto !important;
+    min-width: 30% !important;
+    z-index: 1;
+    background-color: rgb(17, 17, 17, 0.8);
+    transition-timing-function: ease-in;
+    transition: all 0.5s;
+}
+
+.account-info-dropdown {
+    height: auto !important;
+    width: auto !important;
+    min-width: 0% !important;
+    z-index: 20%;
     background-color: rgb(17, 17, 17, 0.8);
     transition-timing-function: ease-in;
     transition: all 0.5s;
@@ -64,13 +81,12 @@
     border-radius: 20%;
 }
 
-.friend {
-    padding-right: 5% !important;
-    padding-left: 5% !important;
+.all-width {
+    width: 100% !important;
 }
 
-.add-friend {
-    width: 100% !important;
+.red-background {
+    background-color: #F45F5F !important;
 }
 
 .search-icons {
@@ -93,9 +109,34 @@
 }
 
 .badge-notification {
-    background-color: #F45F5F !important;
+    background-color: transparent !important;
+    color: #F45F5F !important;
 }
 
 .dropdown-content li {
     background-color:  rgb(17, 17, 17, 0.8) !important;
+}
+
+.dropdown-notifications {
+    padding-left: 0px;
+}
+
+nav ul a span.badge {
+    display: inline;
+}
+
+.border-search {
+    border: 1px solid #263238 !important;
+    border-radius: 20px !important;
+}
+
+.collapsible-header {
+    padding: 0px;
+    background-color: rgb(17, 17, 17, 0.8);
+    color: white;
+    border-bottom: none;
+}
+
+.collapsible {
+    border: none;
 }

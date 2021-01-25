@@ -48,6 +48,13 @@ function Nav(props) {
             closeOnClick: false
         });
 
+        M.Dropdown.init(document.querySelectorAll('.dropdown-account'), {
+            inDuration: 500,
+            outDuration: 225,
+            coverTrigger: false,
+            closeOnClick: false
+        });
+
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
         M.Modal.init(document.querySelectorAll('.modal'), {});
         M.Collapsible.init(document.querySelectorAll('.collapsible'), {})
@@ -103,9 +110,10 @@ function Nav(props) {
 
     const updateFriends = () => {
         return listFriends.map(function(friend){
-            return <li class = "friend white-text" key={friend.username}>
-                {friend.username}
+            return <li key={friend.username}>
+                <a class = "white-text">{friend.username.toUpperCase()}
                 {friend.online? <p class = 'right online-friend'> Online</p> : <p class = 'right center offline-friend'> Offline</p>}
+                </a>
             </li>
         })
     } 
@@ -113,30 +121,35 @@ function Nav(props) {
     const updateSpanNotifications = () => {
         friendRequest(myusername).then(data => {
             if(data.requests.length > 0){
-                //document.getElementById("badge-notification").classList.remove("scale-out")
                 setNewNotification(true)
             }
         })
     }
 
     const updateNotifications = () => {
-        //document.getElementById("badge-notification").classList.add("scale-out")
         return listNotifications.map(function(request){
-            return <li class = "notification white-text" key={request.username}>
-                <p class = "left">{request.friendUsername} vuole essere tuo amico</p>
-                <button class = 'right' onClick = {() => friendResponse(myusername, request.friendUsername, 1)}>Aggiungi</button>
-                <button class = 'right' onClick = {() => friendResponse(myusername, request.friendUsername, 2)} >Rifiuta</button>
+            return <li key={request.username}>
+                    <a class = "left white-text">{request.friendUsername.toUpperCase()}</a>
+                    <a class = 'right green-text' onClick = {() => friendResponse(myusername, request.friendUsername, 1)}>Aggiungi</a>
+                    <a class = 'right red-text' onClick = {() => friendResponse(myusername, request.friendUsername, 2)} >Rifiuta</a>
             </li>
         })
     }
 
     const updateBadgeList = () => {
-        console.log(showBadges)
-        return  <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-                    <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-                </li>
-                    
+        console.log(props.badges)
+        return props.badges.badges.map(function(badge){
+            return  <li>
+                        <div class="collapsible-header valign-wrapper">
+                            <i class="material-icons">{badge.owned? badge.source: "https"}</i>
+                            {badge.owned && badge.title}
+                            {(!badge.owned) && <span class="badge">Locked</span>}
+                        </div>
+                        <div class="collapsible-body white-text">
+                            <span>{badge.description}</span>
+                        </div>
+                    </li>
+        })
     }
     
     const onChangeFriendName = e => {
@@ -150,38 +163,43 @@ function Nav(props) {
                 <div class="nav-wrapper">
                     <a data-target="mobile-nav-dashboard" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <div className = "row">
-                        <div className ="col s1">
+                        <div className ="col s2">
                             <p className = "movieparty-logo">MovieParty</p>
                         </div>
-                        <div className ="col s1 offset-s1 prova">
+                        <div className ="col s3 prova">
                             <button className = "search-icons transparent" onClick={() => searchMovie(searchbarText)}><i class="material-icons white-text">search</i></button>
                         </div>
-                        <div className ="col s4 l3 m2 border-red">
+                        <div className ="col s4 l3 m2">
                             <form>
                                 <div class="input-field">
-                                    <input id="search" type="search" onChange={onChange} value={searchbarText} required/>
+                                    <input id="search" class="border-search" type="search" onChange={onChange} value={searchbarText} required/>
                                 </div>
                             </form>
                         </div>
-                        <ul id="nav-mobile" class="right hide-on-med-and-down border-red">
+                        <ul id="nav-mobile" class="right hide-on-med-and-down">
+                            <li><a class="dropdown-trigger dropdown-notifications" data-target="notifications">{newNotification && <span class="new badge badge-notification"></span>}NOTIFICATION<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <ul id="notifications" class="dropdown-content notification-list-dropdown">
+                                <li><a>Notification</a></li>
+                                {listNotifications !== undefined && updateNotifications()}
+                            </ul>
                             <li><a class="dropdown-trigger dropdown-badges" data-target="badges">BADGES<i class="material-icons right">arrow_drop_down</i></a></li>
                             <ul id="badges" class="dropdown-content friends-list-dropdown">
-                                <li class = "prova"><a class = "prova">Badges</a></li>
+                                <li><a>Badges</a></li>
                                 <li><ul class="collapsible">
                                     {showBadges && updateBadgeList()}
                                 </ul></li>
                             </ul>
-                            <li><a class="dropdown-trigger dropdown-notifications" data-target="notifications">{newNotification && <span id = "badge-notification" class="new badge badge-notification"></span>}NOTIFICATION<i class="material-icons right">arrow_drop_down</i></a></li>
-                            <ul id="notifications" class="dropdown-content friends-list-dropdown">
-                                <li><a>Notification</a></li>
-                                {listNotifications !== undefined && updateNotifications()}
-                            </ul>
                             <li><a class="dropdown-trigger dropdown-friends" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
                             <ul id="friends" class="dropdown-content friends-list-dropdown">
-                                <li class = "valign-wrapper"><button data-target="modal1" class="btn modal-trigger red white-text add-friend">Add friend</button></li>
                                 {listFriends !== undefined && updateFriends()}
+                                {/* <li class = "valign-wrapper"><button data-target="modal1" class="btn modal-trigger white-text add-friend">Add friend</button></li> */}
+                                <li class = "valign-wrapper"><a class = "all-width"><button data-target="modal1" class="btn modal-trigger white-text red-background all-width">Add friend</button></a></li>                               
                             </ul>
-                            <li><a class="waves-effect waves-teal btn-flat white-text" onClick={() => onLogoutClick(myusername)}>Logout</a></li>
+                            {/* <li><a class="waves-effect waves-teal btn-flat white-text" onClick={() => onLogoutClick(myusername)}>Logout</a></li> */}
+                            <li><a class="dropdown-trigger dropdown-account" data-target="account">{myusername.toUpperCase()}</a></li>
+                            <ul id="account" class="dropdown-content account-info-dropdown">
+                                <li class = "valign-wrapper"><button class="btn-flat white-text add-friend" onClick={() => onLogoutClick(myusername)}>LOGOUT</button></li>                               
+                            </ul>
                         </ul>
                     </div> 
                 </div>
@@ -235,5 +253,3 @@ export default connect(
     mapStateToProps,
     { logoutUser }
 )(Nav);
-
-//export default Nav;
