@@ -132,11 +132,13 @@ nav ul a span.badge {
 
 .collapsible-header {
     padding: 0px;
-    background-color: rgb(17, 17, 17, 0.8);
+    /*background-color: rgb(17, 17, 17, 0.8);*/
+    background-color: transparent !important;
     color: white;
     border-bottom: none;
 }
 
 .collapsible {
     border: none;
+    margin: 0 0 0 0;
 }
