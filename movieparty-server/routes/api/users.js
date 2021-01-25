@@ -169,7 +169,7 @@ router.get("/friendrequest", (req, res) => {
     username = req.query.name
     console.log("aggiornamento: " + username)
 
-    FriendRequest.find({receiver: username}).then(requests => {
+    FriendRequest.find({receiver: username, result: 0}).then(requests => {
 
         requestJSON = []
         requests.forEach(request => {

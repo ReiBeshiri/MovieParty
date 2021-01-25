@@ -4,35 +4,56 @@ import { connect } from "react-redux";
 import {SET_MAIN_BANNER_MOVIE} from "../../../actions/types";
 import store from "../../../store";
 import { logoutUser } from "../../../actions/authActions";
-import { sendFriendRequest, friendRequest, friendList } from "../../../actions/friendsActions";
+import { sendFriendRequest, friendRequest, friendList, friendResponse, userBadgeList } from "../../../actions/friendsActions";
 import axios from "../../../utils/Requests/axiosReq";
 import requestsTmdb from "../../../utils/Requests/requestsTmdb";
 import M from "materialize-css";
 import "./MyNav.css"
 
 function Nav(props) {
-    const { user } = props.auth;
-    const [searchbarText, setSearchbarText] = useState("");
+    const { user } = props.auth
+    const [searchbarText, setSearchbarText] = useState("")
     const [show, showNav] = useState(false);
-    const [friendName, setFriendName] = useState("");
-    const myusername = user.name.split(" ")[0];
+    const [friendName, setFriendName] = useState("")
+    const myusername = user.name.split(" ")[0]
+    const [listFriends, setListFriends] = useState(undefined)
+    const [listNotifications, setListNotifications] = useState(undefined)
+    const [newNotification, setNewNotification] = useState(false)
+    const [showBadges, setShowBadges] = useState(false)
     
     useEffect(() => { 
 
-        M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), {
-            onOpenStart: updateFriends, 
+        M.Dropdown.init(document.querySelectorAll('.dropdown-friends'), {
+            onOpenStart: initListFriends, 
+            onCloseEnd: resetListFriends,
             inDuration: 500,
             outDuration: 225,
             coverTrigger: false
         });
 
+        M.Dropdown.init(document.querySelectorAll('.dropdown-notifications'), {
+            onOpenStart: initListNotification,
+            onCloseEnd: resetListNotifications, 
+            inDuration: 500,
+            outDuration: 225,
+            coverTrigger: false
+        });
+
+        M.Dropdown.init(document.querySelectorAll('.dropdown-badges'), {
+            onOpenStart: changeShowBadges,
+            onCloseEnd: changeShowBadges, 
+            inDuration: 500,
+            outDuration: 225,
+            coverTrigger: false,
+            closeOnClick: false
+        });
+
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
         M.Modal.init(document.querySelectorAll('.modal'), {});
-        console.log("PRVVVVA")
-        friendRequest(myusername).then(data => { data.requests.forEach(request => {
-            console.log("amico che mi ha inviato una richiesta: " + request.friendUsername)
-        })});
+        M.Collapsible.init(document.querySelectorAll('.collapsible'), {})
 
+        updateSpanNotifications()
+        
     }, []);
 
     const onChange = e => {
@@ -55,35 +76,72 @@ function Nav(props) {
         if(movie.length>0){fetchMovie(movie);} //if movie length > 0 search, dont otherwise        
     };
 
+    const initListFriends = () => {
+        friendList(myusername).then(data => {
+            setListFriends(data.friends)
+        })
+    }
+
+    const resetListFriends = () => {
+        setListFriends(undefined)
+    }
+
+    const initListNotification = () => {
+        friendRequest(myusername).then(data => {
+            setListNotifications(data.requests)
+        })
+    }
+
+    const resetListNotifications = () => {
+        setNewNotification(false)
+        setListNotifications(undefined)
+    }
+
+    const changeShowBadges = () => {
+        setShowBadges(!showBadges)
+    }
+
     const updateFriends = () => {
-        const ulFriends = document.getElementById("friends")
-        const ulMobileFriends = document.getElementById("friends-mobile")
-
-        var elements = document.getElementsByClassName("friend");
-        while(elements.length > 0){
-            elements[0].parentNode.removeChild(elements[0]);
-        }
-
-        console.log(ulMobileFriends.innerHTML)
-        
-        friendList(myusername).then(data => { data.friends.forEach(element => {
-            const newFriend = 
-            `<li class = "friend white-text">
-                ${element.username}
-                ${element.online? "<p class = 'right online-friend'> Online</p>": "<p class = 'right center offline-friend'> Offline</p>"}
-            </li>`
-            ulFriends.innerHTML = ulFriends.innerHTML + newFriend
-            ulMobileFriends.innerHTML = ulMobileFriends.innerHTML + newFriend  
-        })})
+        return listFriends.map(function(friend){
+            return <li class = "friend white-text" key={friend.username}>
+                {friend.username}
+                {friend.online? <p class = 'right online-friend'> Online</p> : <p class = 'right center offline-friend'> Offline</p>}
+            </li>
+        })
     } 
+
+    const updateSpanNotifications = () => {
+        friendRequest(myusername).then(data => {
+            if(data.requests.length > 0){
+                //document.getElementById("badge-notification").classList.remove("scale-out")
+                setNewNotification(true)
+            }
+        })
+    }
+
+    const updateNotifications = () => {
+        //document.getElementById("badge-notification").classList.add("scale-out")
+        return listNotifications.map(function(request){
+            return <li class = "notification white-text" key={request.username}>
+                <p class = "left">{request.friendUsername} vuole essere tuo amico</p>
+                <button class = 'right' onClick = {() => friendResponse(myusername, request.friendUsername, 1)}>Aggiungi</button>
+                <button class = 'right' onClick = {() => friendResponse(myusername, request.friendUsername, 2)} >Rifiuta</button>
+            </li>
+        })
+    }
+
+    const updateBadgeList = () => {
+        console.log(showBadges)
+        return  <li>
+                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+                    <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                </li>
+                    
+    }
     
     const onChangeFriendName = e => {
         setFriendName(e.target.value );
     };
-
-    const deleteFriendName = () => {
-        setFriendName("")
-    }
 
     return (
         // <div class="navbar-fixed"> da errori la position: relative
@@ -106,13 +164,22 @@ function Nav(props) {
                             </form>
                         </div>
                         <ul id="nav-mobile" class="right hide-on-med-and-down border-red">
-                            <li><a class="dropdown-trigger" data-target="notification">NOTIFICATION<i class="material-icons right">arrow_drop_down</i></a></li>
-                            <ul id="notification" class="dropdown-content friends-list-dropdown">
-                                <li><a>New notification</a></li>
+                            <li><a class="dropdown-trigger dropdown-badges" data-target="badges">BADGES<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <ul id="badges" class="dropdown-content friends-list-dropdown">
+                                <li class = "prova"><a class = "prova">Badges</a></li>
+                                <li><ul class="collapsible">
+                                    {showBadges && updateBadgeList()}
+                                </ul></li>
                             </ul>
-                            <li><a class="dropdown-trigger" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <li><a class="dropdown-trigger dropdown-notifications" data-target="notifications">{newNotification && <span id = "badge-notification" class="new badge badge-notification"></span>}NOTIFICATION<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <ul id="notifications" class="dropdown-content friends-list-dropdown">
+                                <li><a>Notification</a></li>
+                                {listNotifications !== undefined && updateNotifications()}
+                            </ul>
+                            <li><a class="dropdown-trigger dropdown-friends" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
                             <ul id="friends" class="dropdown-content friends-list-dropdown">
-                                <li><button data-target="modal1" class="btn modal-trigger red white-text add-friend">Add friend</button></li>
+                                <li class = "valign-wrapper"><button data-target="modal1" class="btn modal-trigger red white-text add-friend">Add friend</button></li>
+                                {listFriends !== undefined && updateFriends()}
                             </ul>
                             <li><a class="waves-effect waves-teal btn-flat white-text" onClick={() => onLogoutClick(myusername)}>Logout</a></li>
                         </ul>
@@ -121,9 +188,10 @@ function Nav(props) {
             </nav>
 
             <ul class="sidenav" id="mobile-nav-dashboard">
-                <li><a class="dropdown-trigger" data-target="friends-mobile">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a class="dropdown-trigger dropdown-friends" data-target="friends-mobile">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
                 <ul id="friends-mobile" class="dropdown-content mobile-friends-list-dropdown">
-                    <li><a className = "red-text">I tuoi amici</a></li>
+                <li><button data-target="modal1" class="btn modal-trigger red white-text add-friend">Add friend</button></li>
+                    {listFriends !== undefined && updateFriends()}
                 </ul>
                 <li><a class="waves-effect waves-teal btn-flat" onClick={() => onLogoutClick(myusername)}>Logout</a></li>
             </ul>
@@ -160,6 +228,7 @@ Nav.propTypes = {
 const mapStateToProps = state => ({
     auth: state.auth,
     friend: state.friend,
+    badges: state.badges
 });
 
 export default connect(

@@ -86,9 +86,16 @@
     background-color: rgb(17, 17, 17, 0.8) !important;
 }
 
-
 .prova {
     width: auto !important;
     padding-right: 0px !important;
     margin-right: 0px !important;
+}
+
+.badge-notification {
+    background-color: #F45F5F !important;
+}
+
+.dropdown-content li {
+    background-color:  rgb(17, 17, 17, 0.8) !important;
 }
