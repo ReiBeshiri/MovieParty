@@ -36,3 +36,13 @@
   /*different style for trending movies*/
   transform: scale(1.11);
 }
+
+@media /*only screen and*/ (max-width: 500px) {
+  .row__poster {
+    max-height: 150px;
+  }
+  h4 {
+    height: 15px;
+    font-size: x-large;
+  }
+}
