@@ -42,8 +42,8 @@ router.post("/register", (req, res) => {
             const newUserBadge = new UserBadge({
                 username: req.body.name,
                 badges:[ 
-                        {source: "badge1", title: "badge1 Title", description: "unlock badge 1", owned: false},
-                        {source: "badge2", title: "badge2 Title", description: "unlock badge 2", owned: false}
+                        {source: "comment", title: "First comment!", description: "Write a comment in chat", owned: false},
+                        {source: "camera_roll", title: "First party!", description: "Play a movie with a party", owned: false}
                 ]
             });
             newUserBadge.save()
