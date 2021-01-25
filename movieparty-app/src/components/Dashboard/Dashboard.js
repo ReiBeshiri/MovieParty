@@ -8,6 +8,7 @@ import Nav from "./Nav/Nav"
 import request from "../../utils/Requests/requestsTmdb"; //url to fetch the movies info from tmdb
 import {useNotification} from "../Notification/NotificationProvider";
 import {notification_titles} from "../Notification/NotificationTitle";
+import {userBadgeList} from "../../actions/friendsActions"
 
 function Dashboard(props) {
   const { user } = props.auth;
@@ -17,6 +18,10 @@ function Dashboard(props) {
   const dispatch = useNotification();
 
   console.log(props)
+
+  useEffect(()=>{
+    if(props.badges.username === ""){userBadgeList(myusername)}
+  },[props.badges.username])
 
   useEffect(() => {
     if(props.friend.friend_username !== undefined && props.friend.friend_username.length > 2){

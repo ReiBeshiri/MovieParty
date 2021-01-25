@@ -1,4 +1,6 @@
 import axios from "axios";
+import store from "../store";
+import { GET_BADGES } from "./types";
 
 export const genericmsg = (myUsername, friendUsername) => {
 
@@ -76,7 +78,10 @@ export const friendList = (myUsername) => {
 
 export const userBadgeList = (myUsername) => {
     const promise = axios.get("/api/users/badgelist", { params: { username: myUsername }})
-    const dataPromise = promise.then((response) => response.data)
+    const dataPromise = promise.then((response) => store.dispatch({
+                                        type: GET_BADGES,
+                                        payload: response.data
+                                    }))
     
     return dataPromise
 }

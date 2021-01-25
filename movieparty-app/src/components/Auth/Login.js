@@ -22,12 +22,14 @@ function Login(props) {
       //gamification init
       var badgelist;
       userBadgeList(props.auth.user.name)
-        .then(data => { badgelist = data})
-        .then(()=>console.log(badgelist))//.then(()=> updateBadgeList(badgelist, "badge1"))
-        .then(()=>store.dispatch({
-          type: GET_BADGES,
-          payload: badgelist
-        }))
+        //.then(data => { badgelist = data})
+        /*.then(()=>store.dispatch({
+              type: GET_BADGES,
+              payload: badgelist
+              }))*/
+        //.then(()=> console.log(props))
+        //.then(()=>initSocket(props.auth.user.name))
+        //.then(()=> props.history.push("/dashboard"))
       //init socket connection
       initSocket(props.auth.user.name);
       props.history.push("/dashboard");
@@ -135,7 +137,8 @@ Login.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  badges: state.badges
 });
 
 export default connect(
