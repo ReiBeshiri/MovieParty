@@ -56,6 +56,14 @@
   );
 }
 
+@media /*only screen and*/ (max-width: 768px) {
+  .banner__contents {
+    margin-left: 1rem;
+    padding-top: 20%;
+    height: 350px;
+  }
+}
+
 @media /*only screen and*/ (max-width: 500px) {
   .banner__description {
     max-width: 95%;
