@@ -54,7 +54,7 @@ function MoviePartyPlay(props) {
       dispatch({
         title: notification_titles.genericmsg,
         type: "BADGE",
-        message: {text: "badge 1 unlocked!!!", info: ""},
+        message: {text: "Badge unlocked! "+props.badges.badges[1].title, info: ""},
         myusr: ""
       })
     }

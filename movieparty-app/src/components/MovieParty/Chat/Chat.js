@@ -40,7 +40,7 @@ const Chat = (props) => {
       dispatch({
         title: notification_titles.genericmsg,
         type: "BADGE",
-        message: {text: "badge 0 unlocked!!!", info: ""},
+        message: {text: "Badge unlocked! "+props.badges.badges[0].title, info: ""},
         myusr: myusername
       })
     }
