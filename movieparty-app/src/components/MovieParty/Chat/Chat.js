@@ -35,21 +35,23 @@ const Chat = (props) => {
 
   useEffect(()=>{
     if(notifyBadge){
+      console.log(props.badges.badges[0].owned)
       //NOTIFY      
       dispatch({
         title: notification_titles.genericmsg,
         type: "BADGE",
-        message: {text: "badge 1 unlocked!!!", info: ""},
+        message: {text: "badge 0 unlocked!!!", info: ""},
         myusr: myusername
       })
     }
-  },[notifyBadge, dispatch, myusername])
+  },[notifyBadge])
 
   const gamify = () => {
     //badge1 chat
-    if(!props.badges.badge1.owned){
-      updateBadgeList(props.badges, "badge1")
-      props.badges.badge1.owned=true
+    if(!props.badges.badges[0].owned){
+      console.log("grofo")
+      updateBadgeList(props.badges, "badge0")
+      props.badges.badges[0].owned=true
       setNotifyBadge(true)
     }
     //END BADGE

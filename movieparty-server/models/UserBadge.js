@@ -7,8 +7,10 @@ const UserBadgeSchema = new Schema({
     type: String,
     required: true
   },
-  badge1: { source: String, description: String, owned: Boolean },
-  badge2: { source: String, description: String, owned: Boolean }
+  badges: [
+     { source: String, description: String, owned: Boolean },
+     { source: String, description: String, owned: Boolean }
+  ]
 });
 
 module.exports = UserBadge = mongoose.model("userbadge", UserBadgeSchema);

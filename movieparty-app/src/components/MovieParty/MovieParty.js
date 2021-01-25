@@ -70,23 +70,12 @@ function MovieParty(props) {
     }, [props.partystatus.movieparty_isStarted])
 
     function viewFriends(friendsList){
-
-        const prova = friendsList.map(function(friend){
+        return friendsList.map(function(friend){
             return  <div className="friend" key={friend.username}>
                         <label className="friend__list">{friend.username} <label className={friend.online?"friend__online":"friend__offline"}>{(friend.online?"online":"offline")}</label></label>
                         <button id={"btn" + friend.username} className={friend.online?"lobby__pre__party__invite__friend":"lobby__pre__party__invite__friend__disabled"} onClick={(e) => sendInvite(e.target, friend.username)} disabled={!friend.online}>Invita</button> 
                     </div>
         });
-
-        console.log(prova)
-
-        return prova
-        /*return friendsList.map(function(friend){
-            return  <div className="friend" key={friend.username}>
-                        <label className="friend__list">{friend.username} <label className={friend.online?"friend__online":"friend__offline"}>{(friend.online?"online":"offline")}</label></label>
-                        <button id={"btn" + friend.username} className={friend.online?"lobby__pre__party__invite__friend":"lobby__pre__party__invite__friend__disabled"} onClick={(e) => sendInvite(e.target, friend.username)} disabled={!friend.online}>Invita</button> 
-                    </div>
-        }); */
     }
 
     function sendInvite(btn, friendUsername){

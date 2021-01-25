@@ -41,8 +41,10 @@ router.post("/register", (req, res) => {
 
             const newUserBadge = new UserBadge({
                 username: req.body.name,
-                badge1: {source: "badge1", description: "unlock badge 1", owned: false},
-                badge2: {source: "badge2", description: "unlock badge 2", owned: false}
+                badges:[ 
+                        {source: "badge1", description: "unlock badge 1", owned: false},
+                        {source: "badge2", description: "unlock badge 2", owned: false}
+                ]
             });
             newUserBadge.save()
 
@@ -273,19 +275,19 @@ router.put("/addbadge", (req, res) => {
     var newvalues;
     //badge2: { source: String, description: String, owned: Boolean }
     switch (type) {
-        case "badge1":
-            //badge 1 set up values
-            newvalues = {$set: { "badge1": {
-                source: bl.badge1.source,
-                description: bl.badge1.description,
+        case "badge0":
+            //badge 0 set up values
+            newvalues = {$set: { "badges.0": {
+                source: bl.badges[0].source,
+                description: bl.badges[0].description,
                 owned: true
             } }}
           break;
-        case "badge2":
-            //badge 2 set up values
-            newvalues = {$set: { "badge2": {
-                source: bl.badge2.source,
-                description: bl.badge2.description,
+        case "badge1":
+            //badge 1 set up values
+            newvalues = {$set: { "badges.1": {
+                source: bl.badges[1].source,
+                description: bl.badges[1].description,
                 owned: true
             } }}
           break;

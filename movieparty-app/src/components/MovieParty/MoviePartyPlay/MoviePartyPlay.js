@@ -46,15 +46,15 @@ function MoviePartyPlay(props) {
   },[])
 
   const gamify = () => {
-    //badge2 chat
-    if(!props.badges.badge2.owned){
-      updateBadgeList(props.badges, "badge2")
-      props.badges.badge2.owned=true
+    //badge2 first play
+    if(!props.badges.badges[1].owned){
+      updateBadgeList(props.badges, "badge1")
+      props.badges.badges[1].owned=true
       //NOTIFY
       dispatch({
         title: notification_titles.genericmsg,
         type: "BADGE",
-        message: {text: "badge 2 unlocked!!!", info: ""},
+        message: {text: "badge 1 unlocked!!!", info: ""},
         myusr: ""
       })
     }
