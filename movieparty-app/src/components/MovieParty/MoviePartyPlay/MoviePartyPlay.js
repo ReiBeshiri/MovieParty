@@ -48,7 +48,7 @@ function MoviePartyPlay(props) {
   const gamify = () => {
     //badge2 first play
     if(!props.badges.badges[1].owned){
-      updateBadgeList(props.badges, "badge1")
+      updateBadgeList(props.badges, "1")
       props.badges.badges[1].owned=true
       //NOTIFY
       dispatch({

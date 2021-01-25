@@ -8,8 +8,8 @@ const UserBadgeSchema = new Schema({
     required: true
   },
   badges: [
-     { source: String, description: String, owned: Boolean },
-     { source: String, description: String, owned: Boolean }
+     { source: String, title: String, description: String, owned: Boolean },  //#badge0
+     { source: String, title: String, description: String, owned: Boolean }   //#badge1
   ]
 });
 

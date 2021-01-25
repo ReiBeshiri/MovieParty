@@ -50,7 +50,7 @@ const Chat = (props) => {
     //badge1 chat
     if(!props.badges.badges[0].owned){
       console.log("grofo")
-      updateBadgeList(props.badges, "badge0")
+      updateBadgeList(props.badges, "0")
       props.badges.badges[0].owned=true
       setNotifyBadge(true)
     }

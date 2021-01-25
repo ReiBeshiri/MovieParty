@@ -42,8 +42,8 @@ router.post("/register", (req, res) => {
             const newUserBadge = new UserBadge({
                 username: req.body.name,
                 badges:[ 
-                        {source: "badge1", description: "unlock badge 1", owned: false},
-                        {source: "badge2", description: "unlock badge 2", owned: false}
+                        {source: "badge1", title: "badge1 Title", description: "unlock badge 1", owned: false},
+                        {source: "badge2", title: "badge2 Title", description: "unlock badge 2", owned: false}
                 ]
             });
             newUserBadge.save()
@@ -269,27 +269,24 @@ router.get("/badgelist", (req, res) => {
 
 router.put("/addbadge", (req, res) => {
     var bl = req.body.params.badgelist
-    var type = req.body.params.badgetype
+    var type = parseInt(req.body.params.badgetype)
 
     var myquery = {username: bl.username};
     var newvalues;
-    //badge2: { source: String, description: String, owned: Boolean }
+    var struct = {
+        source: bl.badges[type].source,
+        title: bl.badges[type].title,
+        description: bl.badges[type].description,
+        owned: true
+    }
+    
+    newvalues = {$set: { path_: struct }}
     switch (type) {
-        case "badge0":
-            //badge 0 set up values
-            newvalues = {$set: { "badges.0": {
-                source: bl.badges[0].source,
-                description: bl.badges[0].description,
-                owned: true
-            } }}
+        case 0:
+            newvalues = {$set: { "badges.0": struct }}
           break;
-        case "badge1":
-            //badge 1 set up values
-            newvalues = {$set: { "badges.1": {
-                source: bl.badges[1].source,
-                description: bl.badges[1].description,
-                owned: true
-            } }}
+        case 1:
+            newvalues = {$set: { "badges.1": struct }}
           break;
       }
 
