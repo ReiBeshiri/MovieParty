@@ -125,7 +125,7 @@ router.post("/genericmsg", (req, res) => {
 });
 
 router.post("/addfriend", (req, res) => {
-
+    var send = true
     myUsername = req.body.requester
     friendUsername = req.body.receiver
 
@@ -133,9 +133,16 @@ router.post("/addfriend", (req, res) => {
     console.log(friendUsername)
 
     User.findOne({ name: myUsername }).then(myself => {
+        
+        FriendRequest.findOne({requester : myUsername, receiver : friendUsername, result : 0}).then(req => {
+            console.log("FriendRequest already in list")
+            send=false
+            return res.status(200).json({ info: "FriendRequest already in list"});
+        })
 
         if(myself.friends.includes(friendUsername)){
             console.log("User already in friends list")
+            send=false
             return res.status(200).json({ info: "User already in friends list"});
         } 
 
@@ -148,16 +155,19 @@ router.post("/addfriend", (req, res) => {
                 return res.status(404).json({ info: "User not found" });
             }
 
-            const newFriendRequest = new FriendRequest({
-                requester: myUsername,
-                receiver: friendUsername,
-                result: 0
-            });
-            newFriendRequest.save()
-            console.log("sending private msg from " + myUsername + " to " + friendUsername)
-            socketio.sendPrivateMessage(friendUsername, "friendRequest", myUsername)
+            if(send){
+                const newFriendRequest = new FriendRequest({
+                    requester: myUsername,
+                    receiver: friendUsername,
+                    result: 0
+                });
+                newFriendRequest.save()
+                console.log("sending private msg from " + myUsername + " to " + friendUsername)
+                socketio.sendPrivateMessage(friendUsername, "friendRequest", myUsername)
+    
+                return res.status(200).json();
+            }
 
-            return res.status(200).json();
         });
     });
 });

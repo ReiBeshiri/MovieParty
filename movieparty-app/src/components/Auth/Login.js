@@ -9,6 +9,7 @@ import "./Auth.css";
 import {userBadgeList} from "../../actions/friendsActions"
 import store from "../../store";
 import { GET_BADGES } from "../../actions/types";
+import err from "../../reducers/errorReducer";
 
 function Login(props) {
 
@@ -55,6 +56,12 @@ function Login(props) {
 
     props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
+
+  useEffect(()=>{
+    if(errors.passwordincorrect === "Password incorrect"){
+      errors.passwordincorrect = ""
+    }
+  },[errors]);
 
     //const { errors } = state;
 
