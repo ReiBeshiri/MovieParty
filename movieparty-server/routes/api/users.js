@@ -137,9 +137,12 @@ router.post("/addfriend", (req, res) => {
     User.findOne({ name: myUsername }).then(myself => {
         
         FriendRequest.findOne({requester : myUsername, receiver : friendUsername, result : 0}).then(req => {
-            console.log("FriendRequest already in list")
-            send=false
-            return res.status(200).json({ info: "FriendRequest already in list"});
+            if(req !== null){
+                console.log("FriendRequest already in list")
+                console.log(req)
+                send=false
+                return res.status(200).json({ info: "FriendRequest already in list"});
+            }
         })
 
         if(myself.friends.includes(friendUsername)){

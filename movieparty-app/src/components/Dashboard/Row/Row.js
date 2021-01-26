@@ -37,7 +37,7 @@ function Row({ title, fetchTitles, trending}) {
   //yt player options
   const opts = {
     height: "400",//400
-    width: "80%",
+    width: "100%",
     playerVars: {
       autoplay: 0,
     },

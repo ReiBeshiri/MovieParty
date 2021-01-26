@@ -116,10 +116,8 @@ export const sendMoviePartyResponse = (sender, room, response) => {
 }
 
 export const sendMoviePartyInvite = (myUsername, friendUsername, movieURL) => {
+    console.log("sendMoviePartyInvite: " + myUsername)
     if(socket !== undefined){
-        console.log("sender:" + myUsername)
-        console.log("receiver:" + friendUsername)
-        console.log("movieURL:" + movieURL)
         socket.emit("moviePartyInviteSender", {sender: myUsername, receiver: friendUsername, room: myUsername, movieURL: movieURL})        
     }
 }
