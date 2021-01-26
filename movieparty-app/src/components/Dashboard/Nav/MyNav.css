@@ -2,9 +2,9 @@
     background-color: rgb(17, 17, 17, 0.8);
 }
 
-.border-red {
-    border: 1px solid #F45F5F;
-    border-radius: 24px;
+.nav-wrapper .input-field input[type=search] {
+    border: 1px solid #263238;
+    border-radius: 20px;
 }
 
 .input-field input[type=search] {
@@ -25,7 +25,7 @@
     font-size: 2vw;
 }
 
-ul.friends-list-dropdown {
+.dropdown-nav {
     height: auto !important;
     width: auto !important;
     min-width: 20%;
@@ -35,30 +35,14 @@ ul.friends-list-dropdown {
     transition: all 0.5s;
 }
 
-.notification-list-dropdown {
-    height: auto !important;
-    width: auto !important;
-    min-width: 30% !important;
-    z-index: 1;
-    background-color: rgb(17, 17, 17, 0.8);
-    transition-timing-function: ease-in;
-    transition: all 0.5s;
-}
-
 .account-info-dropdown {
-    height: auto !important;
-    width: auto !important;
-    min-width: 0% !important;
-    z-index: 20%;
-    background-color: rgb(17, 17, 17, 0.8);
-    transition-timing-function: ease-in;
-    transition: all 0.5s;
+    min-width: 10%;
 }
 
 .mobile-friends-list-dropdown {
     height: auto !important;
     width: 100% !important;
-    min-width: 50% !important;
+    min-width: 50%;
     z-index: 1;
     background-color: rgb(17, 17, 17, 0.8);
     transition-timing-function: ease-in;
@@ -66,16 +50,16 @@ ul.friends-list-dropdown {
 }
 
 .online-friend {
-    padding-right: 2% !important;
-    padding-left: 2% !important;
+    padding-right: 2%;
+    padding-left: 2%;
     color: green;
     border: double green;
     border-radius: 20%;
 }
 
 .offline-friend {
-    padding-right: 2% !important;
-    padding-left: 2% !important;
+    padding-right: 2%;
+    padding-left: 2%;
     color: red;
     border: double red;
     border-radius: 20%;
@@ -86,36 +70,31 @@ ul.friends-list-dropdown {
 }
 
 .red-background {
-    background-color: #F45F5F !important;
+    background-color: #F45F5F;
 }
 
 .search-icons {
-    border: hidden !important;
+    border: hidden;
 }
 
 .modal {
-    background-color:  rgb(17, 17, 17);
     top: 30% !important;
 }
 
-.modal-footer {
-    background-color: rgb(17, 17, 17, 0.8) !important;
+.row .col.s3 {
+    width: auto;
+    padding-right: 0px ;
+    margin-right: 0px;
 }
 
-.prova {
-    width: auto !important;
-    padding-right: 0px !important;
-    margin-right: 0px !important;
+span.badge.new {
+    background-color: transparent;
+    color: #F45F5F;
 }
 
-.badge-notification {
-    background-color: transparent !important;
-    color: #F45F5F !important;
-}
-
-.dropdown-content li {
+/*.dropdown-content li {
     background-color:  rgb(17, 17, 17, 0.8) !important;
-}
+}*/
 
 .dropdown-notifications {
     padding-left: 0px;
@@ -125,15 +104,8 @@ nav ul a span.badge {
     display: inline;
 }
 
-.border-search {
-    border: 1px solid #263238 !important;
-    border-radius: 20px !important;
-}
-
 .collapsible-header {
     padding: 0px;
-    /*background-color: rgb(17, 17, 17, 0.8);*/
-    background-color: transparent !important;
     color: white;
     border-bottom: none;
 }
@@ -141,4 +113,12 @@ nav ul a span.badge {
 .collapsible {
     border: none;
     margin: 0 0 0 0;
+}
+
+.dropdown-content li:hover, .dropdown-content li.active {
+    background-color:unset;
+}
+
+.collapsible-body {
+    border-bottom: none;
 }
