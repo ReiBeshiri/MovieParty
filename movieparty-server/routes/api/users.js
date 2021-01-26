@@ -29,39 +29,49 @@ router.post("/register", (req, res) => {
         return res.status(400).json(errors);
     }
 
-    User.findOne({ email: req.body.email }).then(user => {
-        if (user) {
-            return res.status(400).json({ email: "Email already exists" });
-        } else {
-            const newUser = new User({
-                name: req.body.name,
-                email: req.body.email,
-                password: req.body.password
-            });
-
-            const newUserBadge = new UserBadge({
-                username: req.body.name,
-                badges:[ 
-                        {source: "comment", title: "First comment!", description: "Write a comment in chat", owned: false},
-                        {source: "camera_roll", title: "First party!", description: "Play a movie with a party", owned: false}
-                ]
-            });
-            newUserBadge.save()
-
-            //Hash password before saving in database
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err, hash) => {
-                if (err) throw err;
-                newUser.password = hash;
-                newUser
-                    .save()
-                    .then(user => res.json(user))
-                    .catch(err => console.log(err));
-                
-                });
+    User.findOne({ name: req.body.name }).then(usr => {
+        console.log(usr)
+        if (usr) {            
+            return res.status(400).json({ name: "Username already exists" });
+        }else{
+            console.log("asfjasnjafsjafsnjasfj")
+            User.findOne({ email: req.body.email }).then(user => {
+                if (user) {
+                    return res.status(400).json({ email: "Email already exists" });
+                } else {
+                    const newUser = new User({
+                        name: req.body.name,
+                        email: req.body.email,
+                        password: req.body.password
+                    });
+        
+                    const newUserBadge = new UserBadge({
+                        username: req.body.name,
+                        badges:[ 
+                                {source: "comment", title: "First comment!", description: "Write a comment in chat", owned: false},
+                                {source: "camera_roll", title: "First party!", description: "Play a movie with a party", owned: false}
+                        ]
+                    });
+                    newUserBadge.save()
+        
+                    //Hash password before saving in database
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        if (err) throw err;
+                        newUser.password = hash;
+                        newUser
+                            .save()
+                            .then(user => res.json(user))
+                            .catch(err => console.log(err));
+                        
+                        });
+                    });
+                }
             });
         }
-    });
+    })
+
+
 });
 
 // @route POST api/users/login
