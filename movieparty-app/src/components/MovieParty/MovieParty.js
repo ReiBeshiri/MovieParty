@@ -90,10 +90,10 @@ function MovieParty(props) {
     return(
         <div className = {!start?"lobby__elements":"lobby__elements_"}>
             {!start && <div className="lobby__pre__party">
-                {!start && <p className="lobby__pre__party__title"><h4>lobby pre party di {props.partystatus.leader}!</h4></p>}
+                {!start && <p className="lobby__pre__party__title"><h4>{props.partystatus.leader} pre party lobby!</h4></p>}
                 {!start && props.partystatus.leader === myusername && listFriends !== undefined && viewFriends(listFriends)}
                 {!start && props.partystatus.leader === myusername && <button className="lobby__pre__party__start__party" onClick={() => startParty()}>Avvia il party</button>}
-                {!start && props.partystatus.leader !== myusername && <p>aspetto che il leader starta il party, sono {myusername}</p>}                
+                {!start && props.partystatus.leader !== myusername && <p>Waiting for the leader to start the party</p>}                
             </div>}
             {!start && <div className = "lobby__pre__party__chat__container"><Chat className = "lobby__pre__party__chat"/></div>}
             {start && <MoviePartyPlay movieURL = {movieURL}/>}

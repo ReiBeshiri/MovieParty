@@ -37,7 +37,7 @@ function Row({ title, fetchTitles, trending}) {
   //yt player options
   const opts = {
     height: "400",//400
-    width: "100%",
+    width: "99%",
     playerVars: {
       autoplay: 0,
     },
@@ -89,7 +89,9 @@ function Row({ title, fetchTitles, trending}) {
     async function fetchMovieTrailer(){
       /**function from movie-trailer api, search url from movie id */
       const ytUrl = await axios.get( axios.defaults.baseURL + "/movie/" + movieId + requestsTmdbMovieTrailer.trailerVideoKey)
-      setMoviePartyUrlSolo(String(ytUrl.data.results[0].key)); //add undefined key conrtrol
+      if(ytUrl.data.results[0] !== undefined){
+        setMoviePartyUrlSolo(String(ytUrl.data.results[0].key)); //add undefined key conrtrol
+      }
       return ytUrl;
     }
     //set movie trailers
