@@ -239,7 +239,7 @@ function Nav(props) {
                             {listNotifications !== undefined && updateNotifications()}
                         </div>
                     </li>
-                    <li><button class="btn-flat all-width white-text" onClick={() => onLogoutClick(myusername)}>LOGOUT</button></li>
+                    <li><button class="btn-flat all-width  white-text" onClick={() => onLogoutClick(myusername)}>LOGOUT</button></li>
                 </ul>
 
             </ul>

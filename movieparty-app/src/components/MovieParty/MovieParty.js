@@ -8,7 +8,7 @@ import { joinRoom } from '../../socket/socket';
 import store from "../../store";
 import requestsTmdbMovieTrailer from "../../utils/Requests/requestsTmdb";
 import Chat from './Chat/Chat';
-import { friendList } from "../../actions/friendsActions";
+import { friendList } from "../../actions/usersActions";
 
 import {
     PARTY_INVITATION
