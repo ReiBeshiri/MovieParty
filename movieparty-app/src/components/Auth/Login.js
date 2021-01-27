@@ -7,9 +7,6 @@ import classnames from "classnames";
 import { initSocket } from "../../socket/socket";
 import "./Auth.css";
 import {userBadgeList} from "../../actions/usersActions"
-import store from "../../store";
-import { GET_BADGES } from "../../actions/types";
-import err from "../../reducers/errorReducer";
 
 function Login(props) {
 
@@ -19,18 +16,7 @@ function Login(props) {
 
   useEffect(() => {
     if (props.auth.isAuthenticated) {
-      //gamification init
-      var badgelist;
       userBadgeList(props.auth.user.name)
-        //.then(data => { badgelist = data})
-        /*.then(()=>store.dispatch({
-              type: GET_BADGES,
-              payload: badgelist
-              }))*/
-        //.then(()=> console.log(props))
-        //.then(()=>initSocket(props.auth.user.name))
-        //.then(()=> props.history.push("/dashboard"))
-      //init socket connection
       initSocket(props.auth.user.name);
       props.history.push("/dashboard");
     }
@@ -65,68 +51,67 @@ function Login(props) {
     }
   },[errors]);
 
-    //const { errors } = state;
 
-    return (
-      <div className="center grey padding-top-login">
-        <Link to="/" className="btn-flat waves-effect white-text">
-          <i className="material-icons left">keyboard_backspace</i> Back to
-          home
-        </Link>
-        <div className="col s12">
-          <h4>
-            <b className = "white-text">Login</b>
-          </h4>
-          <p className="grey-text text-darken-1">
-            Don't have an account? <Link to="/register" className = "red-text">Register</Link>
-          </p>
-        </div>
-        <form noValidate onSubmit={onSubmit} className = "row">
-          <div className="input-field col s4 offset-s4">
-            <input
-              onChange={onChangeEmail}
-              value={email}
-              error={errors.email}
-              id="email"
-              type="email"
-              className={classnames("white-text", {
-                invalid: errors.email || errors.emailnotfound
-              })}
-            />
-            <label htmlFor="email">Email</label>
-            <span className="red-text">
-              {errors.email}
-              {errors.emailnotfound}
-            </span>
-          </div>
-          <div className="input-field col s4 offset-s4">
-            <input
-              onChange={onChangePassword}
-              value={password}
-              error={errors.password}
-              id="password"
-              type="password"
-              className={classnames("white-text", {
-                invalid: errors.password || errors.passwordincorrect
-              })}
-            />
-            <label htmlFor="password">Password</label>
-            <span className="red-text">
-              {errors.password}
-              {errors.passwordincorrect}
-            </span>
-          </div>
-          <div className="col s4 offset-s4">
-            <button
-              type="submit"
-              className="btn auth-button transparent redborder waves-effect waves-light hoverable"
-            >
-              Login
-            </button>
-          </div>
-        </form>
+  return (
+    <div className="center grey padding-top-login">
+      <Link to="/" className="btn-flat waves-effect white-text">
+        <i className="material-icons left">keyboard_backspace</i> Back to
+        home
+      </Link>
+      <div className="col s12">
+        <h4>
+          <b className = "white-text">Login</b>
+        </h4>
+        <p className="grey-text text-darken-1">
+          Don't have an account? <Link to="/register" className = "red-text">Register</Link>
+        </p>
       </div>
-    );
+      <form noValidate onSubmit={onSubmit} className = "row">
+        <div className="input-field col s4 offset-s4">
+          <input
+            onChange={onChangeEmail}
+            value={email}
+            error={errors.email}
+            id="email"
+            type="email"
+            className={classnames("white-text", {
+              invalid: errors.email || errors.emailnotfound
+            })}
+          />
+          <label htmlFor="email">Email</label>
+          <span className="red-text">
+            {errors.email}
+            {errors.emailnotfound}
+          </span>
+        </div>
+        <div className="input-field col s4 offset-s4">
+          <input
+            onChange={onChangePassword}
+            value={password}
+            error={errors.password}
+            id="password"
+            type="password"
+            className={classnames("white-text", {
+              invalid: errors.password || errors.passwordincorrect
+            })}
+          />
+          <label htmlFor="password">Password</label>
+          <span className="red-text">
+            {errors.password}
+            {errors.passwordincorrect}
+          </span>
+        </div>
+        <div className="col s4 offset-s4">
+          <button
+            type="submit"
+            className="btn auth-button transparent redborder waves-effect waves-light hoverable"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
 Login.propTypes = {

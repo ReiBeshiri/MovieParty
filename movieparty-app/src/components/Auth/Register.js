@@ -49,13 +49,6 @@ function Register(props) {
     props.registerUser(newUser, props.history);
   };
 
-  /*setErrors({
-    name: name,
-    email: email,
-    password: password,
-    password2: password2
-  });*/
-
   return (
     <div className="center grey padding-top-register">
       <Link to="/" className="btn-flat waves-effect white-text">
