@@ -3,7 +3,7 @@ import React from 'react';
 import './Input.css';
 
 const Input = ({ message, setMessage, sendMessage }) => (
-  <form className="form">
+  <form className="form valign-wrapper">
     <input
       className="input"
       type="text"

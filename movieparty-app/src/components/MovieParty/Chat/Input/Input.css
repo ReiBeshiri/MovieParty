@@ -1,7 +1,7 @@
 .form {
   display: flex;
   border-top: 3px solid #a1ada5;
-  height: 10%;
+  /*height: 10%;*/
 }
 
 .input {
@@ -9,6 +9,7 @@
   border-radius: none;
   width: 80%;
   font-size: 1.2em;
+  margin-left: 2% !important;
 }
 
 input:focus,
@@ -21,10 +22,10 @@ select:focus {
   color: #fff;
   text-transform: uppercase;
   text-decoration: none;
-  background: #97242e;
+  background: #5c5758;
   padding-top: 2%;
   padding-bottom: 2%;
-  margin: 20px;
+  margin: 2%;
   display: inline-block;
   border-radius: 5px;
   border: #111;
