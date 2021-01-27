@@ -1,7 +1,7 @@
 import {
     SET_FRIEND_USERNAME,
     SET_ACCEPTED_FRIENDSHIP
-} from "../actions/types";
+} from "./types";
 
 const initialState = {
     friend_username: "",

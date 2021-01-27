@@ -3,8 +3,9 @@ import {
     PARTY_INVITATION,
     IN_LOBBY,
     NEW_CHAT_MESSAGE,
-    SYNCHRONIZE_VIDEO
-} from "../actions/types";
+    SYNCHRONIZE_VIDEO,
+    RESET
+} from "./types";
 
 const initialState = {
     movieparty_isStarted: false,
@@ -49,6 +50,7 @@ export default function movieparty(state = initialState, action) {
                 timestamp: action.payload.timestamp,
                 playing: action.payload.playing
             }
+        case RESET: return initialState
         default:
             return state;
     }

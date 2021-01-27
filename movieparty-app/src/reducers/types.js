@@ -11,3 +11,4 @@ export const GENERICMSG = "GENERICMSG";
 export const NEW_CHAT_MESSAGE = "NEW_CHAT_MESSAGE";
 export const SYNCHRONIZE_VIDEO = "SYNCHRONIZE_VIDEO";
 export const GET_BADGES = "GET_BADGES";
+export const RESET = "RESET";

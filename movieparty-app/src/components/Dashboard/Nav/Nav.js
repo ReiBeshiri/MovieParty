@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {SET_MAIN_BANNER_MOVIE} from "../../../actions/types";
+import {SET_MAIN_BANNER_MOVIE} from "../../../reducers/types";
 import store from "../../../store";
 import { logoutUser } from "../../../actions/authActions";
 import { sendFriendRequest, friendRequest, friendList, friendResponse } from "../../../actions/usersActions";

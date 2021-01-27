@@ -1,6 +1,6 @@
 import {
     SET_MAIN_BANNER_MOVIE
-} from "../actions/types";
+} from "./types";
 
 const initialState = {
     mainBannerMovieId: "",

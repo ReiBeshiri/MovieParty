@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from "../store";
-import { GET_BADGES } from "./types";
+import { GET_BADGES } from "../reducers/types";
 
 export const genericmsg = (myUsername, friendUsername) => {
 

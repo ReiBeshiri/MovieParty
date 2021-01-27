@@ -1,5 +1,7 @@
 import "./Dashboard.css";
 import React, { useState, useEffect } from "react";
+import store from "../../store";
+import {RESET} from "../../reducers/types"
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Row from "./Row/Row";
@@ -18,6 +20,13 @@ function Dashboard(props) {
   const dispatch = useNotification();
 
   console.log(props)
+
+  useEffect(()=>{
+    store.dispatch({
+      type: RESET,
+      payload: {}
+    })
+  },[])
 
   useEffect(()=>{
     if(props.badges.username === ""){userBadgeList(myusername)}

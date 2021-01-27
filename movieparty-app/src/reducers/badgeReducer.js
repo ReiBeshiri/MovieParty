@@ -1,4 +1,4 @@
-import { GET_BADGES } from "../actions/types";
+import { GET_BADGES } from "./types";
 
 const initialState = {
   username:"",

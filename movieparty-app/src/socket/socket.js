@@ -8,7 +8,7 @@ import {
     IN_LOBBY,
     NEW_CHAT_MESSAGE,
     SYNCHRONIZE_VIDEO
-} from "../actions/types";
+} from "../reducers/types";
 import store from "../store";
 
 var socket;

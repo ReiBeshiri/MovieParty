@@ -1,6 +1,6 @@
 import {
     GENERICMSG
-} from "../actions/types";
+} from "./types";
 
 const initialState = {
     message: ""

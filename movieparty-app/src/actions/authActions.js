@@ -5,7 +5,7 @@ import {
     GET_ERRORS,
     SET_CURRENT_USER,
     USER_LOADING
-} from "./types";
+} from "../reducers/types";
 import { initSocket, disconnectSocket } from "../socket/socket";
 //const clientSocket = require('../socket/socket');
 

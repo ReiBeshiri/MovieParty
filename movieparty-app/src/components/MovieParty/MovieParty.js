@@ -9,10 +9,7 @@ import store from "../../store";
 import requestsTmdbMovieTrailer from "../../utils/Requests/requestsTmdb";
 import Chat from './Chat/Chat';
 import { friendList } from "../../actions/usersActions";
-
-import {
-    PARTY_INVITATION
-} from "../../actions/types";
+import {PARTY_INVITATION} from "../../reducers/types";
 
 function MovieParty(props) {
 
