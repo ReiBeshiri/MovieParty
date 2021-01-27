@@ -44,7 +44,7 @@ function Banner(props) {
             changeMainMovieBanner(props.searchedMovie.mainBannerMovieId);
             props.searchedMovie.mainBannerMovieId = ""//reset props
         }
-    }, [props])
+    }, [props.searchedMovie])
 
     //fetch friend list once at page load
     useEffect(() => {

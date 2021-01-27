@@ -33,7 +33,7 @@ function Dashboard(props) {
       });
       props.friend.friend_username=undefined;//reset props
     }      
-  }, [props.friend.friend_username,myusername,props.friend,dispatch])
+  }, [props.friend.friend_username,myusername,dispatch])
 
   useEffect(() => {
     if(props.friend.friend_accepted !== undefined && props.friend.friend_accepted.length > 2){
@@ -45,7 +45,7 @@ function Dashboard(props) {
       });
       props.friend.friend_accepted=undefined;//reset props
     }
-  }, [props.friend.friend_accepted,myusername,dispatch,props.friend])
+  }, [props.friend.friend_accepted,myusername,dispatch])
 
   useEffect(() => {
     if(props.genericmsg.message !== undefined && props.genericmsg.message.length > 2){
@@ -68,10 +68,10 @@ function Dashboard(props) {
       props.partystatus.leader=myusername
     }
     console.log("psuh movie party " + (inParty && !props.partystatus.movieparty_isStarted))
-  },[props.partystatus.inLobby,myusername,inParty,props.partystatus])
+  },[props.partystatus.inLobby])
 
   useEffect(() => {
-    if(!inParty && props.partystatus.leader!==myusername && props.partystatus.room!==undefined){
+    if(!props.partystatus.leader!==myusername && props.partystatus.room!==undefined){
       if(props.partystatus.leader.length>2){
         dispatch({
           title: notification_titles.party_req,
@@ -82,7 +82,7 @@ function Dashboard(props) {
       }
         //reset props
     }
-  }, [props.partystatus.room,myusername,inParty,dispatch,props.partystatus])
+  }, [props.partystatus.room])
 
   return (
     <div className="app">
