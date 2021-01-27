@@ -57,9 +57,10 @@ function MovieParty(props) {
         if(props.partystatus.movieparty_isStarted){
             console.log(props)
             setStart(props.partystatus.movieparty_isStarted)
-            setMovieURL(props.partystatus.movieURL)            
+            setMovieURL(props.partystatus.movieURL)
             //exit lobby
             props.partystatus.inLobby=false
+            props.partystatus.leader=""
         }
     }, [props.partystatus.movieparty_isStarted])
 
@@ -85,6 +86,7 @@ function MovieParty(props) {
         sendStartParty(myusername)
         //exit lobby
         props.partystatus.inLobby=false
+        props.partystatus.leader=""
     }
 
     return(
