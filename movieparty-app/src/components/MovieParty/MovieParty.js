@@ -31,7 +31,7 @@ function MovieParty(props) {
         }
         fetchMovieTrailer(movieid)
     }
-
+    
     useEffect(() => {
         joinRoom(myusername);
         if(props.partystatus.leader === "" || props.partystatus.leader === myusername){
@@ -53,7 +53,7 @@ function MovieParty(props) {
     useEffect(() => {
         if(props.partystatus.movieparty_isStarted){
             console.log(props)
-            setStart(props.partystatus.movieparty_isStarted)
+            setStart(true)
             setMovieURL(props.partystatus.movieURL)
             //exit lobby
             props.partystatus.inLobby=false
@@ -79,12 +79,15 @@ function MovieParty(props) {
     }
 
     function startParty(){
+        console.log("start party")
         setStart(true)
         sendStartParty(myusername)
         //exit lobby
         props.partystatus.inLobby=false
         props.partystatus.leader=""
     }
+
+    console.log(start)
 
     return(
         <div className = {!start?"lobby__elements":"lobby__elements_"}>
