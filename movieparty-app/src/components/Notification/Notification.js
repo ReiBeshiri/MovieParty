@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"; 
-import {friendResponse } from "../../actions/friendsActions";
+import {friendResponse } from "../../actions/usersActions";
 import { notification_titles } from "./NotificationTitle";
 import {sendMoviePartyResponse} from "../../socket/socket";
 

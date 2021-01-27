@@ -8,7 +8,7 @@ import Nav from "./Nav/Nav"
 import request from "../../utils/Requests/requestsTmdb"; //url to fetch the movies info from tmdb
 import {useNotification} from "../Notification/NotificationProvider";
 import {notification_titles} from "../Notification/NotificationTitle";
-import {userBadgeList} from "../../actions/friendsActions"
+import {userBadgeList} from "../../actions/usersActions"
 
 function Dashboard(props) {
   const { user } = props.auth;

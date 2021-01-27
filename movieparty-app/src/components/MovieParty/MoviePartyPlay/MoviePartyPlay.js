@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef  } from "react";
 import ReactPlayer from 'react-player'
 import Chat from '../Chat/Chat';
 import {synchronizeVideo} from "../../../socket/socket";
-import {updateBadgeList} from "../../../actions/friendsActions";
+import {updateBadgeList} from "../../../actions/usersActions";
 import {useNotification} from "../../Notification/NotificationProvider";
 import {notification_titles} from "../../Notification/NotificationTitle";
 

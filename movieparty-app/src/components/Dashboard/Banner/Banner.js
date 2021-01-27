@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "../../../utils/Requests/axiosReq"
 import req from "../../../utils/Requests/requestsTmdb"
 import { connect } from "react-redux";
-import { friendList } from "../../../actions/friendsActions";
+import { friendList } from "../../../actions/usersActions";
 import "./Banner.css"
 
 function Banner(props) {

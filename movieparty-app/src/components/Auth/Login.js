@@ -6,7 +6,7 @@ import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 import { initSocket } from "../../socket/socket";
 import "./Auth.css";
-import {userBadgeList} from "../../actions/friendsActions"
+import {userBadgeList} from "../../actions/usersActions"
 import store from "../../store";
 import { GET_BADGES } from "../../actions/types";
 import err from "../../reducers/errorReducer";

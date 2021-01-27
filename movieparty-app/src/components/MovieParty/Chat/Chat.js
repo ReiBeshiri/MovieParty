@@ -5,7 +5,7 @@ import InfoBar from './InfoBar/InfoBar';
 import Input from './Input/Input';
 import Messages from './Messages/Messages';
 import { sendChatMessage } from "../../../socket/socket";
-import {updateBadgeList} from "../../../actions/friendsActions";
+import {updateBadgeList} from "../../../actions/usersActions";
 import {useNotification} from "../../Notification/NotificationProvider";
 import {notification_titles} from "../../Notification/NotificationTitle";
 

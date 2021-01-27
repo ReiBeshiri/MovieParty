@@ -5,17 +5,17 @@
 .nav-wrapper .input-field input[type=search] {
     border: 1px solid #263238;
     border-radius: 20px;
+    padding-left: 2%;
 }
 
 .input-field input[type=search] {
-    display: initial !important;
+    display: initial;
     color: white;
-    margin-left: 0px !important;
-    padding-left: 2% !important;
+    margin-left: 0px;
 }
 
 .input-field input[type=search]:focus:not(.browser-default) {
-    background-color: transparent !important;
+    background-color: transparent;
     color: white;
 }
 
@@ -53,16 +53,16 @@
     padding-right: 2%;
     padding-left: 2%;
     color: green;
-    border: double green;
-    border-radius: 20%;
+    /*border: double green;
+    border-radius: 20%;*/
 }
 
 .offline-friend {
     padding-right: 2%;
     padding-left: 2%;
     color: red;
-    border: double red;
-    border-radius: 20%;
+    /*border: double red;
+    border-radius: 20%;*/
 }
 
 .all-width {
@@ -122,3 +122,22 @@ nav ul a span.badge {
 .collapsible-body {
     border-bottom: none;
 }
+
+.sidenav {
+    background-color: rgb(17, 17, 17, 0.8);
+}
+
+.sidenav .collapsible-body, .sidenav.fixed .collapsible-body {
+    /*background-color: rgb(17, 17, 17, 0.8);*/
+    background-color: transparent;
+}
+
+.sidenav li>a.category {
+    color: #26a69a;
+}
+
+.sidenav .collapsible-body li a.right, .sidenav.fixed .collapsible-body li a.right {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {SET_MAIN_BANNER_MOVIE} from "../../../actions/types";
 import store from "../../../store";
 import { logoutUser } from "../../../actions/authActions";
-import { sendFriendRequest, friendRequest, friendList, friendResponse } from "../../../actions/friendsActions";
+import { sendFriendRequest, friendRequest, friendList, friendResponse } from "../../../actions/usersActions";
 import axios from "../../../utils/Requests/axiosReq";
 import requestsTmdb from "../../../utils/Requests/requestsTmdb";
 import M from "materialize-css";
@@ -40,7 +40,7 @@ function Nav(props) {
 
         M.Dropdown.init(document.querySelectorAll('.dropdown-badges'), {
             onOpenStart: changeShowBadges,
-            onCloseEnd: changeShowBadges, 
+            onCloseEnd: changeShowBadges,
             inDuration: 500,
             outDuration: 225,
             coverTrigger: false,
@@ -57,9 +57,12 @@ function Nav(props) {
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
         M.Modal.init(document.querySelectorAll('.modal'), {});
         M.Collapsible.init(document.querySelectorAll('.collapsible'), {})
+        M.Collapsible.init(document.querySelectorAll('.mobile-collapsible'), {
+            onCloseEnd: resetAll,
+            inDuration: 500
+        });
 
         updateSpanNotifications()
-        
     }, []);
 
     const onChange = e => {
@@ -145,11 +148,17 @@ function Nav(props) {
                             {badge.owned && badge.title}
                             {(!badge.owned) && <span class="badge">Locked</span>}
                         </div>
-                        <div class="collapsible-body white-text transparent">
+                        <div class="collapsible-body white-text transparent center">
                             <span>{badge.description}</span>
                         </div>
                     </li>
         })
+    }
+
+    const resetAll = () => {
+        resetListFriends()
+        resetListNotifications()
+        changeShowBadges()
     }
     
     const onChangeFriendName = e => {
@@ -192,10 +201,8 @@ function Nav(props) {
                             <li><a class="dropdown-trigger dropdown-friends" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
                             <ul id="friends" class="dropdown-content dropdown-nav">
                                 {listFriends !== undefined && updateFriends()}
-                                {/* <li class = "valign-wrapper"><button data-target="modal1" class="btn modal-trigger white-text add-friend">Add friend</button></li> */}
-                                <li class = "valign-wrapper"><a class = "all-width"><button data-target="modal1" class="btn modal-trigger white-text red-background all-width">Add friend</button></a></li>                               
+                                <li class = "valign-wrapper"><a class = "all-width"><button data-target="modalAddFriend" class="btn modal-trigger white-text red-background all-width">Add friend</button></a></li>                               
                             </ul>
-                            {/* <li><a class="waves-effect waves-teal btn-flat white-text" onClick={() => onLogoutClick(myusername)}>Logout</a></li> */}
                             <li><a class="dropdown-trigger dropdown-account" data-target="account">{myusername.toUpperCase()}</a></li>
                             <ul id="account" class="dropdown-content dropdown-nav account-info-dropdown">
                                 <li class = "valign-wrapper"><button class="btn-flat all-width center white-text add-friend" onClick={() => onLogoutClick(myusername)}>LOGOUT</button></li>                               
@@ -206,15 +213,38 @@ function Nav(props) {
             </nav>
 
             <ul class="sidenav" id="mobile-nav-dashboard">
-                <li><a class="dropdown-trigger dropdown-friends" data-target="friends-mobile">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
-                <ul id="friends-mobile" class="dropdown-content mobile-friends-list-dropdown">
-                <li><button data-target="modal1" class="btn modal-trigger red white-text add-friend">Add friend</button></li>
-                    {listFriends !== undefined && updateFriends()}
+                <ul class="collapsible mobile-collapsible">
+                    <li>
+                        <div class="collapsible-header" onClick = {() => initListFriends()}>Friends</div>
+                        <div class="collapsible-body">
+                            {listFriends !== undefined && updateFriends()}
+                            <li class = "valign-wrapper"><a class = "all-width"><button data-target="modalAddFriend" class="btn modal-trigger white-text red-background all-width">Add friend</button></a></li>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header" onClick = {() => changeShowBadges()}>Badges</div>
+                        <div class="collapsible-body">
+                            <li><a class = "category">Badges</a></li>
+                            <li>
+                                <ul class="collapsible">
+                                    {showBadges && updateBadgeList()}
+                                </ul>
+                            </li>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header" onClick = {() => initListNotification()}>Notification{newNotification && <span class="new badge"></span>}</div>
+                        <div class="collapsible-body">
+                            <li><a class = "category">Notification</a></li>
+                            {listNotifications !== undefined && updateNotifications()}
+                        </div>
+                    </li>
+                    <li><button class="btn-flat all-width white-text" onClick={() => onLogoutClick(myusername)}>LOGOUT</button></li>
                 </ul>
-                <li><a class="waves-effect waves-teal btn-flat" onClick={() => onLogoutClick(myusername)}>Logout</a></li>
+
             </ul>
 
-            <div id="modal1" class="modal grey darken-4">
+            <div id="modalAddFriend" class="modal grey darken-4">
                 <div class="modal-content">
                     <h4 class = "red-text">Add a new friend</h4>
                     <div className="input-field">
