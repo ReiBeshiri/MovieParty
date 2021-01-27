@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 
+
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
@@ -316,7 +317,10 @@ router.put("/logout", (req, res) => {
         user.save()
         return res.status(200).json();
     });
+});
 
+router.get('/*',function (req, res) {
+    res.redirect('http://localhost:3000/login');
 });
   
 module.exports = router;
