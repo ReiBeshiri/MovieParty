@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import store from "../../store";
+import { GET_ERRORS } from "../../reducers/types";
 import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 import "./Auth.css";
@@ -13,6 +15,13 @@ function Register(props) {
   const [password,setPassword] = useState("");
   const [password2,setPassword2] = useState("");
   const [errors,setErrors] = useState({});
+
+  useEffect(() => {
+    store.dispatch({
+      type: GET_ERRORS,
+      payload: {}
+    })
+  }, []);
 
   useEffect(() => {
     if (props.errors) {

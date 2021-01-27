@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import classnames from "classnames";
 import { initSocket } from "../../socket/socket";
+import store from "../../store";
+import { GET_ERRORS } from "../../reducers/types";
 import "./Auth.css";
 import {userBadgeList} from "../../actions/usersActions"
 
@@ -13,6 +15,13 @@ function Login(props) {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [errors,setError] = useState({});
+
+  useEffect(() => {
+    store.dispatch({
+      type: GET_ERRORS,
+      payload: {}
+    })
+  }, []);
 
   useEffect(() => {
     if (props.auth.isAuthenticated) {
