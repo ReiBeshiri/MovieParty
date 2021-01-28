@@ -6,6 +6,7 @@
     border: 1px solid #263238;
     border-radius: 20px;
     padding-left: 2%;
+    width: 100%;
 }
 
 .input-field input[type=search] {
@@ -92,10 +93,6 @@ span.badge.new {
     color: #F45F5F;
 }
 
-/*.dropdown-content li {
-    background-color:  rgb(17, 17, 17, 0.8) !important;
-}*/
-
 .dropdown-notifications {
     padding-left: 0px;
 }
@@ -124,7 +121,7 @@ nav ul a span.badge {
 }
 
 .sidenav {
-    background-color: rgb(17, 17, 17, 0.8);
+    background-color: rgb(17 17 17 / 95%);
 }
 
 .sidenav .collapsible-body, .sidenav.fixed .collapsible-body {
@@ -139,5 +136,9 @@ nav ul a span.badge {
 .sidenav .collapsible-body li a.right, .sidenav.fixed .collapsible-body li a.right {
     padding-left: 2%;
     padding-right: 2%;
+}
+
+.sidenav li>a {
+    color: white;
 }
 

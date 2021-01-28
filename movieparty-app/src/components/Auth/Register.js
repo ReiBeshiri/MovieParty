@@ -73,7 +73,7 @@ function Register(props) {
         </p>
       </div>
       <form noValidate onSubmit={onSubmit} className = "row">
-        <div className="input-field col s4 offset-s4">
+        <div className="input-field col s10 l4 offset-s1 offset-l4">
           <input
             onChange={onChangeName}
             value={name}
@@ -85,7 +85,7 @@ function Register(props) {
           <label htmlFor="name">Name</label>
           <span className="red-text">{errors.name}</span>
         </div>
-        <div className="input-field col s4 offset-s4">
+        <div className="input-field col s10 l4 offset-s1 offset-l4">
           <input
             onChange={onChangeEmail}
             value={email}
@@ -99,7 +99,7 @@ function Register(props) {
           <label htmlFor="email">Email</label>
           <span className="red-text">{errors.email}</span>
         </div>
-        <div className="input-field col s4 offset-s4">
+        <div className="input-field col s10 l4 offset-s1 offset-l4">
           <input
             onChange={onChangePassword}
             value={password}
@@ -113,7 +113,7 @@ function Register(props) {
           <label htmlFor="password">Password</label>
           <span className="red-text">{errors.password}</span>
         </div>
-        <div className="input-field col s4 offset-s4">
+        <div className="input-field col s10 l4 offset-s1 offset-l4">
           <input
             onChange={onChangePassword2}
             value={password2}
@@ -127,7 +127,7 @@ function Register(props) {
           <label htmlFor="password2">Confirm Password</label>
           <span className="red-text">{errors.password2}</span>
         </div>
-        <div className="col s4 offset-s4">
+        <div className="col col s10 l4 offset-s1 offset-l4">
           <button
             type="submit"
             className="btn auth-button transparent redborder waves-effect waves-light hoverable "

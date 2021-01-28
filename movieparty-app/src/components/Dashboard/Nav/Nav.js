@@ -8,7 +8,7 @@ import { sendFriendRequest, friendRequest, friendList, friendResponse } from "..
 import axios from "../../../utils/Requests/axiosReq";
 import requestsTmdb from "../../../utils/Requests/requestsTmdb";
 import M from "materialize-css";
-import "./MyNav.css"
+import "./Nav.css"
 
 function Nav(props) {
     const { user } = props.auth
@@ -39,8 +39,8 @@ function Nav(props) {
         });
 
         M.Dropdown.init(document.querySelectorAll('.dropdown-badges'), {
-            onOpenStart: changeShowBadges,
-            onCloseEnd: changeShowBadges,
+            onOpenStart: setShowBadges(true),
+            onCloseEnd: setShowBadges(false),
             inDuration: 500,
             outDuration: 225,
             coverTrigger: false,
@@ -106,10 +106,6 @@ function Nav(props) {
         setListNotifications(undefined)
     }
 
-    const changeShowBadges = () => {
-        setShowBadges(!showBadges)
-    }
-
     const updateFriends = () => {
         return listFriends.map(function(friend){
             return <li key={friend.username}>
@@ -158,7 +154,6 @@ function Nav(props) {
     const resetAll = () => {
         resetListFriends()
         resetListNotifications()
-        changeShowBadges()
     }
     
     const onChangeFriendName = e => {
@@ -166,7 +161,6 @@ function Nav(props) {
     };
 
     return (
-        // <div class="navbar-fixed"> da errori la position: relative
         <div>
             <nav className = "navDashboard z-depth-0">
                 <div class="nav-wrapper">
@@ -178,7 +172,7 @@ function Nav(props) {
                         <div className ="col s3">
                             <button className = "search-icons transparent" onClick={() => searchMovie(searchbarText)}><i class="material-icons white-text">search</i></button>
                         </div>
-                        <div className ="col s4 l3 m2">
+                        <div className ="col s7 l3">
                             <form>
                                 <div class="input-field">
                                     <input id="search" class="border-search" type="search" onChange={onChange} value={searchbarText} required/>
@@ -213,6 +207,7 @@ function Nav(props) {
             </nav>
 
             <ul class="sidenav" id="mobile-nav-dashboard">
+                <li><a class = "center">ACCOUNT: {myusername.toUpperCase()}</a></li>
                 <ul class="collapsible mobile-collapsible">
                     <li>
                         <div class="collapsible-header" onClick = {() => initListFriends()}>Friends</div>
@@ -222,7 +217,7 @@ function Nav(props) {
                         </div>
                     </li>
                     <li>
-                        <div class="collapsible-header" onClick = {() => changeShowBadges()}>Badges</div>
+                        <div class="collapsible-header" onClick = {() => setShowBadges(true)}>Badges</div>
                         <div class="collapsible-body">
                             <li><a class = "category">Badges</a></li>
                             <li>
@@ -239,9 +234,8 @@ function Nav(props) {
                             {listNotifications !== undefined && updateNotifications()}
                         </div>
                     </li>
-                    <li><button class="btn-flat all-width  white-text" onClick={() => onLogoutClick(myusername)}>LOGOUT</button></li>
                 </ul>
-
+                <li><button class="btn-flat all-width  white-text" onClick={() => onLogoutClick(myusername)}>LOGOUT</button></li>
             </ul>
 
             <div id="modalAddFriend" class="modal grey darken-4">

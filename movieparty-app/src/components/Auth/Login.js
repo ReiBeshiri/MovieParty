@@ -76,7 +76,7 @@ function Login(props) {
         </p>
       </div>
       <form noValidate onSubmit={onSubmit} className = "row">
-        <div className="input-field col s4 offset-s4">
+        <div className="input-field col s10 l4 offset-s1 offset-l4">
           <input
             onChange={onChangeEmail}
             value={email}
@@ -93,7 +93,7 @@ function Login(props) {
             {errors.emailnotfound}
           </span>
         </div>
-        <div className="input-field col s4 offset-s4">
+        <div className="input-field col s10 l4 offset-s1 offset-l4">
           <input
             onChange={onChangePassword}
             value={password}
@@ -110,7 +110,7 @@ function Login(props) {
             {errors.passwordincorrect}
           </span>
         </div>
-        <div className="col s4 offset-s4">
+        <div className="col col s10 l4 offset-s1 offset-l4">
           <button
             type="submit"
             className="btn auth-button transparent redborder waves-effect waves-light hoverable"
