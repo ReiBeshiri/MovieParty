@@ -33,8 +33,8 @@ function MovieParty(props) {
     }
     
     useEffect(() => {
-        joinRoom(myusername);
         if(props.partystatus.leader === "" || props.partystatus.leader === myusername){
+            joinRoom(myusername);
             fetchmovie(props.location.movieId);
             store.dispatch({
                 type: PARTY_INVITATION,

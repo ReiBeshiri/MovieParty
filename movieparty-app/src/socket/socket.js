@@ -13,6 +13,7 @@ import store from "../store";
 
 var socket;
 var myusername;
+var currentRoom=undefined;
 
 //DA RINOMINARE IL FILE "SocketClient"
 export const initSocket = (username) => {
@@ -124,7 +125,15 @@ export const sendMoviePartyInvite = (myUsername, friendUsername, movieURL) => {
 
 export const joinRoom = (roomName) => {
     if(socket !== undefined){
+        currentRoom = roomName;
         socket.emit("join", {myusername: myusername, room: roomName})
+    }
+}
+
+export const leaveRoom = () => {
+    if(socket !== undefined && currentRoom !== undefined){
+        socket.emit("leave", {room: currentRoom})
+        currentRoom=undefined
     }
 }
 

@@ -30,7 +30,10 @@ export default function movieparty(state = initialState, action) {
                         movieparty_isStarted: action.payload, 
                     };
                 }     
-                return state;
+                return {
+                    ...state,
+                    movieparty_isStarted: false, 
+                };
             }
         case PARTY_INVITATION:
             return{

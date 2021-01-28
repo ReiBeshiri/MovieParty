@@ -12,7 +12,7 @@ import {notification_titles} from "../../Notification/NotificationTitle";
 const Chat = (props) => {
 
   const myusername = props.auth.user.name.split(" ")[0];
-  const roomName = props.partystatus.leader;
+  const roomName = props.partystatus.room;
   const [message, setMessage] = useState(''); 
   const [messages, setMessages] = useState([]); //Per tenere traccia dei messaggi bisogna avere uno stato. Questa istruzione ci permette di tenere traccia di tutti i messaggi. "setMessages" conterrà tutti gli array.
   const dispatch = useNotification();
@@ -29,6 +29,7 @@ const Chat = (props) => {
     gamify()
     event.preventDefault(); //Permette di non far refreshare la pagina
     sendChatMessage(myusername, roomName, message)
+
     setMessages(messages => [...messages, {username: myusername, text: message}])
     setMessage("")
   }

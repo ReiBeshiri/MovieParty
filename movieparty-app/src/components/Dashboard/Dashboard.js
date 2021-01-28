@@ -4,6 +4,7 @@ import store from "../../store";
 import {RESET} from "../../reducers/types"
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { leaveRoom } from '../../socket/socket';
 import Row from "./Row/Row";
 import Banner from "./Banner/Banner";
 import Nav from "./Nav/Nav"
@@ -22,6 +23,7 @@ function Dashboard(props) {
   console.log(props)
 
   useEffect(()=>{
+    leaveRoom()
     store.dispatch({
       type: RESET,
       payload: {}

@@ -30,6 +30,11 @@ function serverSocket(server){
             socket.broadcast.to(data.room).emit('message', { user: 'admin', text: `${data.myusername} has joined!`});
         });
 
+        socket.on('leave', (data) =>{
+            socket.leave(data.room)
+            console.log("sono uscito dalla stanza |" + data.room)
+        })
+
         socket.on('moviePartyInviteSender', (data)=>{
             console.log("movieparty invito: " + data.sender + " " + data.receiver + ", movieURL:" + data.movieURL)
             sendPrivateMessage(data.receiver, "moviePartyInviteReceiver", {sender: data.sender, room: data.room, movieURL: data.movieURL})
