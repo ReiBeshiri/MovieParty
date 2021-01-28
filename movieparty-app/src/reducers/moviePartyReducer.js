@@ -23,12 +23,14 @@ export default function movieparty(state = initialState, action) {
     switch (action.type) {
         case MOVIEPARTY_IS_STARTED:
             {   
-                if(state.movieURL !== ""){
+                if(state.movieURL !== "" || state.movieURL !== undefined){
+                    console.log("Cambiamento Dal Leader")
                     return {
                         ...state,
-                        movieparty_isStarted: action.payload,                
+                        movieparty_isStarted: action.payload, 
                     };
-                }                
+                }     
+                return state;
             }
         case PARTY_INVITATION:
             return{
@@ -49,11 +51,14 @@ export default function movieparty(state = initialState, action) {
                 lastMessage: action.payload
             }
         case SYNCHRONIZE_VIDEO:
-            return{
-                ...state,
-                timestamp: action.payload.timestamp,
-                playing: action.payload.playing
-            }
+            if(state.room === action.payload.roomName){
+                return{
+                    ...state,
+                    timestamp: action.payload.timestamp,
+                    playing: action.payload.playing
+                }
+            } 
+            return state;           
         case RESET: return initialState
         default:
             return state;
