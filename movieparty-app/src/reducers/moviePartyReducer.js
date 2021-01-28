@@ -22,10 +22,14 @@ const initialState = {
 export default function movieparty(state = initialState, action) {
     switch (action.type) {
         case MOVIEPARTY_IS_STARTED:
-            return {
-                ...state,
-                movieparty_isStarted: action.payload,                
-            };
+            {   
+                if(state.movieURL !== ""){
+                    return {
+                        ...state,
+                        movieparty_isStarted: action.payload,                
+                    };
+                }                
+            }
         case PARTY_INVITATION:
             return{
                 ...state,
