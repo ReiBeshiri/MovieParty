@@ -39,8 +39,8 @@ function Nav(props) {
         });
 
         M.Dropdown.init(document.querySelectorAll('.dropdown-badges'), {
-            onOpenStart: setShowBadges(true),
-            onCloseEnd: setShowBadges(false),
+            onOpenStart: () => {setShowBadges(true)},
+            onCloseEnd: () => {setShowBadges(false)},
             inDuration: 500,
             outDuration: 225,
             coverTrigger: false,
@@ -109,7 +109,7 @@ function Nav(props) {
     const updateFriends = () => {
         return listFriends.map(function(friend){
             return <li key={friend.username}>
-                <a class = "white-text">
+                <a href="#!" class = "white-text">
                     {friend.username.toUpperCase()}
                     {friend.online? <p class = 'right online-friend'> Online</p> : <p class = 'right center offline-friend'> Offline</p>}
                 </a>
@@ -128,9 +128,9 @@ function Nav(props) {
     const updateNotifications = () => {
         return listNotifications.map(function(request){
             return <li key={request.username}>
-                    <a class = "left white-text">{request.friendUsername.toUpperCase()}</a>
-                    <a class = 'right green-text' onClick = {() => friendResponse(myusername, request.friendUsername, 1)}>Aggiungi</a>
-                    <a class = 'right red-text' onClick = {() => friendResponse(myusername, request.friendUsername, 2)} >Rifiuta</a>
+                    <a href="#!" class = "left white-text">{request.friendUsername.toUpperCase()}</a>
+                    <a href="#!" class = 'right green-text' onClick = {() => friendResponse(myusername, request.friendUsername, 1)}>Aggiungi</a>
+                    <a href="#!" class = 'right red-text' onClick = {() => friendResponse(myusername, request.friendUsername, 2)} >Rifiuta</a>
             </li>
         })
     }
@@ -164,7 +164,7 @@ function Nav(props) {
         <div>
             <nav className = "navDashboard z-depth-0">
                 <div class="nav-wrapper">
-                    <a data-target="mobile-nav-dashboard" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <a href="#!" data-target="mobile-nav-dashboard" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <div className = "row">
                         <div className ="col s2">
                             <p className = "movieparty-logo">MovieParty</p>
@@ -180,24 +180,24 @@ function Nav(props) {
                             </form>
                         </div>
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
-                            <li><a class="dropdown-trigger dropdown-notifications" data-target="notifications">{newNotification && <span class="new badge"></span>}NOTIFICATION<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <li><a href="#!" class="dropdown-trigger dropdown-notifications" data-target="notifications">{newNotification && <span class="new badge"></span>}NOTIFICATION<i class="material-icons right">arrow_drop_down</i></a></li>
                             <ul id="notifications" class="dropdown-content dropdown-nav">
-                                <li><a>Notification</a></li>
+                                <li><a href="#!" >Notification</a></li>
                                 {listNotifications !== undefined && updateNotifications()}
                             </ul>
-                            <li><a class="dropdown-trigger dropdown-badges" data-target="badges">BADGES<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <li><a href="#!" class="dropdown-trigger dropdown-badges" data-target="badges">BADGES<i class="material-icons right">arrow_drop_down</i></a></li>
                             <ul id="badges" class="dropdown-content dropdown-nav">
-                                <li><a>Badges</a></li>
+                                <li><a href="#!" >Badges</a></li>
                                 <li><ul class="collapsible">
                                     {showBadges && updateBadgeList()}
                                 </ul></li>
                             </ul>
-                            <li><a class="dropdown-trigger dropdown-friends" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <li><a href="#!" class="dropdown-trigger dropdown-friends" data-target="friends">FRIENDS<i class="material-icons right">arrow_drop_down</i></a></li>
                             <ul id="friends" class="dropdown-content dropdown-nav">
                                 {listFriends !== undefined && updateFriends()}
-                                <li class = "valign-wrapper"><a class = "all-width"><button data-target="modalAddFriend" class="btn modal-trigger white-text red-background all-width">Add friend</button></a></li>                               
+                                <li class = "valign-wrapper"><a href="#!" class = "all-width"><button data-target="modalAddFriend" class="btn modal-trigger white-text red-background all-width">Add friend</button></a></li>                               
                             </ul>
-                            <li><a class="dropdown-trigger dropdown-account" data-target="account">{myusername.toUpperCase()}</a></li>
+                            <li><a href="#!" class="dropdown-trigger dropdown-account" data-target="account">{myusername.toUpperCase()}</a></li>
                             <ul id="account" class="dropdown-content dropdown-nav account-info-dropdown">
                                 <li class = "valign-wrapper"><button class="btn-flat all-width center white-text add-friend" onClick={() => onLogoutClick(myusername)}>LOGOUT</button></li>                               
                             </ul>
@@ -207,19 +207,19 @@ function Nav(props) {
             </nav>
 
             <ul class="sidenav" id="mobile-nav-dashboard">
-                <li><a class = "center">ACCOUNT: {myusername.toUpperCase()}</a></li>
+                <li><a href="#!" class = "center">ACCOUNT: {myusername.toUpperCase()}</a></li>
                 <ul class="collapsible mobile-collapsible">
                     <li>
                         <div class="collapsible-header" onClick = {() => initListFriends()}>Friends</div>
                         <div class="collapsible-body">
                             {listFriends !== undefined && updateFriends()}
-                            <li class = "valign-wrapper"><a class = "all-width"><button data-target="modalAddFriend" class="btn modal-trigger white-text red-background all-width">Add friend</button></a></li>
+                            <li class = "valign-wrapper"><a href="#!" class = "all-width"><button data-target="modalAddFriend" class="btn modal-trigger white-text red-background all-width">Add friend</button></a></li>
                         </div>
                     </li>
                     <li>
                         <div class="collapsible-header" onClick = {() => setShowBadges(true)}>Badges</div>
                         <div class="collapsible-body">
-                            <li><a class = "category">Badges</a></li>
+                            <li><a href="#!" class = "category">Badges</a></li>
                             <li>
                                 <ul class="collapsible">
                                     {showBadges && updateBadgeList()}
@@ -230,7 +230,7 @@ function Nav(props) {
                     <li>
                         <div class="collapsible-header" onClick = {() => initListNotification()}>Notification{newNotification && <span class="new badge"></span>}</div>
                         <div class="collapsible-body">
-                            <li><a class = "category">Notification</a></li>
+                            <li><a href="#!" class = "category">Notification</a></li>
                             {listNotifications !== undefined && updateNotifications()}
                         </div>
                     </li>
@@ -253,8 +253,8 @@ function Nav(props) {
                     </div>
                 </div>
                 <div class="modal-footer grey darken-4">
-                    <a class="modal-close waves-effect waves-green btn-flat white-text" onClick = {() => setFriendName("")}>Discard</a>
-                    <a class="modal-close waves-effect waves-green btn-flat white-text" onClick={() => sendFriendRequest(myusername, friendName)}>Send request</a>
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat white-text" onClick = {() => setFriendName("")}>Discard</a>
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat white-text" onClick={() => sendFriendRequest(myusername, friendName)}>Send request</a>
                 </div>
             </div>
         </div>
