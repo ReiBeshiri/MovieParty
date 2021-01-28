@@ -1,6 +1,6 @@
 .form {
   display: flex;
-  border-top: 3px solid #a1ada5;
+  border-top: 3px solid #a1242f;
   /*height: 10%;*/
 }
 
@@ -22,13 +22,10 @@ select:focus {
   color: #fff;
   text-transform: uppercase;
   text-decoration: none;
-  background: #5c5758;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  margin: 2%;
+  color:  #F45F5F;
   display: inline-block;
-  border-radius: 5px;
-  border: #111;
+  /*border-radius: 5px;
+  border: #111;*/
   width: 20%;
 }
 
@@ -37,10 +34,11 @@ select:focus {
     display: inline;
   }
   .input {
-    width: 100%;
+    width: 85% !important;
   }
   .sendButton {
-    display: none;
-    width: 0%;
+    margin: 1%;
+    width: 10%;
+    padding: 1%;
   }
 }

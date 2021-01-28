@@ -13,7 +13,7 @@ const Input = ({ message, setMessage, sendMessage }) => (
       onChange={({ target: { value } }) => setMessage(value)}
       onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null} //Quando viene premuta la barra spaziatrice il messaggio viene inviato
     />
-    <button className="sendButton" onClick={e => sendMessage(e)}>Send</button>
+    <button className="sendButton btn-flat" onClick={e => sendMessage(e)}><i class="material-icons">send</i></button> 
   </form>
 )
 
