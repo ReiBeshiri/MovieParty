@@ -105,7 +105,7 @@ function Dashboard(props) {
       <Row title="Comedy Movies" fetchTitles={request.fetchComedyMovies} trending/>
       <Row title="Fantasy Movies" fetchTitles={request.fetchFantasyMovies} trending/>
       <Row title="Animation Movies" fetchTitles={request.fetchAnimationMovies} trending />
-      {inParty && !props.partystatus.movieparty_isStarted && props.history.push("/movieparty")}
+      {inParty /*&& !props.partystatus.movieparty_isStarted*/ && props.history.push("/movieparty")}
     </div>
   );
 }
