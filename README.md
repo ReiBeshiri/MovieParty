@@ -1,2 +1,2 @@
 # MovieParty
-Progetto ASW
+Web-Application in cui è possibile visionare contenuti multimediali (teoricamente film, tuttavia per motivi di copyright si utilizzeranno solamente i trailer) come se si fosse in una sorta di “salotto virtuale”, in cui è presente la riproduzione sincronizzata del video tra tutti i partecipanti al party e una chat per commentare in tempo reale ciò che si sta visionando. L’idea è sorta in seguito a questo periodo di lontananza forzata da amici e parenti.
