@@ -39,7 +39,7 @@ function Dashboard(props) {
       dispatch({
         title: notification_titles.friend_req,
         type: "SUCCESS", //success or error or ecc..
-        message: {text: "richiesta da ", info: props.friend.friend_username},
+        message: {text: "Friend request from ", info: props.friend.friend_username},
         myusr: myusername
       });
       props.friend.friend_username=undefined;//reset props
@@ -51,7 +51,7 @@ function Dashboard(props) {
       dispatch({
         title: notification_titles.friend_req_accepted,
         type: "SUCCESS",
-        message: {text:"ora sei amico con ", info: props.friend.friend_accepted},
+        message: {text:"Now you are friend with ", info: props.friend.friend_accepted},
         myusr: myusername
       });
       props.friend.friend_accepted=undefined;//reset props

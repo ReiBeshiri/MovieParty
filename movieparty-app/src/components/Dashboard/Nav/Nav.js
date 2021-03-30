@@ -129,8 +129,8 @@ function Nav(props) {
         return listNotifications.map(function(request){
             return <li key={request.username}>
                     <a href="#!" class = "left white-text">{request.friendUsername.toUpperCase()}</a>
-                    <a href="#!" class = 'right green-text' onClick = {() => friendResponse(myusername, request.friendUsername, 1)}>Aggiungi</a>
-                    <a href="#!" class = 'right red-text' onClick = {() => friendResponse(myusername, request.friendUsername, 2)} >Rifiuta</a>
+                    <a href="#!" class = 'right green-text' onClick = {() => friendResponse(myusername, request.friendUsername, 1)}>Accept</a>
+                    <a href="#!" class = 'right red-text' onClick = {() => friendResponse(myusername, request.friendUsername, 2)} >Decline</a>
             </li>
         })
     }
