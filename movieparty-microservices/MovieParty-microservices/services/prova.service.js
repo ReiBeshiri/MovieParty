@@ -47,6 +47,19 @@ module.exports = {
 			}
 		},
 
+		getbodyparams: {
+			rest: {
+				method: "GET",
+				path: "/getbodyname",
+				params: {
+					name : "string"
+				}
+			},
+			async handler(ctx) {
+				return "Hello Moleculer: " + ctx.params.name;
+			}
+		},
+
 		/**
 		 * Say a 'Hello' action.
 		 *
