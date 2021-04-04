@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const conn = require("../configDB/dbManager");
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -13,4 +14,4 @@ const UserBadgeSchema = new Schema({
   ]
 });
 
-module.exports = UserBadge = mongoose.model("userbadges", UserBadgeSchema);
+module.exports = UserBadge = conn.badges.model("userbadges", UserBadgeSchema);

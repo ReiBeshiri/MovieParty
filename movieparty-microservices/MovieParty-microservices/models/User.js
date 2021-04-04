@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const conn = require("../configDB/dbManager");
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -21,4 +22,4 @@ const UserSchema = new Schema({
   }
 });
 
-module.exports = User = mongoose.model("users", UserSchema);
+module.exports = User = conn.users.model("users", UserSchema);

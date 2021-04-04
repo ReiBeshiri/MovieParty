@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const conn = require("../configDB/dbManager");
 const Schema = mongoose.Schema;
 
 /*
@@ -26,4 +27,4 @@ const FriendRequestSchema = new Schema({
     }
 });
 
-module.exports = FriendRequest = mongoose.model("friendrequests", FriendRequestSchema);
+module.exports = FriendRequest = conn.friends.model("friendrequests", FriendRequestSchema);
