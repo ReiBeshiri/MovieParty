@@ -20,7 +20,7 @@ module.exports = {
 	 * Settings
 	 */
 	settings: {
-
+		
 	},
 
 	/**
@@ -38,7 +38,7 @@ module.exports = {
 		 *
 		 * @returns
 		 */
-		getUserByName: {
+		getBadgeList: {
 			rest: {
 				method: "GET",
 				path: "/badgelist"
@@ -67,16 +67,48 @@ module.exports = {
 			}
 		},
 
-		getbodyparams: {
+		updateBadgeList: {
 			rest: {
-				method: "GET",
+				method: "POST",
 				path: "/addbadge",
 				params: {
 					name : "string"
 				}
 			},
 			async handler(ctx) {
-				return "Hello Moleculer: " + ctx.params.name;
+				//req param to be passed
+				var bl = req.body.params.badgelist
+				var type = parseInt(req.body.params.badgetype)
+			
+				var myquery = {username: bl.username};
+				var newvalues = {$set: { path_: struct }};
+				var struct = {
+					source: bl.badges[type].source,
+					title: bl.badges[type].title,
+					description: bl.badges[type].description,
+					owned: true
+				}
+
+				newvalues = type==0 ? {$set: { "badges.0": struct }} : {$set: { "badges.1": struct }}
+
+				/*if(type==0){
+					newvalues = {$set: { "badges.0": struct }}
+				} else {
+					newvalues = {$set: { "badges.1": struct }}
+				}
+				
+				switch (type) {
+					case 0:
+						newvalues = {$set: { "badges.0": struct }}
+					  break;
+					case 1:
+						newvalues = {$set: { "badges.1": struct }}
+					  break;
+				  }*/
+			
+				Badges.updateOne(myquery, newvalues).then(()=> console.log("Badge update completed"));
+					
+				return "Badge update completed";
 			}
 		},
 	},
@@ -106,10 +138,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-        /*// Connect to MongoDB as soon as the service is up
-        mongoose.connect(dbBadges, { useNewUrlParser: true })
-        .then(() => console.log("MongoDB Badges successfully connected"))
-        .catch(err => console.log(err))*/
+        
 	},
 
 	/**
