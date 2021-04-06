@@ -1,9 +1,9 @@
 "use strict";
 
 const mongoose = require("mongoose");
-const dbUsers = require("../configDB/userDBKeys").mongoURI; // DB key Config User database
+/*const dbUsers = require("../configDB/userDBKeys").mongoURI; // DB key Config User database
 const dbFriends = require("../configDB/friendDBKeys").mongoURI; // DB key Config Friend database
-const dbBadges = require("../configDB/badgeDBKeys").mongoURI;
+const dbBadges = require("../configDB/badgeDBKeys").mongoURI;*/
 
 // Load User model
 const User = require("../models/User");
@@ -41,45 +41,46 @@ module.exports = {
 		getBadgeList: {
 			rest: {
 				method: "GET",
-				path: "/badgelist"
+				path: "/badgelist",
+				params: {
+					username: "string",
+				}
 			},
 			async handler(ctx) {
                 
-                //IMPUT DATA
-                //myUsername = req.query.username
-                var myUsername = "utente1"
-                
-                var response = null;
+                var username = ctx.params.username;
 
-                console.log("SERVER - richiesta lista badge")
-
-                Badges.findOne({ username: myUsername }).then(userbadgelist => {
+                return await Badges.findOne({ username: username }).then(userbadgelist => {
                     // Check if user exists
                     if (!userbadgelist) {
                         response = "userbadge not found"
                         throw new MoleculerRetryableError("User Badge List Not Found", 404, "no data available", {nodeID: "serverNode-NNN" });
                     }
                     console.log(userbadgelist)
-                    response = "response badge list";//JSON.parse(userbadgelist);
+					return userbadgelist;                    
                 });
 
-                return "response badge list";
 			}
 		},
 
 		updateBadgeList: {
 			rest: {
 				method: "POST",
-				path: "/addbadge",
+				path: "/updateBadgeList",
 				params: {
-					name : "string"
+					badgetype : "string",
+					badgelist : "string"
 				}
 			},
-			async handler(ctx) {
-				//req param to be passed
-				var bl = req.body.params.badgelist
-				var type = parseInt(req.body.params.badgetype)
-			
+			async handler(ctx) {				
+
+				var bl = ctx.params.badgelist
+				var type = parseInt(ctx.params.badgetype)
+				if(type>1){
+					ctx.meta.$statusCode = 400;//Bad Request
+					return 'Bad Request: "Not existing badgetype"';
+				}
+				
 				var myquery = {username: bl.username};
 				var newvalues = {$set: { path_: struct }};
 				var struct = {
@@ -91,24 +92,18 @@ module.exports = {
 
 				newvalues = type==0 ? {$set: { "badges.0": struct }} : {$set: { "badges.1": struct }}
 
-				/*if(type==0){
-					newvalues = {$set: { "badges.0": struct }}
-				} else {
-					newvalues = {$set: { "badges.1": struct }}
-				}
-				
-				switch (type) {
-					case 0:
-						newvalues = {$set: { "badges.0": struct }}
-					  break;
-					case 1:
-						newvalues = {$set: { "badges.1": struct }}
-					  break;
-				  }*/
-			
-				Badges.updateOne(myquery, newvalues).then(()=> console.log("Badge update completed"));
-					
-				return "Badge update completed";
+				return await User.findOne({ name: bl.username }).then(usr => {
+                    if (!usr) {
+                        ctx.meta.$statusCode = 404;//Data Not Found
+                        return 'Data Not Found: "Username not existing"';            
+                    }else{
+						Badges.updateOne(myquery, newvalues).then(()=> {
+							console.log("Badge Update Completed");
+							return "Badge Update Completed";
+						});
+					}
+				});
+							
 			}
 		},
 	},
