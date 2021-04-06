@@ -1,13 +1,13 @@
 "use strict";
 
-const mongoose = require("mongoose");
+/*const mongoose = require("mongoose");
 const dbUsers = require("../configDB/userDBKeys").mongoURI; // DB Config
 const dbFriends = require("../configDB/friendDBKeys").mongoURI; // DB Config
 
 // Load User model
 const User = require("../models/User");
 const Friends = require("../models/UserFriends");
-const Badges = require("../models/UserBadge");
+const Badges = require("../models/UserBadge");*/
 
 module.exports = {
 	name: "prova",
@@ -29,12 +29,7 @@ module.exports = {
 	 */
 	actions: {
         
-		/**
-		 * Say a 'Hello' action.
-		 *
-		 * @returns
-		 */
-		getUserByName: {
+		/*getUserByName: {
 			rest: {
 				method: "GET",
 				path: "/getuserbyname"
@@ -45,7 +40,7 @@ module.exports = {
                 })
 				return "Hello Moleculer";
 			}
-		},
+		},*/
 
 		getbodyparams: {
 			rest: {
@@ -60,12 +55,7 @@ module.exports = {
 			}
 		},
 
-		/**
-		 * Say a 'Hello' action.
-		 *
-		 * @returns
-		 */
-		 getFriendsByName: {
+		 /*getFriendsByName: {
 			rest: {
 				method: "GET",
 				path: "/getfriendsbyname"
@@ -78,11 +68,7 @@ module.exports = {
 			}
 		},
 
-		/**
-		 * Say a 'Hello' action.
-		 *
-		 * @returns
-		 */
+		
 		 getBadgesByName: {
 			rest: {
 				method: "GET",
@@ -94,7 +80,7 @@ module.exports = {
                 })
 				return "Hello Moleculer";
 			}
-		},
+		},*/
 	},
 
 	/**
@@ -123,9 +109,9 @@ module.exports = {
 	 */
 	async started() {
         // Connect to MongoDB
-        mongoose.connect(dbUsers, { useNewUrlParser: true })
+        /*mongoose.connect(dbUsers, { useNewUrlParser: true })
         .then(() => console.log("MongoDB Users successfully connected"))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err))*/
 	},
 
 	/**
