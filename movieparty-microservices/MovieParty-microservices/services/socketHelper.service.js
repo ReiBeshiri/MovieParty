@@ -33,17 +33,8 @@ module.exports = {
         /**
          * Checks if a user is online socket server side.
          */
-        isUserOnline:{
-            rest: {
-				method: "GET",
-				path: "/isUserOnline",
-				params: {
-					username: "string",
-				}
-			},
-			async handler(ctx) {
-                return usernameSocketId.has(ctx.params.username)
-            }
+        isUserOnline(ctx){
+            return usernameSocketId.has(ctx.params.username)
         }
 	},
 
@@ -51,12 +42,23 @@ module.exports = {
 	 * Events
 	 */
 	events: {
-        "socketHelper.sendPrivateMessage"(receiverUser, eventName, data) {
-            if(usernameSocketId.has(receiverUser)){ //send the real-time request if the receiver is online.
-                console.log("sending the message")
-                let usr = usernameSocketId.get(receiverUser)
-                io.to(usr).emit(eventName, data);
-                console.log("Private message "+ eventName +" sent to " + data + " from "+ receiverUser)
+        "socketHelper.sendPrivateMessage": {
+            params: {
+                receiverUser: "string",
+                eventName:  "string",
+                data:  "string",
+            },
+            handler(ctx){
+                const receiverUser = ctx.params.receiverUser
+                const eventName = ctx.params.eventName
+                const data = ctx.params.data
+
+                if(usernameSocketId.has(receiverUser)){ //send the real-time request if the receiver is online.
+                    console.log("sending the message")
+                    let usr = usernameSocketId.get(receiverUser)
+                    io.to(usr).emit(eventName, data);
+                    console.log("Private message "+ eventName +" sent to " + data + " from "+ receiverUser)
+                }
             }
         }
 	},

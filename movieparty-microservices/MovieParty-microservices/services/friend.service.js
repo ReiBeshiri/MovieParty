@@ -67,6 +67,13 @@ module.exports = {
                             result: 0
                         });
                         newFriendRequest.save()
+
+                        var socketMess = {
+                            receiverUser: receiver,
+                            eventName: "friendRequest",
+                            data: requester
+                        }
+                        ctx.emit("socketHelper.sendPrivateMessage", socketMess)
                         //socketio.sendPrivateMessage(receiver, "friendRequest", requester)
                     }
                 } else {
@@ -122,12 +129,24 @@ module.exports = {
                     UserFriends.findOne({ name: requester }).then(user => {
                         user.friends.addToSet(receiver)
                         user.save()
+                        var socketMess = {
+                            receiverUser: requester,
+                            eventName: "friendRequestAccepted",
+                            data: receiver
+                        }
+                        ctx.emit("socketHelper.sendPrivateMessage", socketMess)
                         //socketio.sendPrivateMessage(myUsername, "friendRequestAccepted", friendUsername)
                     });
             
                     UserFriends.findOne({ name: receiver }).then(user => {
                         user.friends.addToSet(requester)
                         user.save()
+                        var socketMess = {
+                            receiverUser: receiver,
+                            eventName: "friendRequestAccepted",
+                            data: requester
+                        }
+                        ctx.emit("socketHelper.sendPrivateMessage", socketMess)
                         //socketio.sendPrivateMessage(friendUsername, "friendRequestAccepted", myUsername)
                     });
                 });
@@ -156,6 +175,8 @@ module.exports = {
                     user.friends.forEach(friend => {
                         var item = {}
                         item["username"] = friend
+                        //FORSE CI VA AWAIT
+                        item["online"] = ctx.call("socketHelper.isUserOnline", {username: username});
                         //item["online"] = socketio.isOnline(friend)
                         friendsJSON.push(item)
                     });
