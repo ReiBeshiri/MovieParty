@@ -1,8 +1,5 @@
 "use strict";
 
-const mongoose = require("mongoose");
-const dbFriends = require("../configDB/friendDBKeys").mongoURI; // DB Config
-
 // Load User model
 const UserFriends = require("../models/UserFriends");
 const FriendRequest = require("../models/FriendRequest");
@@ -26,40 +23,38 @@ module.exports = {
 	 * Actions
 	 */
 	actions: {
-		addfriend: {
+		newfriendrequest: {
 			rest: {
 				method: "POST",
-				path: "/addfriend",
+				path: "/newfriendrequest",
 				params: {
-					myUsername : "string",
-                    friendUsername : "string"
+					requester : "string",
+                    receiver : "string"
 				}
 			},
 			async handler(ctx) {
-                const myUsername = ctx.params.myUsername;
-                const friendUsername = ctx.params.friendUsername;
+                const requester = ctx.params.myUsername;
+                const receiver = ctx.params.friendUsername;
                 var send = true
                 var response = null
 
                 var entity = await ctx.mcall(
                     {
-                        requesterIsPresent: {action: 'friend.userIsPresent', params: { name: myUsername}},
-                        receiverIsPresent: {action: 'friend.userIsPresent', params: { name: friendUsername}}
+                        requesterIsPresent: {action: 'friend.userIsPresent', params: { name: requester}},
+                        receiverIsPresent: {action: 'friend.userIsPresent', params: { name: receiver}}
                     }                                        
                 );
                 
                 if(entity.requesterIsPresent && entity.receiverIsPresent){
-                    FriendRequest.findOne({requester : myUsername, receiver : friendUsername, result : 0}).then(req => {
+                    FriendRequest.findOne({requester : requester, receiver : receiver, result : 0}).then(req => {
                         if(req !== null){
-                            console.log("FriendRequest already in list")
                             send=false
                             response =  'info: "FriendRequest already in list"';
                         }
                     })
 
-                    UserFriends.findOne({name: myUsername}).then(user => {
-                        if(user.friends.includes(friendUsername)){
-                            console.log("User already in friends list")
+                    UserFriends.findOne({name: requester}).then(user => {
+                        if(user.friends.includes(receiver)){
                             send=false
                             response = 'info: "User already in friends list"';
                         }
@@ -67,23 +62,18 @@ module.exports = {
 
                     if(send){
                         const newFriendRequest = new FriendRequest({
-                            requester: myUsername,
-                            receiver: friendUsername,
+                            requester: requester,
+                            receiver: receiver,
                             result: 0
                         });
                         newFriendRequest.save()
-                        console.log("sending private msg from " + myUsername + " to " + friendUsername)
-                        //socketio.sendPrivateMessage(friendUsername, "friendRequest", myUsername)
+                        //socketio.sendPrivateMessage(receiver, "friendRequest", requester)
                     }
-
                 } else {
                     ctx.meta.$statusCode = 404;
                     response = 'info: "User not found"';
                 }
-
-                return response;
-
-                
+                return response; 
 			}
 		},
 

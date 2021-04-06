@@ -3,9 +3,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../configDB/userDBKeys");
-const mongoose = require("mongoose");
-// DB Config
-const dbUsers = require("../configDB/userDBKeys").mongoURI; 
 
 // Load User model
 const User = require("../models/User");
@@ -75,7 +72,8 @@ module.exports = {
                                 });
             
                                 ctx.emit("friend.newuser", ctx.params.name);
-                    
+                                ctx.emit("badge.newuser", ctx.params.name);
+
                                 //Hash password before saving in database
                                 bcrypt.genSalt(10, (err, salt) => {
                                     bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -116,7 +114,6 @@ module.exports = {
                 const password = ctx.params.password;
             
                 // Find user by email
-                //return await User.findOne({ email }).then(user => async () => {
                 return await User.findOne({ email }).then(async function(user){
                     // Check if user exist
                     if (!user) {
@@ -135,7 +132,7 @@ module.exports = {
                             
                             // Sign token
                             var token = jwt.sign(payload, keys.secretOrKey, {
-                                expiresIn: 31556926 // 1 year in seconds
+                                expiresIn: 2629800 // 1 month in seconds
                             });
 
                             user.online = true
@@ -167,13 +164,6 @@ module.exports = {
                 });
 			}
 		},
-
-        /*async isPresent(ctx) {
-            console.log(ctx.params)
-            return await User.findOne({ name: ctx.params.name }).then(user => { 
-                return !user? false : true;
-            });    
-        }*/
 	},
 
 	/**

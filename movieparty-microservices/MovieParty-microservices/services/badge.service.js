@@ -1,17 +1,10 @@
 "use strict";
 
-const mongoose = require("mongoose");
-/*const dbUsers = require("../configDB/userDBKeys").mongoURI; // DB key Config User database
-const dbFriends = require("../configDB/friendDBKeys").mongoURI; // DB key Config Friend database
-const dbBadges = require("../configDB/badgeDBKeys").mongoURI;*/
-
-// Load User model
-const User = require("../models/User");
-const Friends = require("../models/UserFriends");
-const Badges = require("../models/UserBadge");
+// Load Badges model
+const Badge = require("../models/UserBadge");
 
 //component to throw error/badReq/etc
-const { MoleculerError } = require("moleculer").Errors;
+//const { MoleculerError } = require("moleculer").Errors;
 
 module.exports = {
 	name: "badge",
@@ -50,11 +43,15 @@ module.exports = {
                 
                 var username = ctx.params.username;
 
-                return await Badges.findOne({ username: username }).then(userbadgelist => {
+                return await Badge.findOne({ username: username }).then(userbadgelist => {
                     // Check if user exists
                     if (!userbadgelist) {
-                        response = "userbadge not found"
-                        throw new MoleculerRetryableError("User Badge List Not Found", 404, "no data available", {nodeID: "serverNode-NNN" });
+                        ctx.meta.$statusCode = 404
+						return {
+							name: "No Data Available",
+							message: "User Badge List Not Found"
+						};
+                        //throw new MoleculerRetryableError("User Badge List Not Found", 404, "no data available", {nodeID: "serverNode-NNN" });
                     }
                     console.log(userbadgelist)
 					return userbadgelist;                    
@@ -80,8 +77,7 @@ module.exports = {
 					ctx.meta.$statusCode = 400;//Bad Request
 					return {
 						name: "Bad Request",
-						message: "Not existing badgetype",
-						code: ctx.meta.$statusCode
+						message: "Not existing badgetype"
 					};
 				}
 				
@@ -97,18 +93,16 @@ module.exports = {
 				newvalues = type==0 ? {$set: { "badges.0": struct }} : {$set: { "badges.1": struct }}
 
 				return await 
-				Badges.findOne({ username: bl.username }).then(userbadgelist => {
+				Badge.findOne({ username: bl.username }).then(userbadgelist => {
                     // Check if user exists
                     if (!userbadgelist) {
 						ctx.meta.$statusCode = 404;//No Data Available
-                        //return new MoleculerError("User Badge List Not Found", 404, "No Data Available", {nodeID: ctx.nodeID });						
-						return {
+                        return {
 							name: "No Data Available",
-							message: "No Badgelist Found",
-							code: ctx.meta.$statusCode
+							message: "No Badgelist Found"
 						};
                     }else{
-						Badges.updateOne(myquery, newvalues).then(()=> {
+						Badge.updateOne(myquery, newvalues).then(()=> {
 							console.log("Badge Update Completed");
 							return "Badge Update Completed";
 						});
@@ -123,6 +117,18 @@ module.exports = {
 	 * Events
 	 */
 	events: {
+		"badge.newuser"(name) {
+            this.logger.info(name);
+
+            const newUserBadge = new Badge({
+				username: name,
+				badges:[ 
+						{source: "comment", title: "First comment!", description: "Write a comment in chat", owned: false},
+						{source: "camera_roll", title: "First party!", description: "Play a movie with a party", owned: false}
+				]
+			});
+			newUserBadge.save()
+        }
 
 	},
 
