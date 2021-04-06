@@ -78,7 +78,11 @@ module.exports = {
 				var type = parseInt(ctx.params.badgetype)
 				if(type>1){
 					ctx.meta.$statusCode = 400;//Bad Request
-					return 'Bad Request: "Not existing badgetype"';
+					return {
+						name: "Bad Request",
+						message: "Not existing badgetype",
+						code: ctx.meta.$statusCode
+					};
 				}
 				
 				var myquery = {username: bl.username};
@@ -92,17 +96,24 @@ module.exports = {
 
 				newvalues = type==0 ? {$set: { "badges.0": struct }} : {$set: { "badges.1": struct }}
 
-				return await User.findOne({ name: bl.username }).then(usr => {
-                    if (!usr) {
-                        ctx.meta.$statusCode = 404;//Data Not Found
-                        return 'Data Not Found: "Username not existing"';            
+				return await 
+				Badges.findOne({ username: bl.username }).then(userbadgelist => {
+                    // Check if user exists
+                    if (!userbadgelist) {
+						ctx.meta.$statusCode = 404;//No Data Available
+                        return new MoleculerError("User Badge List Not Found", 404, "No Data Available", {nodeID: ctx.nodeID });						
+						return {
+							name: "No Data Available",
+							message: "No Badgelist Found",
+							code: ctx.meta.$statusCode
+						};
                     }else{
 						Badges.updateOne(myquery, newvalues).then(()=> {
 							console.log("Badge Update Completed");
 							return "Badge Update Completed";
 						});
-					}
-				});
+					}               
+                });			
 							
 			}
 		},
