@@ -2,6 +2,7 @@
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const keys = require("../configDB/userDBKeys");
 const mongoose = require("mongoose");
 // DB Config
 const dbUsers = require("../configDB/userDBKeys").mongoURI; 
@@ -102,7 +103,6 @@ module.exports = {
 				}
 			},
             async handler(ctx) {
-
                 // Form validation
                 const { errors, isValid } = validateLoginInput(ctx.params);
             
@@ -116,49 +116,38 @@ module.exports = {
                 const password = ctx.params.password;
             
                 // Find user by email
-                User.findOne({ email }).then(user => {
-                    // Check if user exists
+                //return await User.findOne({ email }).then(user => async () => {
+                return await User.findOne({ email }).then(async function(user){
+                    // Check if user exist
                     if (!user) {
                         ctx.meta.$statusCode = 400;
-                        return 'emailnotfound: "Email not found"';
+                        return {emailnotfound: "Email not found"};
                     }
                 
                     // Check password
-                    bcrypt.compare(password, user.password).then(isMatch => {
+                    return await bcrypt.compare(password, user.password).then(isMatch => {
                         if (isMatch) {
-                            // User matched
-                            // Create JWT Payload
+                            // User matched, Create JWT Payload
                             const payload = {
                                 id: user.id,
                                 name: user.name
                             };
                             
-                            var tokenTMP = "";
                             // Sign token
-                            jwt.sign(payload, keys.secretOrKey, {
+                            var token = jwt.sign(payload, keys.secretOrKey, {
                                 expiresIn: 31556926 // 1 year in seconds
-                                },(err, token) => {
-                                    //DA RIGUARDARE
-                                    /*res.json({
-                                        success: true,
-                                        token: "Bearer " + token
-                                    });*/
-                                    tokenTMP = token;
-                                }
-                            );
+                            });
 
                             user.online = true
                             user.save()
-
-                            return 'success: true, token: "Bearer "' + tokenTMP;
+                            return {success: true, token: "Bearer " + token};
 
                         } else {
                             ctx.meta.$statusCode = 400;
-                            return 'passwordincorrect: "Password incorrect"';
+                            return {passwordincorrect: "Password incorrect"};
                         }
                     });
                 });
-
             }
         }, 
 
@@ -171,8 +160,7 @@ module.exports = {
 				}
 			},
 			async handler(ctx) {
-                myUsername = ctx.params.name;
-                User.findOne({ name: myUsername }).then(user => {
+                User.findOne({ name: ctx.params.name }).then(user => {
                     user.online = false;
                     user.save();
                     return;
