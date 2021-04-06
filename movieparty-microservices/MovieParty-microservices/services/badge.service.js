@@ -101,7 +101,7 @@ module.exports = {
                     // Check if user exists
                     if (!userbadgelist) {
 						ctx.meta.$statusCode = 404;//No Data Available
-                        return new MoleculerError("User Badge List Not Found", 404, "No Data Available", {nodeID: ctx.nodeID });						
+                        //return new MoleculerError("User Badge List Not Found", 404, "No Data Available", {nodeID: ctx.nodeID });						
 						return {
 							name: "No Data Available",
 							message: "No Badgelist Found",
