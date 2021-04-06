@@ -1,9 +1,9 @@
 "use strict";
 
 const mongoose = require("mongoose");
-const dbUsers = require("../configDB/userDBKeys").mongoURI; // DB key Config User database
+/*const dbUsers = require("../configDB/userDBKeys").mongoURI; // DB key Config User database
 const dbFriends = require("../configDB/friendDBKeys").mongoURI; // DB key Config Friend database
-const dbBadges = require("../configDB/badgeDBKeys").mongoURI;
+const dbBadges = require("../configDB/badgeDBKeys").mongoURI;*/
 
 // Load User model
 const User = require("../models/User");
@@ -20,7 +20,7 @@ module.exports = {
 	 * Settings
 	 */
 	settings: {
-
+		
 	},
 
 	/**
@@ -38,45 +38,83 @@ module.exports = {
 		 *
 		 * @returns
 		 */
-		getUserByName: {
+		getBadgeList: {
 			rest: {
 				method: "GET",
-				path: "/badgelist"
+				path: "/badgelist",
+				params: {
+					username: "string",
+				}
 			},
 			async handler(ctx) {
                 
-                //IMPUT DATA
-                //myUsername = req.query.username
-                var myUsername = "utente1"
-                
-                var response = null;
+                var username = ctx.params.username;
 
-                console.log("SERVER - richiesta lista badge")
-
-                Badges.findOne({ username: myUsername }).then(userbadgelist => {
+                return await Badges.findOne({ username: username }).then(userbadgelist => {
                     // Check if user exists
                     if (!userbadgelist) {
                         response = "userbadge not found"
                         throw new MoleculerRetryableError("User Badge List Not Found", 404, "no data available", {nodeID: "serverNode-NNN" });
                     }
                     console.log(userbadgelist)
-                    response = "response badge list";//JSON.parse(userbadgelist);
+					return userbadgelist;                    
                 });
 
-                return "response badge list";
 			}
 		},
 
-		getbodyparams: {
+		updateBadgeList: {
 			rest: {
-				method: "GET",
-				path: "/addbadge",
+				method: "POST",
+				path: "/updateBadgeList",
 				params: {
-					name : "string"
+					badgetype : "string",
+					badgelist : "string"
 				}
 			},
-			async handler(ctx) {
-				return "Hello Moleculer: " + ctx.params.name;
+			async handler(ctx) {				
+
+				var bl = ctx.params.badgelist
+				var type = parseInt(ctx.params.badgetype)
+				if(type>1){
+					ctx.meta.$statusCode = 400;//Bad Request
+					return {
+						name: "Bad Request",
+						message: "Not existing badgetype",
+						code: ctx.meta.$statusCode
+					};
+				}
+				
+				var myquery = {username: bl.username};
+				var newvalues = {$set: { path_: struct }};
+				var struct = {
+					source: bl.badges[type].source,
+					title: bl.badges[type].title,
+					description: bl.badges[type].description,
+					owned: true
+				}
+
+				newvalues = type==0 ? {$set: { "badges.0": struct }} : {$set: { "badges.1": struct }}
+
+				return await 
+				Badges.findOne({ username: bl.username }).then(userbadgelist => {
+                    // Check if user exists
+                    if (!userbadgelist) {
+						ctx.meta.$statusCode = 404;//No Data Available
+                        //return new MoleculerError("User Badge List Not Found", 404, "No Data Available", {nodeID: ctx.nodeID });						
+						return {
+							name: "No Data Available",
+							message: "No Badgelist Found",
+							code: ctx.meta.$statusCode
+						};
+                    }else{
+						Badges.updateOne(myquery, newvalues).then(()=> {
+							console.log("Badge Update Completed");
+							return "Badge Update Completed";
+						});
+					}               
+                });			
+							
 			}
 		},
 	},
@@ -106,10 +144,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-        /*// Connect to MongoDB as soon as the service is up
-        mongoose.connect(dbBadges, { useNewUrlParser: true })
-        .then(() => console.log("MongoDB Badges successfully connected"))
-        .catch(err => console.log(err))*/
+        
 	},
 
 	/**
