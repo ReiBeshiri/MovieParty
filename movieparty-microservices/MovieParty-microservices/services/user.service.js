@@ -58,12 +58,12 @@ module.exports = {
                 return await User.findOne({ name: ctx.params.name }).then(usr => {
                     if (usr) {
                         ctx.meta.$statusCode = 400;
-                        return 'name: "Username already exists"';            
+                        return {name: "Username already exists", message: "Username already exists"};            
                     }else{
                         return User.findOne({ email: ctx.params.email }).then(user => {
                             if (user) {
                                 ctx.meta.$statusCode = 400;
-                                return 'email: "Email already exists"';
+                                return {name: "Email already exists", message: "Email already exists"};
                             } else {
                                 const newUser = new User({
                                     name: ctx.params.name,
@@ -118,7 +118,7 @@ module.exports = {
                     // Check if user exist
                     if (!user) {
                         ctx.meta.$statusCode = 400;
-                        return {emailnotfound: "Email not found"};
+                        return {name: "Email not found", message: "Email not found"};
                     }
                 
                     // Check password
@@ -141,7 +141,7 @@ module.exports = {
 
                         } else {
                             ctx.meta.$statusCode = 400;
-                            return {passwordincorrect: "Password incorrect"};
+                            return {name: "Password incorrect", message: "Password incorrect"};
                         }
                     });
                 });

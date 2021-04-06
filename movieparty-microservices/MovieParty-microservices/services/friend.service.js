@@ -46,17 +46,17 @@ module.exports = {
                 );
                 
                 if(entity.requesterIsPresent && entity.receiverIsPresent){
-                    FriendRequest.findOne({requester : requester, receiver : receiver, result : 0}).then(req => {
+                    await FriendRequest.findOne({requester : requester, receiver : receiver, result : 0}).then(req => {
                         if(req !== null){
                             send=false
-                            response =  'info: "FriendRequest already in list"';
+                            response =  {name: "FriendRequest already in list", message: "FriendRequest already in list"};
                         }
                     })
 
-                    UserFriends.findOne({name: requester}).then(user => {
+                    await UserFriends.findOne({name: requester}).then(user => {
                         if(user.friends.includes(receiver)){
                             send=false
-                            response = 'info: "User already in friends list"';
+                            response = {name: "User already in friends list", message: "User already in friends list"};
                         }
                     })
 
@@ -71,12 +71,101 @@ module.exports = {
                     }
                 } else {
                     ctx.meta.$statusCode = 404;
-                    response = 'info: "User not found"';
+                    response = { name: "User not found", message: "User not found"};
                 }
                 return response; 
 			}
 		},
+        
+        friendrequestlist: {
+            rest: {
+                method: "GET",
+                path: "/friendrequestlist",
+                params: {
+                    name: "string"
+                }
+            },
+            async handler(ctx) {
+                const username = ctx.params.name
 
+                return await FriendRequest.find({receiver: username, result: 0}).then(requests => {
+
+                    var requestJSON = []
+                    requests.forEach(request => {
+                        var item = {}
+                        item["friendUsername"] = request.requester
+                        requestJSON.push(item)
+                    })
+                    return {requests: requestJSON};
+                })
+
+            }
+        },
+
+        friendresponse: {
+            rest: {
+                method: "PUT",
+                path: "/friendresponse",
+                params: {
+                    requester: "string",
+                    receiver: "string",
+                    result: "integer" //number
+                }
+            },
+            async handler(ctx) {
+                const requester = ctx.params.requester
+                const receiver = ctx.params.receiver
+                const result = parseInt(ctx.params.result)
+
+                return await FriendRequest.findOneAndUpdate({ requester: requester, receiver: receiver}, {result: result}).then(request => {
+        
+                    UserFriends.findOne({ name: requester }).then(user => {
+                        user.friends.addToSet(receiver)
+                        user.save()
+                        //socketio.sendPrivateMessage(myUsername, "friendRequestAccepted", friendUsername)
+                    });
+            
+                    UserFriends.findOne({ name: receiver }).then(user => {
+                        user.friends.addToSet(requester)
+                        user.save()
+                        //socketio.sendPrivateMessage(friendUsername, "friendRequestAccepted", myUsername)
+                    });
+                });
+            }
+        },
+
+        friendrlist: {
+            rest: {
+                method: "GET",
+                path: "/friendlist",
+                params: {
+                    name: "string"
+                }
+            },
+            async handler(ctx) {
+                const username = ctx.params.name
+
+                return await UserFriends.findOne({ name: username }).then(user => {
+                    // Check if user exists
+                    if (!user) {
+                        ctx.meta.$statusCode = 404;
+                        return { name: "User not found", message: "User not found"};
+                    }
+            
+                    var friendsJSON = []
+                    user.friends.forEach(friend => {
+                        var item = {}
+                        item["username"] = friend
+                        //item["online"] = socketio.isOnline(friend)
+                        friendsJSON.push(item)
+                    });
+                    
+                    return {friends: friendsJSON};
+                });
+
+            }
+        },
+        
         async userIsPresent(ctx) {
             return await UserFriends.findOne({ name: ctx.params.name }).then(user => { 
                 return !user? false : true;
@@ -89,7 +178,6 @@ module.exports = {
 	 */
 	events: {
         "friend.newuser"(name) {
-            this.logger.info(name);
 
             const newUserFriend = new UserFriends({
                 name: name
@@ -117,10 +205,7 @@ module.exports = {
 	 * Service started lifecycle event handler
 	 */
 	async started() {
-        // Connect to MongoDB
-        /*mongoose.connect(dbFriends, { useNewUrlParser: true })
-        .then(() => console.log("MongoDB Friend successfully connected"))
-        .catch(err => console.log(err))*/
+        
 	},
 
 	/**
