@@ -1,4 +1,4 @@
-const API_KEY = "38edf32690a1d179a3c3b3120f3041ee"; //tmdb api gateway
+const API_KEY = "KEY"; //tmdb api gateway
 
 const genreMap = new Map(); //req map
 genreMap.set("action", 28);
